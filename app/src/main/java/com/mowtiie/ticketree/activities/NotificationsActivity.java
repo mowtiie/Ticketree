@@ -1,5 +1,6 @@
 package com.mowtiie.ticketree.activities;
 
+import com.mowtiie.ticketree.R;
 import com.mowtiie.ticketree.data.Data;
 import com.mowtiie.ticketree.adapters.GenericAdapter;
 import android.os.Bundle;
@@ -34,7 +35,8 @@ public class NotificationsActivity extends AppCompatActivity {
         refreshEmpty();
         Data.UNREAD = 0;
 
-        binding.btnSimulate.setOnClickListener(v -> {
+        binding.toolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() != R.id.action_simulate) return false;
             String event = Data.EVENT_NAMES[0];
             if (!Data.TICKETS.isEmpty()) {
                 event = Data.TICKETS.get(Data.TICKETS.size() - 1).split("\\|")[1];
@@ -45,6 +47,7 @@ public class NotificationsActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
             refreshEmpty();
             Snackbar.make(binding.getRoot(), reminder, Snackbar.LENGTH_LONG).show();
+            return true;
         });
     }
 

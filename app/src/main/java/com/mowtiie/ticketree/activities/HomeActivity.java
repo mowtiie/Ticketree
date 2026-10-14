@@ -8,6 +8,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.mowtiie.ticketree.R;
 import com.mowtiie.ticketree.adapters.GenericAdapter;
 import com.mowtiie.ticketree.data.Data;
 import com.mowtiie.ticketree.databinding.ActivityHomeBinding;
@@ -33,6 +34,26 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.tvWelcome.setText("Welcome, " + Data.USER_NAME);
+
+        binding.toolbar.setOnMenuItemClickListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.action_notifications) {
+                startActivity(new Intent(this, NotificationsActivity.class));
+            } else if (id == R.id.action_profile) {
+                startActivity(new Intent(this, ProfileActivity.class));
+            } else if (id == R.id.action_logout) {
+                Data.USER_NAME = "";
+                Data.USER_EMAIL = "";
+                Data.USER_PASSWORD = "";
+                Data.USER_IS_ORGANIZER = false;
+                Intent intent = new Intent(this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            } else {
+                return false;
+            }
+            return true;
+        });
 
         ArrayList<Integer> featured = new ArrayList<>();
         for (int i = 0; i < Data.EVENT_NAMES.length && featured.size() < 3; i++) {

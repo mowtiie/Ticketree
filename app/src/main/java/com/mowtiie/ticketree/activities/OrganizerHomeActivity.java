@@ -7,6 +7,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.mowtiie.ticketree.R;
 import com.mowtiie.ticketree.adapters.GenericAdapter;
 import com.mowtiie.ticketree.data.Data;
 import com.mowtiie.ticketree.databinding.ActivityOrganizerHomeBinding;
@@ -47,14 +48,29 @@ public class OrganizerHomeActivity extends AppCompatActivity {
         binding.rvList.setLayoutManager(new LinearLayoutManager(this));
         binding.rvList.setAdapter(adapter);
 
-        binding.btnCreate.setOnClickListener(v ->
-                startActivity(new Intent(this, EventFormActivity.class)));
-        binding.btnDashboard.setOnClickListener(v ->
-                startActivity(new Intent(this, OrganizerDashboardActivity.class)));
-        binding.btnPricing.setOnClickListener(v ->
-                startActivity(new Intent(this, TicketPricingActivity.class)));
-        binding.btnProfile.setOnClickListener(v ->
-                startActivity(new Intent(this, ProfileActivity.class)));
+        binding.toolbar.setOnMenuItemClickListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.action_new_event) {
+                startActivity(new Intent(this, EventFormActivity.class));
+            } else if (id == R.id.action_dashboard) {
+                startActivity(new Intent(this, OrganizerDashboardActivity.class));
+            } else if (id == R.id.action_pricing) {
+                startActivity(new Intent(this, TicketPricingActivity.class));
+            } else if (id == R.id.action_profile) {
+                startActivity(new Intent(this, ProfileActivity.class));
+            } else if (id == R.id.action_logout) {
+                Data.USER_NAME = "";
+                Data.USER_EMAIL = "";
+                Data.USER_PASSWORD = "";
+                Data.USER_IS_ORGANIZER = false;
+                Intent intent = new Intent(this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            } else {
+                return false;
+            }
+            return true;
+        });
     }
 
     @Override

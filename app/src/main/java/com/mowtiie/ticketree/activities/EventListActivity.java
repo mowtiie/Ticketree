@@ -11,6 +11,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.mowtiie.ticketree.R;
 import com.mowtiie.ticketree.adapters.GenericAdapter;
 import com.mowtiie.ticketree.data.Data;
 import com.mowtiie.ticketree.databinding.ActivityEventListBinding;
@@ -70,7 +71,11 @@ public class EventListActivity extends AppCompatActivity {
             }
         });
 
-        binding.btnClear.setOnClickListener(v -> clearFilters());
+        binding.toolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() != R.id.action_clear) return false;
+            clearFilters();
+            return true;
+        });
 
         binding.empty.tvEmoji.setText("🔍");
         binding.empty.tvMessage.setText("No events match your filters");
