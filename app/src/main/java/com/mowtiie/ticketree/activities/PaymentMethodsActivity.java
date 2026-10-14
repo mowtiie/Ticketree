@@ -40,10 +40,17 @@ public class PaymentMethodsActivity extends AppCompatActivity {
         binding.rvList.setAdapter(adapter);
         refreshEmpty();
 
+        binding.tilMethod.setHelperText("For example GCash, Maya or Visa ****4321");
+
         binding.btnAdd.setOnClickListener(v -> {
             String method = binding.etMethod.getText().toString().trim();
+            binding.tilMethod.setError(null);
             if (method.isEmpty()) {
-                Snackbar.make(binding.getRoot(), "Enter a payment method", Snackbar.LENGTH_SHORT).show();
+                binding.tilMethod.setError("Enter a payment method");
+                return;
+            }
+            if (Data.PAYMENT_METHODS.contains(method)) {
+                binding.tilMethod.setError("This payment method is already saved");
                 return;
             }
             Data.PAYMENT_METHODS.add(method);

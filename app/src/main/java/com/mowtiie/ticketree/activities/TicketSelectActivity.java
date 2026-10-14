@@ -39,7 +39,7 @@ public class TicketSelectActivity extends AppCompatActivity {
         binding.spType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                qty = 1;
+                qty = Data.TICKET_MIN_QTY[position];
                 update();
             }
 
@@ -49,7 +49,8 @@ public class TicketSelectActivity extends AppCompatActivity {
         });
 
         binding.btnMinus.setOnClickListener(v -> {
-            if (qty > 1) qty--;
+            if (qty > Data.TICKET_MIN_QTY[binding.spType.getSelectedItemPosition()]) qty--;
+            else Snackbar.make(binding.getRoot(), "Minimum " + qty + " ticket(s) for this type", Snackbar.LENGTH_SHORT).show();
             update();
         });
         binding.btnPlus.setOnClickListener(v -> {
@@ -75,6 +76,10 @@ public class TicketSelectActivity extends AppCompatActivity {
 
     void update() {
         binding.tvQty.setText(String.valueOf(qty));
+        int type = binding.spType.getSelectedItemPosition();
+        binding.tvRule.setText(Data.TICKET_MIN_QTY[type] > 1
+                ? Data.TICKET_TYPES[type] + " tickets need at least " + Data.TICKET_MIN_QTY[type] + " seats. Maximum 6 per order."
+                : "Maximum 6 tickets per order.");
         binding.tvTotal.setText("Total: " + Data.money(Data.TICKET_PRICES[binding.spType.getSelectedItemPosition()] * qty));
     }
 }

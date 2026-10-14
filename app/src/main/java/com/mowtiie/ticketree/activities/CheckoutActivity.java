@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -39,6 +40,9 @@ public class CheckoutActivity extends AppCompatActivity {
 
         binding.etName.setText(Data.USER_NAME);
         binding.etEmail.setText(Data.USER_EMAIL);
+        binding.tilName.setHelperText("Name on the receipt");
+        binding.tilEmail.setHelperText("Your tickets and receipt are sent here");
+        binding.tilAddress.setHelperText("Street, city");
 
         if (Data.PAYMENT_METHODS.isEmpty()) {
             Data.PAYMENT_METHODS.add("GCash");
@@ -58,7 +62,7 @@ public class CheckoutActivity extends AppCompatActivity {
                         + "\nTicket type: " + Data.TICKET_TYPES[Data.SEL_TYPE]
                         + "\nSeats: " + seatsText
                         + "\nQuantity: " + Data.SEL_QTY
-                        + "\nTotal: P" + total);
+                        + "\nTotal: " + Data.money(total));
 
         long left = Data.HOLD_END - System.currentTimeMillis();
         if (left <= 0) {
@@ -81,8 +85,19 @@ public class CheckoutActivity extends AppCompatActivity {
             String name = binding.etName.getText().toString().trim();
             String email = binding.etEmail.getText().toString().trim();
             String address = binding.etAddress.getText().toString().trim();
-            if (name.isEmpty() || email.isEmpty() || address.isEmpty()) {
-                Snackbar.make(binding.getRoot(), "Fill in all billing fields", Snackbar.LENGTH_SHORT).show();
+            binding.tilName.setError(null);
+            binding.tilEmail.setError(null);
+            binding.tilAddress.setError(null);
+            if (name.isEmpty()) {
+                binding.tilName.setError("Enter the billing name");
+                return;
+            }
+            if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                binding.tilEmail.setError("Enter a valid email address");
+                return;
+            }
+            if (address.length() < 5) {
+                binding.tilAddress.setError("Enter your billing address");
                 return;
             }
             String method = binding.spPayment.getSelectedItem().toString();
@@ -135,7 +150,7 @@ public class CheckoutActivity extends AppCompatActivity {
                 + "\nEmail: " + email
                 + "\nAddress: " + address
                 + "\nPaid with: " + method
-                + "\n\nTOTAL: P" + total;
+                + "\n\nTOTAL: " + Data.money(total);
         Data.RECEIPTS.add(receipt);
 
         Data.NOTIFICATIONS.add("Booking confirmed: " + eventName + " (" + orderId + ")");

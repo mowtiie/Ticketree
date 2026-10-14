@@ -32,11 +32,13 @@ public class EventDetailActivity extends AppCompatActivity {
         sb.append("Organizer: ").append(Data.EVENT_ORGANIZERS[i]).append("\n");
         sb.append("Starting price: ").append(Data.money(Data.EVENT_PRICES[i])).append("\n\n");
         sb.append(Data.EVENT_DESCRIPTIONS[i]).append("\n\n");
+        sb.append("Speaker lineup\n").append(Data.EVENT_SPEAKERS[i]).append("\n\n");
         sb.append("Ticket types\n");
         for (int t = 0; t < Data.TICKET_TYPES.length; t++) {
             sb.append(Data.TICKET_TYPES[t]).append(" - ").append(Data.money(Data.TICKET_PRICES[t]))
                     .append(" (").append(Data.TICKET_REMAINING[t]).append(" left)\n");
         }
+        sb.append("\nTerms and conditions\n").append(Data.TERMS);
         binding.tvDetails.setText(sb.toString());
 
         binding.btnSelectTickets.setOnClickListener(v -> {

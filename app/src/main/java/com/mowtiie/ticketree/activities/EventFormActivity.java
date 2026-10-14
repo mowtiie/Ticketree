@@ -20,6 +20,15 @@ public class EventFormActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         binding.toolbar.setNavigationOnClickListener(v -> finish());
 
+        binding.tilName.setHelperText("Shown to customers");
+        binding.tilCategory.setHelperText("For example AI Boot Camp or Toastmasters");
+        binding.tilDate.setHelperText("Format: Dec 20, 2026 9:00 AM");
+        binding.tilLocation.setHelperText("City where the event takes place");
+        binding.tilPrice.setHelperText("Starting price in pesos");
+        binding.tilAge.setHelperText("For example 18+ or All ages");
+        binding.tilDescription.setHelperText("What attendees will learn or see");
+        binding.tilSpeakers.setHelperText("Separate names with commas");
+
         int event = getIntent().getIntExtra("event", -1);
         binding.spVenue.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, Data.VENUE_TYPES));
 
@@ -32,6 +41,7 @@ public class EventFormActivity extends AppCompatActivity {
             binding.etPrice.setText(String.valueOf(Data.EVENT_PRICES[event]));
             binding.etAge.setText(Data.EVENT_AGE_RESTRICTIONS[event]);
             binding.etDescription.setText(Data.EVENT_DESCRIPTIONS[event]);
+            binding.etSpeakers.setText(Data.EVENT_SPEAKERS[event]);
             binding.swPublished.setChecked(Data.EVENT_PUBLISHED[event]);
             for (int v = 0; v < Data.VENUE_TYPES.length; v++) {
                 if (Data.VENUE_TYPES[v].equals(Data.EVENT_VENUES[event])) binding.spVenue.setSelection(v);
@@ -48,9 +58,46 @@ public class EventFormActivity extends AppCompatActivity {
             String price = binding.etPrice.getText().toString().trim();
             String age = binding.etAge.getText().toString().trim();
             String description = binding.etDescription.getText().toString().trim();
-            if (name.isEmpty() || category.isEmpty() || date.length() < 12 || location.isEmpty()
-                    || price.isEmpty() || age.isEmpty() || description.isEmpty()) {
-                Snackbar.make(binding.getRoot(), "Fill in all fields (date like Dec 20, 2026 9:00 AM)", Snackbar.LENGTH_LONG).show();
+            String speakers = binding.etSpeakers.getText().toString().trim();
+
+            binding.tilName.setError(null);
+            binding.tilCategory.setError(null);
+            binding.tilDate.setError(null);
+            binding.tilLocation.setError(null);
+            binding.tilPrice.setError(null);
+            binding.tilAge.setError(null);
+            binding.tilDescription.setError(null);
+            binding.tilSpeakers.setError(null);
+            if (name.isEmpty()) {
+                binding.tilName.setError("Enter the event name");
+                return;
+            }
+            if (category.isEmpty()) {
+                binding.tilCategory.setError("Enter a category");
+                return;
+            }
+            if (!date.matches("^[A-Z][a-z]{2} \\d{2}, \\d{4} \\d{1,2}:\\d{2} (AM|PM)$")) {
+                binding.tilDate.setError("Use the format Dec 20, 2026 9:00 AM");
+                return;
+            }
+            if (location.isEmpty()) {
+                binding.tilLocation.setError("Enter the city");
+                return;
+            }
+            if (price.isEmpty() || Integer.parseInt(price) <= 0) {
+                binding.tilPrice.setError("Enter a price above 0");
+                return;
+            }
+            if (age.isEmpty()) {
+                binding.tilAge.setError("Enter an age restriction");
+                return;
+            }
+            if (description.isEmpty()) {
+                binding.tilDescription.setError("Enter a short description");
+                return;
+            }
+            if (speakers.isEmpty()) {
+                binding.tilSpeakers.setError("Enter at least one speaker");
                 return;
             }
             int i = event;
@@ -67,6 +114,7 @@ public class EventFormActivity extends AppCompatActivity {
             Data.EVENT_PRICES[i] = Integer.parseInt(price);
             Data.EVENT_AGE_RESTRICTIONS[i] = age;
             Data.EVENT_DESCRIPTIONS[i] = description;
+            Data.EVENT_SPEAKERS[i] = speakers;
             Data.EVENT_PUBLISHED[i] = binding.swPublished.isChecked();
             Toast.makeText(this, "Event saved", Toast.LENGTH_SHORT).show();
             finish();

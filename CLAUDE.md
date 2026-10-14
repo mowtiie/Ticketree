@@ -119,3 +119,11 @@ The core flow must work end to end before anything else is polished.
 - Format money with `Data.money(int)` (shows the peso sign and thousands separators), never a raw "P" prefix.
 - Use theme attributes and the Material text appearances (`?attr/textAppearance*`, `?attr/colorError`, `@color/success`) instead of hardcoded colors and `textSize`, so dark mode works.
 - Show events with `Data.bindEvent(row, event)` so every list uses the same category icon, title, date and price chip.
+
+## Form conventions
+
+- Every `TextInputLayout` has helper text that says what to enter and the format when it matters (dates, passwords).
+- Validate with inline `setError` on the field that is wrong, not a generic Snackbar. Clear the error on the next attempt.
+- Password fields use the password toggle end icon. Emails are checked with `Patterns.EMAIL_ADDRESS`. Passwords need 6 or more characters.
+- Login has the organizer switch, and it must match the account role.
+- Group tickets need at least 4 seats (`Data.TICKET_MIN_QTY`). All other ticket types start at 1. Maximum is 6 per order.

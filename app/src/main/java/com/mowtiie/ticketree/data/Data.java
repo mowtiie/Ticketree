@@ -94,6 +94,22 @@ public class Data {
             "18+", "15+", "All ages", "18+", "16+", "18+", "15+", "All ages"
     };
 
+    public static String[] EVENT_SPEAKERS = {
+            "Maria Santos, Paolo Reyes, Dr. Liza Cruz",
+            "Dr. Ken Tan, Aira Lim, Josh Bautista",
+            "Club President, Table Topics Master, Chief Evaluator",
+            "Panel of 5 investors, Founder mentors",
+            "Angela Ramos, Dr. Nina Flores, Carla Mendoza",
+            "Rico Dela Cruz, Sam Ortiz",
+            "Coach Dina Villa, Mark Aquino",
+            "Student innovators, Guest judges"
+    };
+    public static final String TERMS =
+            "Tickets are non-refundable. Bring a valid ID and your QR ticket. "
+                    + "Seats are held for 2 minutes during checkout. "
+                    + "The organizer may change the schedule with prior notice.";
+    public static final int[] TICKET_MIN_QTY = {1, 1, 1, 4};
+
     public static final String[] TICKET_TYPES = {"General Admission", "VIP", "Early Bird", "Group"};
     public static final int[] TICKET_PRICES = {1000, 3000, 750, 4500};
     public static final int[] TICKET_REMAINING = {120, 30, 50, 20};
@@ -112,6 +128,7 @@ public class Data {
         EVENT_DESCRIPTIONS = Arrays.copyOf(EVENT_DESCRIPTIONS, n);
         EVENT_ORGANIZERS = Arrays.copyOf(EVENT_ORGANIZERS, n);
         EVENT_AGE_RESTRICTIONS = Arrays.copyOf(EVENT_AGE_RESTRICTIONS, n);
+        EVENT_SPEAKERS = Arrays.copyOf(EVENT_SPEAKERS, n);
         EVENT_PUBLISHED = Arrays.copyOf(EVENT_PUBLISHED, n);
         SEAT_TAKEN = Arrays.copyOf(SEAT_TAKEN, n);
         SEAT_TAKEN[n - 1] = new boolean[3][20];

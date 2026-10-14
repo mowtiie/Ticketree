@@ -5,11 +5,12 @@ import com.mowtiie.ticketree.data.DbHelper;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.util.Patterns;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 
 import com.mowtiie.ticketree.databinding.ActivityProfileBinding;
 
@@ -27,12 +28,28 @@ public class ProfileActivity extends AppCompatActivity {
         binding.etEmail.setText(Data.USER_EMAIL);
         binding.etPassword.setText(Data.USER_PASSWORD);
 
+        binding.tilName.setHelperText("As shown on your tickets");
+        binding.tilEmail.setHelperText("Tickets and receipts are sent here");
+        binding.tilPassword.setHelperText("At least 6 characters");
+        binding.tilPassword.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
+
         binding.btnSave.setOnClickListener(v -> {
             String name = binding.etName.getText().toString().trim();
             String email = binding.etEmail.getText().toString().trim();
             String password = binding.etPassword.getText().toString().trim();
-            if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
-                Snackbar.make(binding.getRoot(), "Fill in all fields", Snackbar.LENGTH_SHORT).show();
+            binding.tilName.setError(null);
+            binding.tilEmail.setError(null);
+            binding.tilPassword.setError(null);
+            if (name.isEmpty()) {
+                binding.tilName.setError("Enter your full name");
+                return;
+            }
+            if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                binding.tilEmail.setError("Enter a valid email address");
+                return;
+            }
+            if (password.length() < 6) {
+                binding.tilPassword.setError("Use at least 6 characters");
                 return;
             }
             ContentValues cv = new ContentValues();
@@ -43,7 +60,7 @@ public class ProfileActivity extends AppCompatActivity {
                     .updateWithOnConflict("users", cv, "email=?", new String[]{Data.USER_EMAIL},
                             android.database.sqlite.SQLiteDatabase.CONFLICT_IGNORE);
             if (rows == 0) {
-                Snackbar.make(binding.getRoot(), "Email already registered", Snackbar.LENGTH_SHORT).show();
+                binding.tilEmail.setError("This email is already registered");
                 return;
             }
             Data.USER_NAME = name;
