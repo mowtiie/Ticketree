@@ -7,7 +7,6 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridLayout;
 
@@ -50,22 +49,17 @@ public class SeatSelectActivity extends AppCompatActivity {
         binding.tvInfo.setText("Pick " + Data.SEL_QTY + " seat(s) in one box. Seats are held for "
                 + Data.HOLD_SECONDS + " seconds once you pick one.");
 
-        binding.spBox.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, Data.BOX_NAMES));
-        binding.spBox.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != Data.SEL_BOX) {
-                    Data.releaseHold();
-                    stopTimer();
-                    Data.SEL_BOX = position;
-                }
-                buildGrid();
+        binding.ddBox.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Data.BOX_NAMES));
+        binding.ddBox.setText(Data.BOX_NAMES[0], false);
+        binding.ddBox.setOnItemClickListener((parent, view, position, id) -> {
+            if (position != Data.SEL_BOX) {
+                Data.releaseHold();
+                stopTimer();
+                Data.SEL_BOX = position;
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
+            buildGrid();
         });
+        buildGrid();
 
         binding.btnContinue.setOnClickListener(v -> {
             if (Data.SEL_SEATS.size() != Data.SEL_QTY) {

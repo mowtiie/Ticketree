@@ -32,7 +32,8 @@ public class EventFormActivity extends AppCompatActivity {
         binding.tilSpeakers.setHelperText("Separate names with commas");
 
         int event = getIntent().getIntExtra("event", -1);
-        binding.spVenue.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, Data.VENUE_TYPES));
+        binding.ddVenue.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Data.VENUE_TYPES));
+        binding.ddVenue.setText(Data.VENUE_TYPES[0], false);
 
         if (event >= 0) {
             binding.toolbar.setTitle("Edit event");
@@ -46,7 +47,7 @@ public class EventFormActivity extends AppCompatActivity {
             binding.etSpeakers.setText(Data.EVENT_SPEAKERS[event]);
             binding.swPublished.setChecked(Data.EVENT_PUBLISHED[event]);
             for (int v = 0; v < Data.VENUE_TYPES.length; v++) {
-                if (Data.VENUE_TYPES[v].equals(Data.EVENT_VENUES[event])) binding.spVenue.setSelection(v);
+                if (Data.VENUE_TYPES[v].equals(Data.EVENT_VENUES[event])) binding.ddVenue.setText(Data.VENUE_TYPES[v], false);
             }
         } else {
             binding.toolbar.setTitle("New event");
@@ -112,7 +113,7 @@ public class EventFormActivity extends AppCompatActivity {
             Data.EVENT_CATEGORIES[i] = category;
             Data.EVENT_DATES[i] = date;
             Data.EVENT_LOCATIONS[i] = location;
-            Data.EVENT_VENUES[i] = binding.spVenue.getSelectedItem().toString();
+            Data.EVENT_VENUES[i] = binding.ddVenue.getText().toString();
             Data.EVENT_PRICES[i] = Integer.parseInt(price);
             Data.EVENT_AGE_RESTRICTIONS[i] = age;
             Data.EVENT_DESCRIPTIONS[i] = description;

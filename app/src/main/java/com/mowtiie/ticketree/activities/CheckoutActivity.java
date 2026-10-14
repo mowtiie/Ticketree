@@ -52,7 +52,8 @@ public class CheckoutActivity extends AppCompatActivity {
             Data.PAYMENT_METHODS.add("Maya");
             Data.PAYMENT_METHODS.add("Visa ****1234");
         }
-        binding.spPayment.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, Data.PAYMENT_METHODS));
+        binding.ddPayment.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Data.PAYMENT_METHODS));
+        binding.ddPayment.setText(Data.PAYMENT_METHODS.get(0), false);
 
         Collections.sort(Data.SEL_SEATS);
         StringBuilder sb = new StringBuilder();
@@ -103,7 +104,7 @@ public class CheckoutActivity extends AppCompatActivity {
                 binding.tilAddress.setError("Enter your billing address");
                 return;
             }
-            String method = binding.spPayment.getSelectedItem().toString();
+            String method = binding.ddPayment.getText().toString();
             paying = true;
             binding.btnPay.setEnabled(false);
             binding.overlay.setVisibility(View.VISIBLE);
