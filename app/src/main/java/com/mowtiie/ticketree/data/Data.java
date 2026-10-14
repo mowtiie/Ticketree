@@ -1,7 +1,11 @@
 package com.mowtiie.ticketree.data;
 
 import java.util.ArrayList;
+import android.content.Context;
 import android.content.res.ColorStateList;
+import android.widget.Toast;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import android.view.View;
 import android.widget.TextView;
 
@@ -175,6 +179,18 @@ public class Data {
     public static final ArrayList<String> ORDERS = new ArrayList<>();
     public static final ArrayList<String> TICKETS = new ArrayList<>();
     public static final ArrayList<String> NOTIFICATIONS = new ArrayList<>();
+    public static int UNREAD = 0;
+
+    public static void addNotification(String message) {
+        String time = new SimpleDateFormat("h:mm a", Locale.US).format(new Date());
+        NOTIFICATIONS.add(0, time + " - " + message);
+        UNREAD++;
+    }
+
+    public static void notify(Context app, String message) {
+        addNotification(message);
+        Toast.makeText(app, message, Toast.LENGTH_SHORT).show();
+    }
     public static final ArrayList<String> RECEIPTS = new ArrayList<>();
     public static final ArrayList<String> PAYMENT_METHODS = new ArrayList<>();
 

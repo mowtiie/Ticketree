@@ -15,10 +15,19 @@ import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 
+    ActivityHomeBinding binding;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        binding.tvNotifLabel.setText("🔔\nNotifications"
+                + (Data.UNREAD > 0 ? " (" + Data.UNREAD + " new)" : ""));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityHomeBinding binding = ActivityHomeBinding.inflate(getLayoutInflater());
+        binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         binding.tvWelcome.setText("Welcome, " + Data.USER_NAME);

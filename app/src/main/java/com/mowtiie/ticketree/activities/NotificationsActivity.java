@@ -4,7 +4,7 @@ import com.mowtiie.ticketree.data.Data;
 import com.mowtiie.ticketree.adapters.GenericAdapter;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,6 +30,7 @@ public class NotificationsActivity extends AppCompatActivity {
         binding.rvList.setLayoutManager(new LinearLayoutManager(this));
         binding.rvList.setAdapter(adapter);
         refreshEmpty();
+        Data.UNREAD = 0;
 
         binding.btnSimulate.setOnClickListener(v -> {
             String event = Data.EVENT_NAMES[0];
@@ -37,10 +38,11 @@ public class NotificationsActivity extends AppCompatActivity {
                 event = Data.TICKETS.get(Data.TICKETS.size() - 1).split("\\|")[1];
             }
             String reminder = "Reminder: " + event + " starts soon. Bring your QR ticket!";
-            Data.NOTIFICATIONS.add(0, reminder);
+            Data.addNotification(reminder);
+            Data.UNREAD = 0;
             adapter.notifyDataSetChanged();
             refreshEmpty();
-            Toast.makeText(this, reminder, Toast.LENGTH_LONG).show();
+            Snackbar.make(binding.getRoot(), reminder, Snackbar.LENGTH_LONG).show();
         });
     }
 

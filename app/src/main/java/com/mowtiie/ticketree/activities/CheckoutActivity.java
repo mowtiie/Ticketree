@@ -1,6 +1,7 @@
 package com.mowtiie.ticketree.activities;
 
 import com.mowtiie.ticketree.data.Data;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -153,12 +154,14 @@ public class CheckoutActivity extends AppCompatActivity {
                 + "\n\nTOTAL: " + Data.money(total);
         Data.RECEIPTS.add(receipt);
 
-        Data.NOTIFICATIONS.add("Booking confirmed: " + eventName + " (" + orderId + ")");
-        Data.NOTIFICATIONS.add("Payment received: " + Data.money(total) + " via " + method);
-        Data.NOTIFICATIONS.add("Tickets delivered to " + email);
+        Context app = getApplicationContext();
+        Data.notify(app, "Booking confirmed: " + eventName + " (" + orderId + ")");
+        Data.notify(app, "Payment received: " + Data.money(total) + " via " + method);
+        Data.notify(app, "Tickets delivered to " + email);
+        new Handler(Looper.getMainLooper()).postDelayed(() ->
+                Data.notify(app, "Reminder: " + eventName + " starts soon. Bring your QR ticket!"), 15000);
 
         Data.SEL_SEATS.clear();
-        Toast.makeText(this, "Payment successful", Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(this, ConfirmationActivity.class);
         intent.putExtra("receipt", receipt);

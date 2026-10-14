@@ -62,8 +62,8 @@ This is a **simulation**. Nothing is real: no backend, no database, no payment g
 - Ticket wallet is a `ListView` of purchased tickets from `Data.TICKETS` (`ArrayList<String>`). Tapping one opens the ticket screen with the static QR image.
 
 **5. Notifications**
-- Simulated with an in-app notification list (`ArrayList<String>`) and a `Toast`: booking confirmation, payment confirmation, ticket delivery, event reminder.
-- Event reminder is triggered by a "Simulate reminder" button or a short `Handler` delay. No system notification channels.
+- Simulated only: an in-app list (`Data.NOTIFICATIONS`, newest first, with a time) plus a `Toast` or `Snackbar`. Never use real Android notifications. Use `Data.notify(appContext, message)` when the screen may close (it stores and shows a Toast), and `Data.addNotification` plus a Snackbar on a screen that stays. Triggers: booking confirmation, payment confirmation, ticket delivery (all after payment), and an automatic event reminder 15 seconds after purchase.
+- The reminder also has a "Simulate reminder" button. `Data.UNREAD` drives the "(n new)" label on the Home card. No system notification channels.
 
 **6. History**
 - Order history and payment receipts are read from `Data.ORDERS` and `Data.RECEIPTS` (`ArrayList<String>`).
