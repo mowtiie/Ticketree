@@ -10,60 +10,69 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvWelcome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="22sp"
             android:textStyle="bold" />
 
-        <TextView
+        <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginVertical="12dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="Featured events"
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <LinearLayout
-            android:id="@+id/featuredContainer"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFeatured"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:layout_marginTop="8dp"
+            android:nestedScrollingEnabled="false" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnBrowse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:text="Browse all events" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnTickets"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="My tickets" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnHistory"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Order history" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnNotifications"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Notifications" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnProfile"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Profile" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnPayments"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Payment methods" />

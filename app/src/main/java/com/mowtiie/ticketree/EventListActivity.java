@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.mowtiie.ticketree.databinding.ActivityEventListBinding;
 
@@ -18,6 +19,7 @@ public class EventListActivity extends AppCompatActivity {
 
     ActivityEventListBinding binding;
     ArrayList<Integer> shown = new ArrayList<>();
+    GenericAdapter<Integer> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +72,18 @@ public class EventListActivity extends AppCompatActivity {
             }
         });
 
-        binding.lvEvents.setOnItemClickListener((parent, view, position, id) -> {
-            Intent intent = new Intent(this, EventDetailActivity.class);
-            intent.putExtra("event", shown.get(position));
-            startActivity(intent);
+        binding.rvList.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new GenericAdapter<>(shown, (row, event, position) -> {
+            row.tvTitle.setText(Data.EVENT_NAMES[event]);
+            row.tvSubtitle.setText(Data.EVENT_CATEGORIES[event] + " | " + Data.EVENT_DATES[event] + " | "
+                    + Data.EVENT_LOCATIONS[event] + " | P" + Data.EVENT_PRICES[event]);
+            row.getRoot().setOnClickListener(v -> {
+                Intent intent = new Intent(this, EventDetailActivity.class);
+                intent.putExtra("event", event);
+                startActivity(intent);
+            });
         });
+        binding.rvList.setAdapter(adapter);
 
         refresh();
     }
@@ -86,7 +95,6 @@ public class EventListActivity extends AppCompatActivity {
         String location = binding.spLocation.getSelectedItem().toString();
 
         shown.clear();
-        ArrayList<String> rows = new ArrayList<>();
         for (int i = 0; i < Data.EVENT_NAMES.length; i++) {
             if (!query.isEmpty() && !Data.EVENT_NAMES[i].toLowerCase().contains(query)
                     && !Data.EVENT_DESCRIPTIONS[i].toLowerCase().contains(query)) continue;
@@ -94,9 +102,8 @@ public class EventListActivity extends AppCompatActivity {
             if (binding.spDate.getSelectedItemPosition() > 0 && !Data.EVENT_DATES[i].startsWith(date)) continue;
             if (binding.spLocation.getSelectedItemPosition() > 0 && !Data.EVENT_LOCATIONS[i].equals(location)) continue;
             shown.add(i);
-            rows.add(Data.EVENT_NAMES[i] + "\n" + Data.EVENT_CATEGORIES[i] + " | "
-                    + Data.EVENT_DATES[i] + " | " + Data.EVENT_LOCATIONS[i] + " | P" + Data.EVENT_PRICES[i]);
         }
-        binding.lvEvents.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, rows));
+        adapter.notifyDataSetChanged();
+        binding.tvEmpty.setVisibility(shown.isEmpty() ? View.VISIBLE : View.GONE);
     }
 }

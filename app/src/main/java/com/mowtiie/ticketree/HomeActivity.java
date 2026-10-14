@@ -2,11 +2,13 @@ package com.mowtiie.ticketree;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.mowtiie.ticketree.databinding.ActivityHomeBinding;
+
+import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -18,24 +20,24 @@ public class HomeActivity extends AppCompatActivity {
 
         binding.tvWelcome.setText("Welcome, " + Data.USER_NAME);
 
-        for (int i = 0; i < 3; i++) {
-            final int index = i;
-            Button b = new Button(this);
-            b.setAllCaps(false);
-            b.setText(Data.EVENT_NAMES[i] + "\n" + Data.EVENT_DATES[i] + " - P" + Data.EVENT_PRICES[i]);
-            b.setOnClickListener(v -> {
+        ArrayList<Integer> featured = new ArrayList<>();
+        for (int i = 0; i < 3; i++) featured.add(i);
+        binding.rvFeatured.setLayoutManager(new LinearLayoutManager(this));
+        binding.rvFeatured.setAdapter(new GenericAdapter<Integer>(featured, (row, event, position) -> {
+            row.tvTitle.setText(Data.EVENT_NAMES[event]);
+            row.tvSubtitle.setText(Data.EVENT_DATES[event] + " | " + Data.EVENT_LOCATIONS[event]
+                    + " | from P" + Data.EVENT_PRICES[event]);
+            row.getRoot().setOnClickListener(v -> {
                 Intent intent = new Intent(this, EventDetailActivity.class);
-                intent.putExtra("event", index);
+                intent.putExtra("event", event);
                 startActivity(intent);
             });
-            binding.featuredContainer.addView(b);
-        }
+        }));
 
         binding.btnBrowse.setOnClickListener(v ->
                 startActivity(new Intent(this, EventListActivity.class)));
         binding.btnTickets.setOnClickListener(v ->
                 startActivity(new Intent(this, TicketWalletActivity.class)));
-
         binding.btnHistory.setOnClickListener(v ->
                 startActivity(new Intent(this, HistoryActivity.class)));
         binding.btnNotifications.setOnClickListener(v ->
