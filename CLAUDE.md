@@ -14,7 +14,7 @@ This is a **simulation**. Nothing is real: no backend, no database, no payment g
 - **No structures.** No architecture patterns (MVVM, MVP, repositories, use cases, DI), no layers, no feature packages, no interfaces or abstract classes, no custom model/POJO classes. Keep everything flat.
 - One package, one Activity per screen, one shared `Data.java` holding public static fields and arrays for all app state.
 - Represent records with parallel arrays (`String[] EVENT_NAMES`, `int[] EVENT_PRICES`, ...) and `ArrayList<String>` for lists that grow (orders, tickets, notifications).
-- Hardcode seed data. Never fetch, persist, or sync anything. State lives in memory and resets on app restart.
+- Hardcode seed data. Never fetch or sync anything. Persistence uses pure SQLite only (see Stack); everything else lives in memory.
 - Duplicate code freely if it is faster than abstracting it.
 - No tests, no logging frameworks, no error handling beyond empty-field checks.
 - Do not add libraries or touch `build.gradle` dependencies. Use only what the project template ships with.
@@ -25,6 +25,8 @@ This is a **simulation**. Nothing is real: no backend, no database, no payment g
 - Navigation: `startActivity(new Intent(...))` with `putExtra` where needed. No Fragments, no Navigation component, no Jetpack Compose.
 - Widgets: `ListView` + `ArrayAdapter<String>`, `Spinner`, `EditText`, `Button`, `AlertDialog`, `Toast`. No RecyclerView unless a layout truly needs it.
 - Views via `findViewById`.
+- UI: use Material 3 components in layouts (`MaterialTextView`, `MaterialCardView`, `MaterialDivider`, `MaterialButton`, `TextInputLayout`, etc.) instead of the plain framework widgets where a Material equivalent exists.
+- Database: pure SQLite (`SQLiteOpenHelper`, `SQLiteDatabase`, `ContentValues`, `Cursor`). No Room, no ORM, no other libraries. Keep the helper flat in a single class, with no DAO or repository layers.
 - No permissions, no internet.
 
 ## Code conventions
