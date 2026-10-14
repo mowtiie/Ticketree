@@ -52,7 +52,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:textColor="?attr/colorError" />
+                    android:background="@drawable/bg_banner"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:visibility="gone" />
 
                 <com.google.android.material.divider.MaterialDivider
                     android:layout_width="match_parent"

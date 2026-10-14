@@ -1,9 +1,13 @@
 package com.mowtiie.ticketree.activities;
 
 import android.os.Bundle;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.google.android.material.textview.MaterialTextView;
 import com.mowtiie.ticketree.data.Data;
 import com.mowtiie.ticketree.databinding.ActivityOrganizerDashboardBinding;
 
@@ -32,29 +36,25 @@ public class OrganizerDashboardActivity extends AppCompatActivity {
             sold[t] += Data.ORDER_QTYS.get(o);
             revenue[t] += Data.ORDER_TOTALS.get(o);
         }
+        int maxRevenue = 1;
         for (int t = 0; t < types; t++) {
             totalTickets += sold[t];
             totalRevenue += revenue[t];
+            maxRevenue = Math.max(maxRevenue, revenue[t]);
         }
         int orders = Data.DEMO_ORDERS + Data.ORDERS.size();
 
-        binding.tvOverview.setText("SALES OVERVIEW"
-                + "\nOrders: " + orders
-                + "\nTickets sold: " + totalTickets
-                + "\nRevenue: P" + totalRevenue
-                + "\nAverage order: P" + (totalRevenue / orders));
+        binding.tvRevenue.setText(Data.money(totalRevenue));
+        binding.tvTickets.setText(String.valueOf(totalTickets));
+        binding.tvOrders.setText(String.valueOf(orders));
+        binding.tvAverage.setText(Data.money(totalRevenue / orders));
 
-        StringBuilder byType = new StringBuilder("SALES BY TICKET TYPE");
-        StringBuilder inventory = new StringBuilder("TICKET INVENTORY");
         for (int t = 0; t < types; t++) {
-            byType.append("\n").append(Data.TICKET_TYPES[t]).append(": ").append(sold[t])
-                    .append(" sold, ").append(Data.money(revenue[t]));
-            inventory.append("\n").append(Data.TICKET_TYPES[t]).append(": ")
-                    .append(Data.TICKET_REMAINING[t]).append(" left of ")
-                    .append(Data.TICKET_REMAINING[t] + sold[t]);
+            addBar(binding.llByType, Data.TICKET_TYPES[t] + ": " + sold[t] + " sold, " + Data.money(revenue[t]),
+                    revenue[t], maxRevenue);
+            addBar(binding.llInventory, Data.TICKET_TYPES[t] + ": " + Data.TICKET_REMAINING[t] + " left of "
+                    + (Data.TICKET_REMAINING[t] + sold[t]), Data.TICKET_REMAINING[t], Data.TICKET_REMAINING[t] + sold[t]);
         }
-        binding.tvByType.setText(byType.toString());
-        binding.tvInventory.setText(inventory.toString());
 
         ArrayList<String> dates = new ArrayList<>();
         ArrayList<Integer> counts = new ArrayList<>();
@@ -72,17 +72,37 @@ public class OrganizerDashboardActivity extends AppCompatActivity {
                 counts.set(at, counts.get(at) + Data.ORDER_QTYS.get(o));
             }
         }
-        StringBuilder byDate = new StringBuilder("SALES BY DATE");
+        int maxCount = 1;
+        for (int c : counts) maxCount = Math.max(maxCount, c);
         for (int d = 0; d < dates.size(); d++) {
-            byDate.append("\n").append(dates.get(d)).append(": ").append(counts.get(d)).append(" tickets");
+            addBar(binding.llByDate, dates.get(d) + ": " + counts.get(d) + " tickets", counts.get(d), maxCount);
         }
-        if (!Data.ORDER_TIMES.isEmpty()) {
-            byDate.append("\n\nLatest orders (date and time)");
+
+        if (Data.ORDER_TIMES.isEmpty()) {
+            binding.tvLatest.setText("No new orders yet. Buy a ticket as a customer to see it here.");
+        } else {
+            StringBuilder latest = new StringBuilder("Latest orders");
             for (int o = Data.ORDER_TIMES.size() - 1; o >= 0 && o >= Data.ORDER_TIMES.size() - 5; o--) {
-                byDate.append("\n").append(Data.ORDER_TIMES.get(o)).append(" - ")
+                latest.append("\n").append(Data.ORDER_TIMES.get(o)).append(" - ")
                         .append(Data.ORDER_QTYS.get(o)).append(" ticket(s)");
             }
+            binding.tvLatest.setText(latest.toString());
         }
-        binding.tvByDate.setText(byDate.toString());
+    }
+
+    void addBar(LinearLayout container, String label, int value, int max) {
+        MaterialTextView text = new MaterialTextView(this);
+        text.setText(label);
+        LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        textParams.topMargin = (int) (12 * getResources().getDisplayMetrics().density);
+        container.addView(text, textParams);
+
+        LinearProgressIndicator bar = new LinearProgressIndicator(this);
+        bar.setMax(max);
+        bar.setProgress(value);
+        bar.setTrackCornerRadius((int) (4 * getResources().getDisplayMetrics().density));
+        container.addView(bar, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 }

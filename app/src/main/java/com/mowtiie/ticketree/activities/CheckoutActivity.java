@@ -68,7 +68,7 @@ public class CheckoutActivity extends AppCompatActivity {
         timer = new CountDownTimer(left, 1000) {
             @Override
             public void onTick(long ms) {
-                binding.tvTimer.setText("Seats held for " + (ms / 1000) + "s");
+                Data.styleTimer(binding.tvTimer, ms);
             }
 
             @Override

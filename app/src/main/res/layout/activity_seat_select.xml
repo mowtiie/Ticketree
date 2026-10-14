@@ -40,7 +40,41 @@
             android:id="@+id/tvTimer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="?attr/colorError" />
+            android:background="@drawable/bg_banner"
+            android:gravity="center"
+            android:padding="12dp"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            android:visibility="gone" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipFree"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:text="Free" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipSelected"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:text="Selected" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipTaken"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:text="Taken" />
+        </com.google.android.material.chip.ChipGroup>
 
         <Spinner
             android:id="@+id/spBox"

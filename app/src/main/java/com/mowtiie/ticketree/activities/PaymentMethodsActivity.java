@@ -54,6 +54,8 @@ public class PaymentMethodsActivity extends AppCompatActivity {
     }
 
     void refreshEmpty() {
-        binding.tvEmpty.setVisibility(Data.PAYMENT_METHODS.isEmpty() ? View.VISIBLE : View.GONE);
+        binding.empty.tvEmoji.setText("💳");
+        binding.empty.tvMessage.setText("No payment methods saved");
+        binding.empty.getRoot().setVisibility(Data.PAYMENT_METHODS.isEmpty() ? View.VISIBLE : View.GONE);
     }
 }

@@ -45,6 +45,8 @@ public class NotificationsActivity extends AppCompatActivity {
     }
 
     void refreshEmpty() {
-        binding.tvEmpty.setVisibility(Data.NOTIFICATIONS.isEmpty() ? View.VISIBLE : View.GONE);
+        binding.empty.tvEmoji.setText("🔔");
+        binding.empty.tvMessage.setText("No notifications yet");
+        binding.empty.getRoot().setVisibility(Data.NOTIFICATIONS.isEmpty() ? View.VISIBLE : View.GONE);
     }
 }

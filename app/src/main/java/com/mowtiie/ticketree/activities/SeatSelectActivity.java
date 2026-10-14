@@ -37,6 +37,14 @@ public class SeatSelectActivity extends AppCompatActivity {
         binding.toolbar.setNavigationOnClickListener(v -> finish());
 
         Data.SEL_BOX = 0;
+
+        binding.chipFree.setChipBackgroundColor(ColorStateList.valueOf(colorOf(0, false)));
+        binding.chipFree.setTextColor(colorOf(0, true));
+        binding.chipSelected.setChipBackgroundColor(ColorStateList.valueOf(colorOf(1, false)));
+        binding.chipSelected.setTextColor(colorOf(1, true));
+        binding.chipTaken.setChipBackgroundColor(ColorStateList.valueOf(colorOf(2, false)));
+        binding.chipTaken.setTextColor(colorOf(2, true));
+
         binding.tvInfo.setText("Pick " + Data.SEL_QTY + " seat(s) in one box. Seats are held for "
                 + Data.HOLD_SECONDS + " seconds once you pick one.");
 
@@ -140,7 +148,7 @@ public class SeatSelectActivity extends AppCompatActivity {
         timer = new CountDownTimer(Data.HOLD_SECONDS * 1000L, 1000) {
             @Override
             public void onTick(long ms) {
-                binding.tvTimer.setText("Seats held for " + (ms / 1000) + "s");
+                Data.styleTimer(binding.tvTimer, ms);
             }
 
             @Override
@@ -160,7 +168,7 @@ public class SeatSelectActivity extends AppCompatActivity {
     void stopTimer() {
         if (timer != null) timer.cancel();
         timer = null;
-        binding.tvTimer.setText("");
+        binding.tvTimer.setVisibility(View.GONE);
     }
 
     @Override

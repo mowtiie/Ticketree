@@ -3,6 +3,9 @@ package com.mowtiie.ticketree.data;
 import java.util.ArrayList;
 import android.content.res.ColorStateList;
 import android.view.View;
+import android.widget.TextView;
+
+import com.google.android.material.color.MaterialColors;
 
 import com.mowtiie.ticketree.databinding.ItemRowBinding;
 
@@ -176,6 +179,25 @@ public class Data {
 
     public static int categoryColor(String category) {
         return CATEGORY_COLORS[Math.abs(category.hashCode()) % CATEGORY_COLORS.length];
+    }
+
+    public static int eventIndex(String name) {
+        for (int i = 0; i < EVENT_NAMES.length; i++) {
+            if (name.equals(EVENT_NAMES[i])) return i;
+        }
+        return 0;
+    }
+
+    public static void styleTimer(TextView tv, long msLeft) {
+        boolean urgent = msLeft <= 15000;
+        tv.setVisibility(View.VISIBLE);
+        tv.setText("Seats held for " + (msLeft / 1000) + "s");
+        tv.setBackgroundTintList(ColorStateList.valueOf(MaterialColors.getColor(tv, urgent
+                ? com.google.android.material.R.attr.colorErrorContainer
+                : com.google.android.material.R.attr.colorSecondaryContainer)));
+        tv.setTextColor(MaterialColors.getColor(tv, urgent
+                ? com.google.android.material.R.attr.colorOnErrorContainer
+                : com.google.android.material.R.attr.colorOnSecondaryContainer));
     }
 
     public static void bindEvent(ItemRowBinding row, int e) {

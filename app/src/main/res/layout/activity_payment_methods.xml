@@ -43,11 +43,11 @@
         android:layout_height="wrap_content"
         android:text="Add" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tvEmpty"
+    <include
+        android:id="@+id/empty"
+        layout="@layout/view_empty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No payment methods saved."
         android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView

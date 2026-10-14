@@ -20,7 +20,13 @@ public class HistoryActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         binding.toolbar.setNavigationOnClickListener(v -> finish());
 
-        if (Data.ORDERS.isEmpty()) binding.tvEmpty.setVisibility(View.VISIBLE);
+        binding.empty.tvEmoji.setText("📜");
+        binding.empty.tvMessage.setText("No orders yet");
+        binding.empty.btnEmpty.setVisibility(View.VISIBLE);
+        binding.empty.btnEmpty.setText("Browse events");
+        binding.empty.btnEmpty.setOnClickListener(v ->
+                startActivity(new android.content.Intent(this, EventListActivity.class)));
+        binding.empty.getRoot().setVisibility(Data.ORDERS.isEmpty() ? View.VISIBLE : View.GONE);
 
         binding.rvList.setLayoutManager(new LinearLayoutManager(this));
         binding.rvList.setAdapter(new GenericAdapter<String>(Data.ORDERS, (row, order, position) -> {
