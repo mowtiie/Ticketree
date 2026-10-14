@@ -223,7 +223,9 @@ public class Data {
         Toast.makeText(app, message, Toast.LENGTH_SHORT).show();
     }
     public static final ArrayList<String> RECEIPTS = new ArrayList<>();
-    public static final ArrayList<String> PAYMENT_METHODS = new ArrayList<>();
+    public static final ArrayList<String> PAYMENT_METHODS = new ArrayList<>(Arrays.asList(
+            "GCash 0917 *** 4567", "Maya 0918 *** 8901", "Visa ****1234"));
+    public static int DEFAULT_PAYMENT = 0;
 
     static final String[] CATEGORY_EMOJI = {
             "🎤", "🤖", "🗣", "💼",
@@ -311,11 +313,11 @@ public class Data {
                 + "\n\nBilled to: Demo Customer"
                 + "\nEmail: " + DEMO_CUSTOMER_EMAIL
                 + "\nAddress: 123 Rizal Street, Manila"
-                + "\nPaid with: GCash"
+                + "\nPaid with: GCash 0917 *** 4567"
                 + "\n\nTOTAL: " + money(total));
 
         addNotification("Booking confirmed: " + EVENT_NAMES[event] + " (" + orderId + ")");
-        addNotification("Payment received: " + money(total) + " via GCash");
+        addNotification("Payment received: " + money(total) + " via GCash 0917 *** 4567");
         addNotification("Tickets delivered to " + DEMO_CUSTOMER_EMAIL);
         addNotification("Reminder: " + EVENT_NAMES[event] + " starts soon. Bring your QR ticket!");
     }

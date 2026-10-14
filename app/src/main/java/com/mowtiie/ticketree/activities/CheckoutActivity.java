@@ -53,7 +53,7 @@ public class CheckoutActivity extends AppCompatActivity {
             Data.PAYMENT_METHODS.add("Visa ****1234");
         }
         binding.ddPayment.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Data.PAYMENT_METHODS));
-        binding.ddPayment.setText(Data.PAYMENT_METHODS.get(0), false);
+        binding.ddPayment.setText(Data.PAYMENT_METHODS.get(Data.DEFAULT_PAYMENT), false);
 
         Collections.sort(Data.SEL_SEATS);
         StringBuilder sb = new StringBuilder();
