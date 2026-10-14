@@ -54,6 +54,8 @@ public class OrganizerHomeActivity extends AppCompatActivity {
                 startActivity(new Intent(this, EventFormActivity.class));
             } else if (id == R.id.action_dashboard) {
                 startActivity(new Intent(this, OrganizerDashboardActivity.class));
+            } else if (id == R.id.action_venues) {
+                startActivity(new Intent(this, VenueManagementActivity.class));
             } else if (id == R.id.action_pricing) {
                 startActivity(new Intent(this, TicketPricingActivity.class));
             } else if (id == R.id.action_profile) {

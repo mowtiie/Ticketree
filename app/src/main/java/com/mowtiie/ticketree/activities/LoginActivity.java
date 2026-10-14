@@ -48,11 +48,13 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             SQLiteDatabase db = new DbHelper(this).getWritableDatabase();
-            Cursor c = db.rawQuery("SELECT name, organizer FROM users WHERE email=? AND password=?",
+            Cursor c = db.rawQuery("SELECT name, organizer, phone, about FROM users WHERE email=? AND password=?",
                     new String[]{email, password});
             if (c.moveToFirst()) {
                 Data.USER_NAME = c.getString(0);
                 Data.USER_IS_ORGANIZER = c.getInt(1) == 1;
+                Data.USER_PHONE = c.getString(2);
+                Data.USER_ABOUT = c.getString(3);
             } else if (DatabaseUtils.queryNumEntries(db, "users") == 0) {
                 ContentValues cv = new ContentValues();
                 cv.put("name", email);
@@ -62,6 +64,8 @@ public class LoginActivity extends AppCompatActivity {
                 db.insert("users", null, cv);
                 Data.USER_NAME = email;
                 Data.USER_IS_ORGANIZER = false;
+                Data.USER_PHONE = "";
+                Data.USER_ABOUT = "";
             } else {
                 c.close();
                 binding.tilPassword.setError("Wrong email or password");

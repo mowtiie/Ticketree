@@ -32,8 +32,15 @@ public class EventFormActivity extends AppCompatActivity {
         binding.tilSpeakers.setHelperText("Separate names with commas");
 
         int event = getIntent().getIntExtra("event", -1);
-        binding.ddVenue.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Data.VENUE_TYPES));
-        binding.ddVenue.setText(Data.VENUE_TYPES[0], false);
+        binding.ddVenue.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Data.VENUES));
+        binding.ddVenue.setText(Data.VENUES.get(0), false);
+        binding.ddImage.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Data.IMAGE_NAMES));
+        binding.ddImage.setText(Data.IMAGE_NAMES[0], false);
+        binding.ivPreview.setImageResource(Data.IMAGE_RES[0]);
+        binding.ddImage.setOnItemClickListener((parent, view, position, id) ->
+                binding.ivPreview.setImageResource(Data.IMAGE_RES[position]));
+        binding.etTerms.setText(Data.TERMS);
+        binding.tilTerms.setHelperText("What attendees agree to when they buy a ticket");
 
         if (event >= 0) {
             binding.toolbar.setTitle("Edit event");
@@ -46,9 +53,10 @@ public class EventFormActivity extends AppCompatActivity {
             binding.etDescription.setText(Data.EVENT_DESCRIPTIONS[event]);
             binding.etSpeakers.setText(Data.EVENT_SPEAKERS[event]);
             binding.swPublished.setChecked(Data.EVENT_PUBLISHED[event]);
-            for (int v = 0; v < Data.VENUE_TYPES.length; v++) {
-                if (Data.VENUE_TYPES[v].equals(Data.EVENT_VENUES[event])) binding.ddVenue.setText(Data.VENUE_TYPES[v], false);
-            }
+            binding.etTerms.setText(Data.EVENT_TERMS[event]);
+            binding.ddImage.setText(Data.IMAGE_NAMES[Data.EVENT_IMAGES[event]], false);
+            binding.ivPreview.setImageResource(Data.IMAGE_RES[Data.EVENT_IMAGES[event]]);
+            binding.ddVenue.setText(Data.EVENT_VENUES[event], false);
         } else {
             binding.toolbar.setTitle("New event");
         }
@@ -62,6 +70,8 @@ public class EventFormActivity extends AppCompatActivity {
             String age = binding.etAge.getText().toString().trim();
             String description = binding.etDescription.getText().toString().trim();
             String speakers = binding.etSpeakers.getText().toString().trim();
+            String terms = binding.etTerms.getText().toString().trim();
+            String imageName = binding.ddImage.getText().toString();
 
             binding.tilName.setError(null);
             binding.tilCategory.setError(null);
@@ -71,6 +81,7 @@ public class EventFormActivity extends AppCompatActivity {
             binding.tilAge.setError(null);
             binding.tilDescription.setError(null);
             binding.tilSpeakers.setError(null);
+            binding.tilTerms.setError(null);
             if (name.isEmpty()) {
                 binding.tilName.setError("Enter the event name");
                 return;
@@ -103,11 +114,17 @@ public class EventFormActivity extends AppCompatActivity {
                 binding.tilSpeakers.setError("Enter at least one speaker");
                 return;
             }
+            if (terms.length() < 10) {
+                binding.tilTerms.setError("Enter the terms and conditions");
+                return;
+            }
             int i = event;
             if (i < 0) {
                 Data.addEvent();
                 i = Data.EVENT_NAMES.length - 1;
                 Data.EVENT_ORGANIZERS[i] = Data.USER_NAME;
+                Data.EVENT_ORG_CONTACTS[i] = Data.USER_PHONE.isEmpty() ? "Not provided" : Data.USER_PHONE;
+                Data.EVENT_ORG_ABOUT[i] = Data.USER_ABOUT.isEmpty() ? "No description yet." : Data.USER_ABOUT;
             }
             Data.EVENT_NAMES[i] = name;
             Data.EVENT_CATEGORIES[i] = category;
@@ -118,6 +135,10 @@ public class EventFormActivity extends AppCompatActivity {
             Data.EVENT_AGE_RESTRICTIONS[i] = age;
             Data.EVENT_DESCRIPTIONS[i] = description;
             Data.EVENT_SPEAKERS[i] = speakers;
+            Data.EVENT_TERMS[i] = terms;
+            for (int k = 0; k < Data.IMAGE_NAMES.length; k++) {
+                if (Data.IMAGE_NAMES[k].equals(imageName)) Data.EVENT_IMAGES[i] = k;
+            }
             Data.EVENT_PUBLISHED[i] = binding.swPublished.isChecked();
             Toast.makeText(this, "Event saved", Toast.LENGTH_SHORT).show();
             finish();

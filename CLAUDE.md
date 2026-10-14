@@ -8,6 +8,8 @@ Core flow: **Discover Event → Select Ticket → Pick Seats → Checkout → Pa
 
 This is a **simulation**. There is no backend, no payment gateway, no email/SMS, no real push notifications and no QR generation. Everything must look and behave correctly on screen during a demo. The only real storage is a small local SQLite table for user accounts.
 
+Source of requirements: the Code Fest brief (modules 1 to 10: account, discovery, checkout, digital tickets, notifications, history, event details, ticket and seat management, organizer management, organizer dashboard). Password reset is only listed as "Password reset", so a simulated flow is enough. QR and seat map are images only, with no generation or dynamic mapping.
+
 Status: all five build-order steps plus UI polish are implemented. The app builds with `./gradlew assembleDebug` and passes lint with no errors. It has **not** been run end to end on an emulator yet.
 
 ## Prime directive: build the fastest way possible
@@ -56,7 +58,7 @@ Navigation is `startActivity(new Intent(...))` with `putExtra`. After payment, `
 
 - Use Material 3 components, not plain framework widgets: `MaterialToolbar`, `MaterialTextView`, `MaterialButton`, `MaterialCardView`, `MaterialDivider`, `TextInputLayout` with `TextInputEditText`, `MaterialSwitch`, `TabLayout`, `Chip`/`ChipGroup`, `CircularProgressIndicator`, `LinearProgressIndicator`.
 - Every screen except Login has a `MaterialToolbar` with a title. Show the back arrow on every screen except the root screens (Home, OrganizerHome, Confirmation).
-- Toolbar actions use menu resources in `res/menu/` via `app:menu` and `binding.toolbar.setOnMenuItemClickListener` (no `setSupportActionBar`). Home has a bell action plus an overflow with Profile and Log out. OrganizerHome has an add action plus an overflow with Dashboard, Ticket pricing, Profile and Log out. The event list has "Clear filters" and Notifications has "Simulate reminder" in the overflow.
+- Toolbar actions use menu resources in `res/menu/` via `app:menu` and `binding.toolbar.setOnMenuItemClickListener` (no `setSupportActionBar`). Home has a bell action plus an overflow with Profile and Log out. OrganizerHome has an add action plus an overflow with Dashboard, Ticket pricing, Venue management, Profile and Log out. The event list has "Clear filters" and Notifications has "Simulate reminder" in the overflow.
 - Empty lists use the shared `view_empty.xml` through `<include android:id="@+id/empty">` (emoji, message, optional button). Show or hide `binding.empty.getRoot()`.
 - Events everywhere are shown with `Data.bindEvent(row, event)`: category emoji on a pastel block, title, date, location and venue, and a "From ₱X" chip.
 - Money is always formatted with `Data.money(int)`. Never write a raw "P" prefix.
@@ -118,11 +120,12 @@ Navigation is `startActivity(new Intent(...))` with `putExtra`. After payment, `
 - Triggers: booking confirmation, payment confirmation and ticket delivery (all right after payment), and an automatic event reminder 15 seconds after purchase. The Notifications toolbar overflow has "Simulate reminder". `Data.UNREAD` drives the "(n new)" label on the Home card.
 
 **6. History**
-- Order history reads `Data.ORDERS`. Tapping an order shows the matching `Data.RECEIPTS` entry in a dialog.
+- History has two tabs: Orders (`Data.ORDERS`) and Payment receipts (`Data.RECEIPTS`). Tapping either shows the receipt text in a dialog.
 
 **7. Event details**
 - Shows type, description, date and time, venue (Onsite, Hotel, Training Camp), organizer, speaker lineup, ticket types with prices and availability, terms and conditions, and age restriction.
-- The event image is a pastel block with the category emoji. No uploads.
+- The event image is one of six bundled placeholder pictures (`event_*.png`, chosen with the "Event image" dropdown in the event form, stored in `EVENT_IMAGES`). No uploads. Lists still show the category emoji block.
+- Organizer information (name, contact number, about) comes from the organizer profile (SQLite `users` columns `phone` and `about`) and is copied onto the event when it is created. Terms and conditions are per event (`EVENT_TERMS`, editable in the form).
 
 **8. Ticket and seat management**
 - Ticket types: General Admission, VIP, Early Bird, Group. Each has a price and remaining count in arrays.
@@ -130,7 +133,7 @@ Navigation is `startActivity(new Intent(...))` with `putExtra`. After payment, `
 - Availability decreases after every successful order.
 
 **9. Organizer management**
-- Organizer home lists all events with Publish/Unpublish; New event, Dashboard, Ticket pricing, Profile and Log out are toolbar actions. EventForm creates or edits an event (all fields plus speakers and a published switch). Ticket pricing edits `TICKET_PRICES` and adds stock.
+- Venue management is its own screen (`Data.VENUES`, add and remove; a venue used by an event cannot be removed). The event form venue dropdown reads from it. Organizer home lists all events with Publish/Unpublish; New event, Dashboard, Ticket pricing, Profile and Log out are toolbar actions. EventForm creates or edits an event (all fields plus speakers and a published switch). Ticket pricing edits `TICKET_PRICES` and adds stock.
 - Every organizer can edit every event. That is a deliberate demo shortcut.
 
 **10. Organizer dashboard**
@@ -138,7 +141,7 @@ Navigation is `startActivity(new Intent(...))` with `putExtra`. After payment, `
 
 ## Screens (one Activity each)
 
-Login, SignUp, ResetPassword, Home, EventList, EventDetail, TicketSelect, SeatSelect, Checkout, Confirmation, TicketWallet, TicketView, History, Notifications, Profile, PaymentMethods, OrganizerHome, EventForm, TicketPricing, OrganizerDashboard.
+Login, SignUp, ResetPassword, Home, EventList, EventDetail, TicketSelect, SeatSelect, Checkout, Confirmation, TicketWallet, TicketView, History, Notifications, Profile, PaymentMethods, OrganizerHome, EventForm, TicketPricing, VenueManagement, OrganizerDashboard.
 
 ## Build order (all done)
 

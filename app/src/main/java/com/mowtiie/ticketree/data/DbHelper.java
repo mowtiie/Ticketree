@@ -7,13 +7,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DbHelper extends SQLiteOpenHelper {
 
     public DbHelper(Context context) {
-        super(context, "ticketree.db", null, 1);
+        super(context, "ticketree.db", null, 2);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, "
-                + "email TEXT UNIQUE, password TEXT, organizer INTEGER)");
+                + "email TEXT UNIQUE, password TEXT, organizer INTEGER, phone TEXT DEFAULT '', about TEXT DEFAULT '')");
     }
 
     @Override

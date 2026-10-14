@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,6 +36,15 @@ public class ProfileActivity extends AppCompatActivity {
         binding.tilPassword.setHelperText("At least 6 characters");
         binding.tilPassword.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
 
+        if (Data.USER_IS_ORGANIZER) {
+            binding.organizerFields.setVisibility(View.VISIBLE);
+            binding.etPhone.setText(Data.USER_PHONE);
+            binding.etAbout.setText(Data.USER_ABOUT);
+            binding.tilName.setHelperText("Organizer name shown on your events");
+            binding.tilPhone.setHelperText("Attendees can reach you here");
+            binding.tilAbout.setHelperText("A short description shown on your event pages");
+        }
+
         binding.btnSave.setOnClickListener(v -> {
             String name = binding.etName.getText().toString().trim();
             String email = binding.etEmail.getText().toString().trim();
@@ -54,7 +64,16 @@ public class ProfileActivity extends AppCompatActivity {
                 binding.tilPassword.setError("Use at least 6 characters");
                 return;
             }
+            String phone = binding.etPhone.getText().toString().trim();
+            String about = binding.etAbout.getText().toString().trim();
+            binding.tilPhone.setError(null);
+            if (Data.USER_IS_ORGANIZER && phone.length() < 7) {
+                binding.tilPhone.setError("Enter a contact number");
+                return;
+            }
             ContentValues cv = new ContentValues();
+            cv.put("phone", phone);
+            cv.put("about", about);
             cv.put("name", name);
             cv.put("email", email);
             cv.put("password", password);
@@ -68,6 +87,8 @@ public class ProfileActivity extends AppCompatActivity {
             Data.USER_NAME = name;
             Data.USER_EMAIL = email;
             Data.USER_PASSWORD = password;
+            Data.USER_PHONE = phone;
+            Data.USER_ABOUT = about;
             Snackbar.make(binding.getRoot(), "Profile updated", Snackbar.LENGTH_SHORT).show();
         });
 

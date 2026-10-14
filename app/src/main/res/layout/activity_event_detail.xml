@@ -23,29 +23,32 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+            <FrameLayout
                 android:id="@+id/header"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_height="220dp">
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvEmoji"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#212121"
-                    android:textSize="56sp" />
+                <ImageView
+                    android:id="@+id/ivImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="Event image"
+                    android:scaleType="centerCrop" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#66000000" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tvImage"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_gravity="bottom"
+                    android:padding="16dp"
                     android:textAppearance="?attr/textAppearanceHeadlineSmall"
-                    android:textColor="#212121" />
-            </LinearLayout>
+                    android:textColor="@android:color/white" />
+            </FrameLayout>
 
             <com.google.android.material.chip.ChipGroup
                 android:layout_width="match_parent"

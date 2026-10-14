@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.google.android.material.color.MaterialColors;
 
+import com.mowtiie.ticketree.R;
 import com.mowtiie.ticketree.databinding.ItemRowBinding;
 
 import java.util.Arrays;
@@ -119,6 +120,32 @@ public class Data {
     public static final int[] TICKET_REMAINING = {120, 30, 50, 20};
 
     public static final String[] BOX_NAMES = {"Lower Box", "Middle Box", "Upper Box"};
+    public static String[] EVENT_ORG_CONTACTS = {
+            "0917 111 0001", "0917 111 0002", "0917 111 0003", "0917 111 0004",
+            "0917 111 0005", "0917 111 0006", "0917 111 0007", "0917 111 0008"
+    };
+    public static String[] EVENT_ORG_ABOUT = {
+            "Leadership community training professionals across the Philippines.",
+            "A tech academy running hands-on AI and coding programs.",
+            "Local Toastmasters chapter that meets every month in Manila.",
+            "Network of founders, mentors and early-stage investors.",
+            "Community that supports women building careers in tech.",
+            "Security training team for students and small businesses.",
+            "Coaches helping people speak with confidence.",
+            "Student-led guild promoting innovation in schools."
+    };
+    public static String[] EVENT_TERMS = {
+            TERMS, TERMS, TERMS, TERMS, TERMS, TERMS, TERMS, TERMS
+    };
+    public static int[] EVENT_IMAGES = {0, 3, 1, 5, 4, 3, 2, 5};
+    public static final String[] IMAGE_NAMES = {"Stage", "Classroom", "Conference", "Workshop", "Networking", "Expo"};
+    public static final int[] IMAGE_RES = {
+            R.drawable.event_stage, R.drawable.event_classroom, R.drawable.event_conference,
+            R.drawable.event_workshop, R.drawable.event_networking, R.drawable.event_expo
+    };
+    public static String USER_PHONE = "";
+    public static String USER_ABOUT = "";
+
     public static boolean[] EVENT_PUBLISHED = {true, true, true, true, true, true, true, true};
 
     public static void addEvent() {
@@ -133,12 +160,16 @@ public class Data {
         EVENT_ORGANIZERS = Arrays.copyOf(EVENT_ORGANIZERS, n);
         EVENT_AGE_RESTRICTIONS = Arrays.copyOf(EVENT_AGE_RESTRICTIONS, n);
         EVENT_SPEAKERS = Arrays.copyOf(EVENT_SPEAKERS, n);
+        EVENT_ORG_CONTACTS = Arrays.copyOf(EVENT_ORG_CONTACTS, n);
+        EVENT_ORG_ABOUT = Arrays.copyOf(EVENT_ORG_ABOUT, n);
+        EVENT_TERMS = Arrays.copyOf(EVENT_TERMS, n);
+        EVENT_IMAGES = Arrays.copyOf(EVENT_IMAGES, n);
         EVENT_PUBLISHED = Arrays.copyOf(EVENT_PUBLISHED, n);
         SEAT_TAKEN = Arrays.copyOf(SEAT_TAKEN, n);
         SEAT_TAKEN[n - 1] = new boolean[3][20];
     }
 
-    public static final String[] VENUE_TYPES = {"Onsite", "Hotel", "Training Camp"};
+    public static final ArrayList<String> VENUES = new ArrayList<>(Arrays.asList("Onsite", "Hotel", "Training Camp"));
 
     public static final ArrayList<Integer> ORDER_TYPES = new ArrayList<>();
     public static final ArrayList<Integer> ORDER_QTYS = new ArrayList<>();

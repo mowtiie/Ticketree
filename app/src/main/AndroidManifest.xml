@@ -77,6 +77,9 @@
         <activity
             android:name=".activities.OrganizerDashboardActivity"
             android:exported="false" />
+        <activity
+            android:name=".activities.VenueManagementActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

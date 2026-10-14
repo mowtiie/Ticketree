@@ -21,8 +21,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
         int i = getIntent().getIntExtra("event", 0);
 
-        binding.header.setBackgroundColor(Data.categoryColor(Data.EVENT_CATEGORIES[i]));
-        binding.tvEmoji.setText(Data.categoryEmoji(Data.EVENT_CATEGORIES[i]));
+        binding.ivImage.setImageResource(Data.IMAGE_RES[Data.EVENT_IMAGES[i]]);
         binding.tvImage.setText(Data.EVENT_NAMES[i]);
         binding.chipCategory.setText(Data.EVENT_CATEGORIES[i]);
         binding.chipVenue.setText(Data.EVENT_VENUES[i]);
@@ -32,6 +31,8 @@ public class EventDetailActivity extends AppCompatActivity {
         sb.append("Date and time: ").append(Data.EVENT_DATES[i]).append("\n");
         sb.append("Location: ").append(Data.EVENT_LOCATIONS[i]).append("\n");
         sb.append("Organizer: ").append(Data.EVENT_ORGANIZERS[i]).append("\n");
+        sb.append("Contact: ").append(Data.EVENT_ORG_CONTACTS[i]).append("\n");
+        sb.append("About the organizer: ").append(Data.EVENT_ORG_ABOUT[i]).append("\n");
         sb.append("Starting price: ").append(Data.money(Data.EVENT_PRICES[i])).append("\n\n");
         sb.append(Data.EVENT_DESCRIPTIONS[i]).append("\n\n");
         sb.append("Speaker lineup\n").append(Data.EVENT_SPEAKERS[i]).append("\n\n");
@@ -40,7 +41,7 @@ public class EventDetailActivity extends AppCompatActivity {
             sb.append(Data.TICKET_TYPES[t]).append(" - ").append(Data.money(Data.TICKET_PRICES[t]))
                     .append(" (").append(Data.TICKET_REMAINING[t]).append(" left)\n");
         }
-        sb.append("\nTerms and conditions\n").append(Data.TERMS);
+        sb.append("\nTerms and conditions\n").append(Data.EVENT_TERMS[i]);
         binding.tvDetails.setText(sb.toString());
 
         binding.btnSelectTickets.setOnClickListener(v -> {
