@@ -10,6 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        app:navigationContentDescription="Back"
         app:navigationIcon="@drawable/ic_back"
         app:title="Dashboard" />
 
@@ -155,6 +156,14 @@
                         android:layout_height="wrap_content"
                         android:text="Sales by ticket type"
                         android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipBest"
+                        style="@style/Widget.Material3.Chip.Assist"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:clickable="false" />
 
                     <LinearLayout
                         android:id="@+id/llByType"

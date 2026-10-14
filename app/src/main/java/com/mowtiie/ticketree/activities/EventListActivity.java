@@ -95,6 +95,11 @@ public class EventListActivity extends AppCompatActivity {
         binding.rvList.setAdapter(adapter);
 
         clearFilters();
+        String preset = getIntent().getStringExtra("category");
+        if (preset != null) {
+            binding.ddCategory.setText(preset, false);
+            refresh();
+        }
     }
 
     void clearFilters() {

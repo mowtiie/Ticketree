@@ -1,14 +1,17 @@
 package com.mowtiie.ticketree.activities;
 
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.color.MaterialColors;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textview.MaterialTextView;
+import com.mowtiie.ticketree.R;
 import com.mowtiie.ticketree.data.Data;
 import com.mowtiie.ticketree.databinding.ActivityOrganizerDashboardBinding;
 
@@ -38,6 +41,7 @@ public class OrganizerDashboardActivity extends AppCompatActivity {
             sold[t] += Data.ORDER_QTYS.get(o);
             revenue[t] += Data.ORDER_TOTALS.get(o);
         }
+        int best = 0;
         int maxRevenue = 1;
         for (int t = 0; t < types; t++) {
             totalTickets += sold[t];
@@ -53,11 +57,13 @@ public class OrganizerDashboardActivity extends AppCompatActivity {
 
         for (int t = 0; t < types; t++) {
             addBar(binding.llByType, Data.TICKET_TYPES[t] + ": " + sold[t] + " sold, " + Data.money(revenue[t]),
-                    revenue[t], maxRevenue);
+                    revenue[t], maxRevenue, typeColor(t));
             addBar(binding.llInventory, Data.TICKET_TYPES[t] + ": " + Data.TICKET_REMAINING[t] + " left of "
-                    + (Data.TICKET_REMAINING[t] + sold[t]), Data.TICKET_REMAINING[t], Data.TICKET_REMAINING[t] + sold[t]);
+                    + (Data.TICKET_REMAINING[t] + sold[t]), Data.TICKET_REMAINING[t], Data.TICKET_REMAINING[t] + sold[t], typeColor(t));
+            if (sold[t] > sold[best]) best = t;
         }
 
+        binding.chipBest.setText("Best seller: " + Data.TICKET_TYPES[best] + " (" + sold[best] + " sold)");
         ArrayList<String> dates = new ArrayList<>();
         ArrayList<Integer> counts = new ArrayList<>();
         for (int d = 0; d < Data.DEMO_SALE_DATES.length; d++) {
@@ -77,7 +83,7 @@ public class OrganizerDashboardActivity extends AppCompatActivity {
         int maxCount = 1;
         for (int c : counts) maxCount = Math.max(maxCount, c);
         for (int d = 0; d < dates.size(); d++) {
-            addBar(binding.llByDate, dates.get(d) + ": " + counts.get(d) + " tickets", counts.get(d), maxCount);
+            addBar(binding.llByDate, dates.get(d) + ": " + counts.get(d) + " tickets", counts.get(d), maxCount, typeColor(3));
         }
 
         if (Data.ORDER_TIMES.isEmpty()) {
@@ -92,7 +98,15 @@ public class OrganizerDashboardActivity extends AppCompatActivity {
         }
     }
 
-    void addBar(LinearLayout container, String label, int value, int max) {
+    int typeColor(int t) {
+        View root = getWindow().getDecorView();
+        if (t == 0) return MaterialColors.getColor(root, androidx.appcompat.R.attr.colorPrimary);
+        if (t == 1) return MaterialColors.getColor(root, com.google.android.material.R.attr.colorTertiary);
+        if (t == 2) return MaterialColors.getColor(root, com.google.android.material.R.attr.colorSecondary);
+        return getColor(R.color.success);
+    }
+
+    void addBar(LinearLayout container, String label, int value, int max, int color) {
         MaterialTextView text = new MaterialTextView(this);
         text.setText(label);
         LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
@@ -103,6 +117,7 @@ public class OrganizerDashboardActivity extends AppCompatActivity {
         LinearProgressIndicator bar = new LinearProgressIndicator(this);
         bar.setMax(max);
         bar.setProgress(value);
+        bar.setIndicatorColor(color);
         bar.setTrackCornerRadius((int) (4 * getResources().getDisplayMetrics().density));
         container.addView(bar, new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));

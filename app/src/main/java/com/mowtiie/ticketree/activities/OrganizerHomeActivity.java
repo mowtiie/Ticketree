@@ -1,12 +1,14 @@
 package com.mowtiie.ticketree.activities;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.material.color.MaterialColors;
 import com.mowtiie.ticketree.R;
 import com.mowtiie.ticketree.adapters.GenericAdapter;
 import com.mowtiie.ticketree.data.Data;
@@ -31,8 +33,15 @@ public class OrganizerHomeActivity extends AppCompatActivity {
 
         adapter = new GenericAdapter<>(events, (row, event, position) -> {
             Data.bindEvent(row, event);
-            row.tvSubtitle.setText(Data.EVENT_DATES[event] + "\n"
-                    + (Data.EVENT_PUBLISHED[event] ? "Published" : "Unpublished"));
+            row.tvSubtitle.setText(Data.EVENT_DATES[event] + "\nFrom " + Data.money(Data.EVENT_PRICES[event]));
+            boolean published = Data.EVENT_PUBLISHED[event];
+            row.chipBadge.setText(published ? "Published" : "Unpublished");
+            row.chipBadge.setChipBackgroundColor(ColorStateList.valueOf(published
+                    ? getColor(R.color.success)
+                    : MaterialColors.getColor(row.getRoot(), com.google.android.material.R.attr.colorSurfaceVariant)));
+            row.chipBadge.setTextColor(published
+                    ? MaterialColors.getColor(row.getRoot(), com.google.android.material.R.attr.colorSurface)
+                    : MaterialColors.getColor(row.getRoot(), com.google.android.material.R.attr.colorOnSurfaceVariant));
             row.btnAction.setVisibility(android.view.View.VISIBLE);
             row.btnAction.setText(Data.EVENT_PUBLISHED[event] ? "Unpublish" : "Publish");
             row.btnAction.setOnClickListener(v -> {

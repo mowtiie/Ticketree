@@ -8,6 +8,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.material.chip.Chip;
 import com.mowtiie.ticketree.R;
 import com.mowtiie.ticketree.adapters.GenericAdapter;
 import com.mowtiie.ticketree.data.Data;
@@ -34,6 +35,23 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.tvWelcome.setText("Welcome, " + Data.USER_NAME);
+
+        binding.etHomeSearch.setOnClickListener(v ->
+                startActivity(new Intent(this, EventListActivity.class)));
+        ArrayList<String> categories = new ArrayList<>();
+        for (int i = 0; i < Data.EVENT_NAMES.length; i++) {
+            if (Data.EVENT_PUBLISHED[i] && !categories.contains(Data.EVENT_CATEGORIES[i])) categories.add(Data.EVENT_CATEGORIES[i]);
+        }
+        for (String category : categories) {
+            Chip chip = new Chip(this);
+            chip.setText(category);
+            chip.setOnClickListener(v -> {
+                Intent intent = new Intent(this, EventListActivity.class);
+                intent.putExtra("category", category);
+                startActivity(intent);
+            });
+            binding.chipCategories.addView(chip);
+        }
 
         binding.toolbar.setOnMenuItemClickListener(item -> {
             int id = item.getItemId();

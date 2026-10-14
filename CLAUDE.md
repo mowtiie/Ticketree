@@ -52,7 +52,7 @@ Navigation is `startActivity(new Intent(...))` with `putExtra`. After payment, `
 - Lists: `RecyclerView` with the one shared `GenericAdapter<T>` and the shared row layout `item_row.xml` (`tvIcon`, `tvTitle`, `tvSubtitle`, `chipBadge`, `btnAction`). Never write a per-screen adapter.
 - Database: pure SQLite (`SQLiteOpenHelper`, `SQLiteDatabase`, `ContentValues`, `Cursor`). No Room, no ORM, no DAO layer.
 - Dropdowns: `TextInputLayout` (ExposedDropdownMenu style) with `MaterialAutoCompleteTextView`. Never `Spinner`.
-- Messages: `Snackbar` for validation and errors on a screen that stays open. `Toast` only for simulated notifications and for messages shown as a screen closes. `AlertDialog` for the receipt popup and the price editor.
+- Messages: `Snackbar` for validation and errors on a screen that stays open. `Toast` only for simulated notifications and for messages shown as a screen closes. `MaterialAlertDialogBuilder` (never the plain `AlertDialog.Builder`) for the receipt popup and the price and stock editors, and a `BottomSheetDialog` for adding a payment method.
 
 ## UI components and layout patterns
 
@@ -166,3 +166,13 @@ The core flow must work end to end before anything else is polished. Remaining w
 - Build: `./gradlew assembleDebug`
 - Lint: `./gradlew lintDebug` (report in `app/build/reports/lint-results-debug.html`)
 - Install and run: use Android Studio's Run button on an emulator.
+
+## UX patterns
+
+- Booking screens show a step indicator (`view_steps.xml`): Tickets (1 of 3), Seats (2 of 3), Payment (3 of 3). Event detail, Ticket select and Seat select have a sticky bottom bar with the price or selection summary and the main action button.
+- Ticket types are selectable cards (`item_ticket_type.xml`), not a dropdown. Sold-out types are dimmed and disabled.
+- Home has a hero card with a read-only search field and category chips that open the event list pre-filtered (`category` extra).
+- Payment methods are added in a bottom sheet with an E-wallet / Card tab layout. Tapping a method makes it the default (`Data.DEFAULT_PAYMENT`), which checkout preselects. Labels are built from the input, for example `GCash 0917 *** 4567` or `Visa ****1234`.
+- Organizer lists show status as a colored chip (green Published, gray Unpublished). The dashboard colors each ticket type's bar and shows a "Best seller" chip.
+- Screen transitions are a short slide and fade (`Animation.Ticketree` in `values/app_themes.xml`).
+- Accessibility: back arrows have a content description, seat buttons announce number and state, decorative emoji views are hidden from screen readers.
