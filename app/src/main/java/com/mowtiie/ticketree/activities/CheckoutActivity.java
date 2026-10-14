@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import com.mowtiie.ticketree.databinding.ActivityCheckoutBinding;
 
 import java.text.SimpleDateFormat;
@@ -32,6 +34,7 @@ public class CheckoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityCheckoutBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.toolbar.setNavigationOnClickListener(v -> finish());
 
 
         binding.etName.setText(Data.USER_NAME);
@@ -79,14 +82,13 @@ public class CheckoutActivity extends AppCompatActivity {
             String email = binding.etEmail.getText().toString().trim();
             String address = binding.etAddress.getText().toString().trim();
             if (name.isEmpty() || email.isEmpty() || address.isEmpty()) {
-                Toast.makeText(this, "Fill in all billing fields", Toast.LENGTH_SHORT).show();
+                Snackbar.make(binding.getRoot(), "Fill in all billing fields", Snackbar.LENGTH_SHORT).show();
                 return;
             }
             String method = binding.spPayment.getSelectedItem().toString();
             paying = true;
             binding.btnPay.setEnabled(false);
-            binding.progress.setVisibility(View.VISIBLE);
-            binding.tvTimer.setText("Processing payment...");
+            binding.overlay.setVisibility(View.VISIBLE);
             if (timer != null) timer.cancel();
             Data.HOLD_END = 0;
 
@@ -117,7 +119,7 @@ public class CheckoutActivity extends AppCompatActivity {
             Data.TICKETS.add(orderId + "|" + eventName + "|" + Data.EVENT_DATES[Data.SEL_EVENT] + "|"
                     + typeName + "|" + Data.BOX_NAMES[Data.SEL_BOX] + "|" + (s + 1));
         }
-        Data.ORDERS.add(orderId + " - " + eventName + " - " + typeName + " x" + Data.SEL_QTY + " - P" + total);
+        Data.ORDERS.add(orderId + " - " + eventName + " - " + typeName + " x" + Data.SEL_QTY + " - " + Data.money(total));
         Data.ORDER_TYPES.add(Data.SEL_TYPE);
         Data.ORDER_QTYS.add(Data.SEL_QTY);
         Data.ORDER_TOTALS.add(total);
@@ -137,7 +139,7 @@ public class CheckoutActivity extends AppCompatActivity {
         Data.RECEIPTS.add(receipt);
 
         Data.NOTIFICATIONS.add("Booking confirmed: " + eventName + " (" + orderId + ")");
-        Data.NOTIFICATIONS.add("Payment received: P" + total + " via " + method);
+        Data.NOTIFICATIONS.add("Payment received: " + Data.money(total) + " via " + method);
         Data.NOTIFICATIONS.add("Tickets delivered to " + email);
 
         Data.SEL_SEATS.clear();

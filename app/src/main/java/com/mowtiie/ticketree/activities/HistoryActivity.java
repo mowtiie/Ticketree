@@ -18,6 +18,7 @@ public class HistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityHistoryBinding binding = ActivityHistoryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.toolbar.setNavigationOnClickListener(v -> finish());
 
         if (Data.ORDERS.isEmpty()) binding.tvEmpty.setVisibility(View.VISIBLE);
 

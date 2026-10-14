@@ -12,8 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         android:text="Ticketree"
-        android:textSize="32sp"
-        android:textStyle="bold" />
+        android:textAppearance="?attr/textAppearanceHeadlineMedium" />
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"

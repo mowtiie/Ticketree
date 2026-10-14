@@ -14,6 +14,7 @@ public class TicketViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityTicketViewBinding binding = ActivityTicketViewBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.toolbar.setNavigationOnClickListener(v -> finish());
 
         String[] p = Data.TICKETS.get(getIntent().getIntExtra("ticket", 0)).split("\\|");
         binding.tvEvent.setText(p[1]);

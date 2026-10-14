@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.snackbar.Snackbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.mowtiie.ticketree.databinding.ActivityPaymentMethodsBinding;
@@ -21,6 +23,7 @@ public class PaymentMethodsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityPaymentMethodsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.toolbar.setNavigationOnClickListener(v -> finish());
 
         adapter = new GenericAdapter<>(Data.PAYMENT_METHODS, (row, method, position) -> {
             row.tvTitle.setText(method);
@@ -40,7 +43,7 @@ public class PaymentMethodsActivity extends AppCompatActivity {
         binding.btnAdd.setOnClickListener(v -> {
             String method = binding.etMethod.getText().toString().trim();
             if (method.isEmpty()) {
-                Toast.makeText(this, "Enter a payment method", Toast.LENGTH_SHORT).show();
+                Snackbar.make(binding.getRoot(), "Enter a payment method", Snackbar.LENGTH_SHORT).show();
                 return;
             }
             Data.PAYMENT_METHODS.add(method);

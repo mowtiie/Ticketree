@@ -6,6 +6,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import com.mowtiie.ticketree.data.Data;
 import com.mowtiie.ticketree.databinding.ActivityEventFormBinding;
 
@@ -16,12 +18,13 @@ public class EventFormActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityEventFormBinding binding = ActivityEventFormBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.toolbar.setNavigationOnClickListener(v -> finish());
 
         int event = getIntent().getIntExtra("event", -1);
         binding.spVenue.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, Data.VENUE_TYPES));
 
         if (event >= 0) {
-            binding.tvTitle.setText("Edit event");
+            binding.toolbar.setTitle("Edit event");
             binding.etName.setText(Data.EVENT_NAMES[event]);
             binding.etCategory.setText(Data.EVENT_CATEGORIES[event]);
             binding.etDate.setText(Data.EVENT_DATES[event]);
@@ -34,7 +37,7 @@ public class EventFormActivity extends AppCompatActivity {
                 if (Data.VENUE_TYPES[v].equals(Data.EVENT_VENUES[event])) binding.spVenue.setSelection(v);
             }
         } else {
-            binding.tvTitle.setText("New event");
+            binding.toolbar.setTitle("New event");
         }
 
         binding.btnSave.setOnClickListener(v -> {
@@ -47,7 +50,7 @@ public class EventFormActivity extends AppCompatActivity {
             String description = binding.etDescription.getText().toString().trim();
             if (name.isEmpty() || category.isEmpty() || date.length() < 12 || location.isEmpty()
                     || price.isEmpty() || age.isEmpty() || description.isEmpty()) {
-                Toast.makeText(this, "Fill in all fields (date like Dec 20, 2026 9:00 AM)", Toast.LENGTH_LONG).show();
+                Snackbar.make(binding.getRoot(), "Fill in all fields (date like Dec 20, 2026 9:00 AM)", Snackbar.LENGTH_LONG).show();
                 return;
             }
             int i = event;

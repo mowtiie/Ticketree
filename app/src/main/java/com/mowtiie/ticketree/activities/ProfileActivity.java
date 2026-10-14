@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import com.mowtiie.ticketree.databinding.ActivityProfileBinding;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -18,6 +20,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityProfileBinding binding = ActivityProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.toolbar.setNavigationOnClickListener(v -> finish());
 
         binding.tvRole.setText(Data.USER_IS_ORGANIZER ? "Organizer account" : "Customer account");
         binding.etName.setText(Data.USER_NAME);
@@ -29,7 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
             String email = binding.etEmail.getText().toString().trim();
             String password = binding.etPassword.getText().toString().trim();
             if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Fill in all fields", Toast.LENGTH_SHORT).show();
+                Snackbar.make(binding.getRoot(), "Fill in all fields", Snackbar.LENGTH_SHORT).show();
                 return;
             }
             ContentValues cv = new ContentValues();
@@ -40,13 +43,13 @@ public class ProfileActivity extends AppCompatActivity {
                     .updateWithOnConflict("users", cv, "email=?", new String[]{Data.USER_EMAIL},
                             android.database.sqlite.SQLiteDatabase.CONFLICT_IGNORE);
             if (rows == 0) {
-                Toast.makeText(this, "Email already registered", Toast.LENGTH_SHORT).show();
+                Snackbar.make(binding.getRoot(), "Email already registered", Snackbar.LENGTH_SHORT).show();
                 return;
             }
             Data.USER_NAME = name;
             Data.USER_EMAIL = email;
             Data.USER_PASSWORD = password;
-            Toast.makeText(this, "Profile updated", Toast.LENGTH_SHORT).show();
+            Snackbar.make(binding.getRoot(), "Profile updated", Snackbar.LENGTH_SHORT).show();
         });
 
         binding.btnReset.setOnClickListener(v ->

@@ -27,7 +27,7 @@ This is a **simulation**. Nothing is real: no backend, no database, no payment g
 
 - Java, XML layouts, AppCompat/Material, single `app` module.
 - Navigation: `startActivity(new Intent(...))` with `putExtra` where needed. No Fragments, no Navigation component, no Jetpack Compose.
-- Widgets: `ListView` + `ArrayAdapter<String>`, `Spinner`, `EditText`, `Button`, `AlertDialog`, `Toast`. No RecyclerView unless a layout truly needs it (then follow the shared generic adapter rule below).
+- Widgets: `Spinner`, `AlertDialog`, `Snackbar` for validation and error messages, `Toast` only for simulated notifications and messages shown as a screen closes. No RecyclerView unless a layout truly needs it (then follow the shared generic adapter rule below).
 - Views via view binding (`buildFeatures { viewBinding = true }` in `app/build.gradle.kts`, which is not a dependency change). Use the generated `*Binding` classes, not `findViewById`.
 - If a screen uses a `RecyclerView`, use one shared generic adapter class (for example `GenericAdapter<T>`) for every list. Do not write a separate adapter class per screen. This single class is the one exception to the no-abstractions rule.
 - UI: use Material 3 components in layouts (`MaterialTextView`, `MaterialCardView`, `MaterialDivider`, `MaterialButton`, `TextInputLayout`, etc.) instead of the plain framework widgets where a Material equivalent exists.
@@ -113,3 +113,9 @@ The core flow must work end to end before anything else is polished.
 
 - Build: `./gradlew assembleDebug`
 - Install and run: use Android Studio's Run button on an emulator.
+## UI conventions
+
+- Every screen except Login has a `MaterialToolbar` with a title. Back arrow on every screen except the root screens (Home, OrganizerHome, Confirmation).
+- Format money with `Data.money(int)` (shows the peso sign and thousands separators), never a raw "P" prefix.
+- Use theme attributes and the Material text appearances (`?attr/textAppearance*`, `?attr/colorError`, `@color/success`) instead of hardcoded colors and `textSize`, so dark mode works.
+- Show events with `Data.bindEvent(row, event)` so every list uses the same category icon, title, date and price chip.

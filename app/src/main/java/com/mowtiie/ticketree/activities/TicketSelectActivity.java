@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import com.mowtiie.ticketree.databinding.ActivityTicketSelectBinding;
 
 public class TicketSelectActivity extends AppCompatActivity {
@@ -23,13 +25,14 @@ public class TicketSelectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityTicketSelectBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.toolbar.setNavigationOnClickListener(v -> finish());
 
         event = getIntent().getIntExtra("event", 0);
         binding.tvEvent.setText(Data.EVENT_NAMES[event]);
 
         String[] rows = new String[Data.TICKET_TYPES.length];
         for (int t = 0; t < rows.length; t++) {
-            rows[t] = Data.TICKET_TYPES[t] + " - P" + Data.TICKET_PRICES[t]
+            rows[t] = Data.TICKET_TYPES[t] + " - " + Data.money(Data.TICKET_PRICES[t])
                     + " (" + Data.TICKET_REMAINING[t] + " left)";
         }
         binding.spType.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, rows));
@@ -52,14 +55,14 @@ public class TicketSelectActivity extends AppCompatActivity {
         binding.btnPlus.setOnClickListener(v -> {
             int max = Math.min(6, Data.TICKET_REMAINING[binding.spType.getSelectedItemPosition()]);
             if (qty < max) qty++;
-            else Toast.makeText(this, "Maximum " + max + " tickets", Toast.LENGTH_SHORT).show();
+            else Snackbar.make(binding.getRoot(), "Maximum " + max + " tickets", Snackbar.LENGTH_SHORT).show();
             update();
         });
 
         binding.btnContinue.setOnClickListener(v -> {
             int type = binding.spType.getSelectedItemPosition();
             if (Data.TICKET_REMAINING[type] < qty) {
-                Toast.makeText(this, "Sold out", Toast.LENGTH_SHORT).show();
+                Snackbar.make(binding.getRoot(), "Sold out", Snackbar.LENGTH_SHORT).show();
                 return;
             }
             Data.releaseHold();
@@ -72,6 +75,6 @@ public class TicketSelectActivity extends AppCompatActivity {
 
     void update() {
         binding.tvQty.setText(String.valueOf(qty));
-        binding.tvTotal.setText("Total: P" + (Data.TICKET_PRICES[binding.spType.getSelectedItemPosition()] * qty));
+        binding.tvTotal.setText("Total: " + Data.money(Data.TICKET_PRICES[binding.spType.getSelectedItemPosition()] * qty));
     }
 }

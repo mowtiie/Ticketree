@@ -1,9 +1,9 @@
 package com.mowtiie.ticketree.activities;
 
+import com.mowtiie.ticketree.R;
 import com.mowtiie.ticketree.data.Data;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -15,9 +15,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import com.mowtiie.ticketree.databinding.ActivitySeatSelectBinding;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.color.MaterialColors;
 
 public class SeatSelectActivity extends AppCompatActivity {
 
@@ -31,6 +34,7 @@ public class SeatSelectActivity extends AppCompatActivity {
 
         binding = ActivitySeatSelectBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.toolbar.setNavigationOnClickListener(v -> finish());
 
         Data.SEL_BOX = 0;
         binding.tvInfo.setText("Pick " + Data.SEL_QTY + " seat(s) in one box. Seats are held for "
@@ -55,7 +59,7 @@ public class SeatSelectActivity extends AppCompatActivity {
 
         binding.btnContinue.setOnClickListener(v -> {
             if (Data.SEL_SEATS.size() != Data.SEL_QTY) {
-                Toast.makeText(this, "Select " + Data.SEL_QTY + " seat(s)", Toast.LENGTH_SHORT).show();
+                Snackbar.make(binding.getRoot(), "Select " + Data.SEL_QTY + " seat(s)", Snackbar.LENGTH_SHORT).show();
                 return;
             }
             forward = true;
@@ -96,7 +100,7 @@ public class SeatSelectActivity extends AppCompatActivity {
                 } else if (taken[seat]) {
                     return;
                 } else if (Data.SEL_SEATS.size() >= Data.SEL_QTY) {
-                    Toast.makeText(this, "You only need " + Data.SEL_QTY + " seat(s)", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(binding.getRoot(), "You only need " + Data.SEL_QTY + " seat(s)", Snackbar.LENGTH_SHORT).show();
                     return;
                 } else {
                     Data.SEL_SEATS.add(seat);
@@ -109,19 +113,25 @@ public class SeatSelectActivity extends AppCompatActivity {
         }
     }
 
+    int colorOf(int state, boolean text) {
+        View v = binding.getRoot();
+        if (state == 1) {
+            return text ? MaterialColors.getColor(v, com.google.android.material.R.attr.colorSurface)
+                    : getColor(R.color.success);
+        } else if (state == 2) {
+            return MaterialColors.getColor(v, text ? com.google.android.material.R.attr.colorOutline
+                    : com.google.android.material.R.attr.colorSurfaceVariant);
+        }
+        return MaterialColors.getColor(v, text ? com.google.android.material.R.attr.colorOnSecondaryContainer
+                : com.google.android.material.R.attr.colorSecondaryContainer);
+    }
+
     void paint(MaterialButton b, int seat) {
         boolean selected = Data.SEL_SEATS.contains(seat);
         boolean taken = Data.SEAT_TAKEN[Data.SEL_EVENT][Data.SEL_BOX][seat];
-        if (selected) {
-            b.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#2E7D32")));
-            b.setTextColor(Color.WHITE);
-        } else if (taken) {
-            b.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#9E9E9E")));
-            b.setTextColor(Color.WHITE);
-        } else {
-            b.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#E0E0E0")));
-            b.setTextColor(Color.BLACK);
-        }
+        int state = selected ? 1 : (taken ? 2 : 0);
+        b.setBackgroundTintList(ColorStateList.valueOf(colorOf(state, false)));
+        b.setTextColor(colorOf(state, true));
     }
 
     void startHold() {

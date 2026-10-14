@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.snackbar.Snackbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.mowtiie.ticketree.adapters.GenericAdapter;
@@ -25,13 +27,14 @@ public class TicketPricingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityTicketPricingBinding binding = ActivityTicketPricingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.toolbar.setNavigationOnClickListener(v -> finish());
 
         ArrayList<Integer> types = new ArrayList<>();
         for (int t = 0; t < Data.TICKET_TYPES.length; t++) types.add(t);
 
         adapter = new GenericAdapter<>(types, (row, type, position) -> {
             row.tvTitle.setText(Data.TICKET_TYPES[type]);
-            row.tvSubtitle.setText("P" + Data.TICKET_PRICES[type] + " | " + Data.TICKET_REMAINING[type] + " left");
+            row.tvSubtitle.setText(Data.money(Data.TICKET_PRICES[type]) + " | " + Data.TICKET_REMAINING[type] + " left");
             row.btnAction.setVisibility(View.VISIBLE);
             row.btnAction.setText("Add 10 seats");
             row.btnAction.setOnClickListener(v -> {
@@ -48,7 +51,7 @@ public class TicketPricingActivity extends AppCompatActivity {
                         .setPositiveButton("Save", (d, w) -> {
                             String text = input.getText().toString().trim();
                             if (text.isEmpty()) {
-                                Toast.makeText(this, "Enter a price", Toast.LENGTH_SHORT).show();
+                                Snackbar.make(binding.getRoot(), "Enter a price", Snackbar.LENGTH_SHORT).show();
                                 return;
                             }
                             Data.TICKET_PRICES[type] = Integer.parseInt(text);

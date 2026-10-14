@@ -18,6 +18,7 @@ public class TicketWalletActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityTicketWalletBinding binding = ActivityTicketWalletBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.toolbar.setNavigationOnClickListener(v -> finish());
 
         if (Data.TICKETS.isEmpty()) binding.tvEmpty.setVisibility(View.VISIBLE);
 

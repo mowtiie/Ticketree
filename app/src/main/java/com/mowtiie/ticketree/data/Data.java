@@ -1,7 +1,13 @@
 package com.mowtiie.ticketree.data;
 
 import java.util.ArrayList;
+import android.content.res.ColorStateList;
+import android.view.View;
+
+import com.mowtiie.ticketree.databinding.ItemRowBinding;
+
 import java.util.Arrays;
+import java.util.Locale;
 
 public class Data {
 
@@ -151,4 +157,34 @@ public class Data {
     public static final ArrayList<String> NOTIFICATIONS = new ArrayList<>();
     public static final ArrayList<String> RECEIPTS = new ArrayList<>();
     public static final ArrayList<String> PAYMENT_METHODS = new ArrayList<>();
+
+    static final String[] CATEGORY_EMOJI = {
+            "🎤", "🤖", "🗣", "💼",
+            "🎪", "🛠", "🌟"
+    };
+    static final int[] CATEGORY_COLORS = {
+            0xFFFFCDD2, 0xFFC5CAE9, 0xFFB2DFDB, 0xFFFFE0B2, 0xFFD1C4E9, 0xFFC8E6C9, 0xFFB3E5FC
+    };
+
+    public static String money(int amount) {
+        return "₱" + String.format(Locale.US, "%,d", amount);
+    }
+
+    public static String categoryEmoji(String category) {
+        return CATEGORY_EMOJI[Math.abs(category.hashCode()) % CATEGORY_EMOJI.length];
+    }
+
+    public static int categoryColor(String category) {
+        return CATEGORY_COLORS[Math.abs(category.hashCode()) % CATEGORY_COLORS.length];
+    }
+
+    public static void bindEvent(ItemRowBinding row, int e) {
+        row.tvIcon.setVisibility(View.VISIBLE);
+        row.tvIcon.setText(categoryEmoji(EVENT_CATEGORIES[e]));
+        row.tvIcon.setBackgroundTintList(ColorStateList.valueOf(categoryColor(EVENT_CATEGORIES[e])));
+        row.tvTitle.setText(EVENT_NAMES[e]);
+        row.tvSubtitle.setText(EVENT_DATES[e] + "\n" + EVENT_LOCATIONS[e] + " | " + EVENT_VENUES[e]);
+        row.chipBadge.setVisibility(View.VISIBLE);
+        row.chipBadge.setText("From " + money(EVENT_PRICES[e]));
+    }
 }

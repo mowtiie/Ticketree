@@ -21,6 +21,7 @@ public class NotificationsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityNotificationsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.toolbar.setNavigationOnClickListener(v -> finish());
 
         adapter = new GenericAdapter<>(Data.NOTIFICATIONS, (row, text, position) -> {
             row.tvTitle.setText(text);

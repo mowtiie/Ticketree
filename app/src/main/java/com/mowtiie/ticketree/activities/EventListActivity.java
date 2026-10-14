@@ -28,6 +28,7 @@ public class EventListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityEventListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.toolbar.setNavigationOnClickListener(v -> finish());
 
         ArrayList<String> categories = new ArrayList<>();
         ArrayList<String> dates = new ArrayList<>();
@@ -77,9 +78,7 @@ public class EventListActivity extends AppCompatActivity {
 
         binding.rvList.setLayoutManager(new LinearLayoutManager(this));
         adapter = new GenericAdapter<>(shown, (row, event, position) -> {
-            row.tvTitle.setText(Data.EVENT_NAMES[event]);
-            row.tvSubtitle.setText(Data.EVENT_CATEGORIES[event] + " | " + Data.EVENT_DATES[event] + " | "
-                    + Data.EVENT_LOCATIONS[event] + " | P" + Data.EVENT_PRICES[event]);
+            Data.bindEvent(row, event);
             row.getRoot().setOnClickListener(v -> {
                 Intent intent = new Intent(this, EventDetailActivity.class);
                 intent.putExtra("event", event);

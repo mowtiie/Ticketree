@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import com.mowtiie.ticketree.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
@@ -26,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
             String email = binding.etEmail.getText().toString().trim();
             String password = binding.etPassword.getText().toString().trim();
             if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Enter email and password", Toast.LENGTH_SHORT).show();
+                Snackbar.make(binding.getRoot(), "Enter email and password", Snackbar.LENGTH_SHORT).show();
                 return;
             }
             SQLiteDatabase db = new DbHelper(this).getWritableDatabase();
@@ -46,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
                 Data.USER_IS_ORGANIZER = false;
             } else {
                 c.close();
-                Toast.makeText(this, "Wrong email or password", Toast.LENGTH_SHORT).show();
+                Snackbar.make(binding.getRoot(), "Wrong email or password", Snackbar.LENGTH_SHORT).show();
                 return;
             }
             c.close();

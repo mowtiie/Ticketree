@@ -27,10 +27,9 @@ public class OrganizerHomeActivity extends AppCompatActivity {
         binding.tvWelcome.setText("Organizer: " + Data.USER_NAME);
 
         adapter = new GenericAdapter<>(events, (row, event, position) -> {
-            row.tvTitle.setText(Data.EVENT_NAMES[event]);
-            row.tvSubtitle.setText(Data.EVENT_DATES[event] + " | " + Data.EVENT_VENUES[event]
-                    + " | P" + Data.EVENT_PRICES[event]
-                    + "\n" + (Data.EVENT_PUBLISHED[event] ? "Published" : "Unpublished"));
+            Data.bindEvent(row, event);
+            row.tvSubtitle.setText(Data.EVENT_DATES[event] + "\n"
+                    + (Data.EVENT_PUBLISHED[event] ? "Published" : "Unpublished"));
             row.btnAction.setVisibility(android.view.View.VISIBLE);
             row.btnAction.setText(Data.EVENT_PUBLISHED[event] ? "Unpublish" : "Publish");
             row.btnAction.setOnClickListener(v -> {

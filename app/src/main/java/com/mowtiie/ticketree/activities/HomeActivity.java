@@ -1,13 +1,14 @@
 package com.mowtiie.ticketree.activities;
 
-import com.mowtiie.ticketree.data.Data;
-import com.mowtiie.ticketree.adapters.GenericAdapter;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.mowtiie.ticketree.adapters.GenericAdapter;
+import com.mowtiie.ticketree.data.Data;
 import com.mowtiie.ticketree.databinding.ActivityHomeBinding;
 
 import java.util.ArrayList;
@@ -26,11 +27,13 @@ public class HomeActivity extends AppCompatActivity {
         for (int i = 0; i < Data.EVENT_NAMES.length && featured.size() < 3; i++) {
             if (Data.EVENT_PUBLISHED[i]) featured.add(i);
         }
-        binding.rvFeatured.setLayoutManager(new LinearLayoutManager(this));
+        float density = getResources().getDisplayMetrics().density;
+        binding.rvFeatured.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         binding.rvFeatured.setAdapter(new GenericAdapter<Integer>(featured, (row, event, position) -> {
-            row.tvTitle.setText(Data.EVENT_NAMES[event]);
-            row.tvSubtitle.setText(Data.EVENT_DATES[event] + " | " + Data.EVENT_LOCATIONS[event]
-                    + " | from P" + Data.EVENT_PRICES[event]);
+            Data.bindEvent(row, event);
+            ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) row.getRoot().getLayoutParams();
+            lp.width = (int) (300 * density);
+            lp.setMarginEnd((int) (8 * density));
             row.getRoot().setOnClickListener(v -> {
                 Intent intent = new Intent(this, EventDetailActivity.class);
                 intent.putExtra("event", event);
@@ -38,17 +41,17 @@ public class HomeActivity extends AppCompatActivity {
             });
         }));
 
-        binding.btnBrowse.setOnClickListener(v ->
+        binding.cardBrowse.setOnClickListener(v ->
                 startActivity(new Intent(this, EventListActivity.class)));
-        binding.btnTickets.setOnClickListener(v ->
+        binding.cardTickets.setOnClickListener(v ->
                 startActivity(new Intent(this, TicketWalletActivity.class)));
-        binding.btnHistory.setOnClickListener(v ->
+        binding.cardHistory.setOnClickListener(v ->
                 startActivity(new Intent(this, HistoryActivity.class)));
-        binding.btnNotifications.setOnClickListener(v ->
+        binding.cardNotifications.setOnClickListener(v ->
                 startActivity(new Intent(this, NotificationsActivity.class)));
-        binding.btnProfile.setOnClickListener(v ->
+        binding.cardProfile.setOnClickListener(v ->
                 startActivity(new Intent(this, ProfileActivity.class)));
-        binding.btnPayments.setOnClickListener(v ->
+        binding.cardPayments.setOnClickListener(v ->
                 startActivity(new Intent(this, PaymentMethodsActivity.class)));
     }
 }

@@ -2,6 +2,7 @@ package com.mowtiie.ticketree.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.animation.OvershootInterpolator;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,11 @@ public class ConfirmationActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.tvReceipt.setText(getIntent().getStringExtra("receipt"));
+
+        binding.tvCheck.setScaleX(0f);
+        binding.tvCheck.setScaleY(0f);
+        binding.tvCheck.animate().scaleX(1f).scaleY(1f).setDuration(600)
+                .setInterpolator(new OvershootInterpolator()).start();
 
         binding.btnWallet.setOnClickListener(v -> {
             goHome();

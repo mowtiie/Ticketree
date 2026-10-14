@@ -16,6 +16,7 @@ public class OrganizerDashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityOrganizerDashboardBinding binding = ActivityOrganizerDashboardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.toolbar.setNavigationOnClickListener(v -> finish());
 
         int types = Data.TICKET_TYPES.length;
         int[] sold = new int[types];
@@ -47,7 +48,7 @@ public class OrganizerDashboardActivity extends AppCompatActivity {
         StringBuilder inventory = new StringBuilder("TICKET INVENTORY");
         for (int t = 0; t < types; t++) {
             byType.append("\n").append(Data.TICKET_TYPES[t]).append(": ").append(sold[t])
-                    .append(" sold, P").append(revenue[t]);
+                    .append(" sold, ").append(Data.money(revenue[t]));
             inventory.append("\n").append(Data.TICKET_TYPES[t]).append(": ")
                     .append(Data.TICKET_REMAINING[t]).append(" left of ")
                     .append(Data.TICKET_REMAINING[t] + sold[t]);
