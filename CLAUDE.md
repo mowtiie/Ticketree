@@ -23,8 +23,9 @@ This is a **simulation**. Nothing is real: no backend, no database, no payment g
 
 - Java, XML layouts, AppCompat/Material, single `app` module.
 - Navigation: `startActivity(new Intent(...))` with `putExtra` where needed. No Fragments, no Navigation component, no Jetpack Compose.
-- Widgets: `ListView` + `ArrayAdapter<String>`, `Spinner`, `EditText`, `Button`, `AlertDialog`, `Toast`. No RecyclerView unless a layout truly needs it.
-- Views via `findViewById`.
+- Widgets: `ListView` + `ArrayAdapter<String>`, `Spinner`, `EditText`, `Button`, `AlertDialog`, `Toast`. No RecyclerView unless a layout truly needs it (then follow the shared generic adapter rule below).
+- Views via view binding (`buildFeatures { viewBinding = true }` in `app/build.gradle.kts`, which is not a dependency change). Use the generated `*Binding` classes, not `findViewById`.
+- If a screen uses a `RecyclerView`, use one shared generic adapter class (for example `GenericAdapter<T>`) for every list. Do not write a separate adapter class per screen. This single class is the one exception to the no-abstractions rule.
 - UI: use Material 3 components in layouts (`MaterialTextView`, `MaterialCardView`, `MaterialDivider`, `MaterialButton`, `TextInputLayout`, etc.) instead of the plain framework widgets where a Material equivalent exists.
 - Database: pure SQLite (`SQLiteOpenHelper`, `SQLiteDatabase`, `ContentValues`, `Cursor`). No Room, no ORM, no other libraries. Keep the helper flat in a single class, with no DAO or repository layers.
 - No permissions, no internet.

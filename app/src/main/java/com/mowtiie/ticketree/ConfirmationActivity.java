@@ -2,25 +2,27 @@ package com.mowtiie.ticketree;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.mowtiie.ticketree.databinding.ActivityConfirmationBinding;
 
 public class ConfirmationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_confirmation);
+        ActivityConfirmationBinding binding = ActivityConfirmationBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        ((TextView) findViewById(R.id.tvReceipt)).setText(getIntent().getStringExtra("receipt"));
+        binding.tvReceipt.setText(getIntent().getStringExtra("receipt"));
 
-        findViewById(R.id.btnWallet).setOnClickListener(v -> {
+        binding.btnWallet.setOnClickListener(v -> {
             goHome();
             startActivity(new Intent(this, TicketWalletActivity.class));
         });
-        findViewById(R.id.btnHome).setOnClickListener(v -> goHome());
+        binding.btnHome.setOnClickListener(v -> goHome());
 
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override

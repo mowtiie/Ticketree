@@ -9,38 +9,34 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridLayout;
-import android.widget.Spinner;
-import android.widget.TextView;
+
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.mowtiie.ticketree.databinding.ActivitySeatSelectBinding;
 
 import com.google.android.material.button.MaterialButton;
 
 public class SeatSelectActivity extends AppCompatActivity {
 
-    Spinner spBox;
-    GridLayout grid;
-    TextView tvInfo, tvTimer;
+    ActivitySeatSelectBinding binding;
     CountDownTimer timer;
     boolean forward = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_seat_select);
 
-        spBox = findViewById(R.id.spBox);
-        grid = findViewById(R.id.gridSeats);
-        tvInfo = findViewById(R.id.tvInfo);
-        tvTimer = findViewById(R.id.tvTimer);
+        binding = ActivitySeatSelectBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         Data.SEL_BOX = 0;
-        tvInfo.setText("Pick " + Data.SEL_QTY + " seat(s) in one box. Seats are held for "
+        binding.tvInfo.setText("Pick " + Data.SEL_QTY + " seat(s) in one box. Seats are held for "
                 + Data.HOLD_SECONDS + " seconds once you pick one.");
 
-        spBox.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, Data.BOX_NAMES));
-        spBox.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.spBox.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, Data.BOX_NAMES));
+        binding.spBox.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != Data.SEL_BOX) {
@@ -56,7 +52,7 @@ public class SeatSelectActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.btnContinue).setOnClickListener(v -> {
+        binding.btnContinue.setOnClickListener(v -> {
             if (Data.SEL_SEATS.size() != Data.SEL_QTY) {
                 Toast.makeText(this, "Select " + Data.SEL_QTY + " seat(s)", Toast.LENGTH_SHORT).show();
                 return;
@@ -73,7 +69,7 @@ public class SeatSelectActivity extends AppCompatActivity {
     }
 
     void buildGrid() {
-        grid.removeAllViews();
+        binding.gridSeats.removeAllViews();
         for (int s = 0; s < 20; s++) {
             final int seat = s;
             MaterialButton b = new MaterialButton(this);
@@ -108,7 +104,7 @@ public class SeatSelectActivity extends AppCompatActivity {
                 }
                 paint(b, seat);
             });
-            grid.addView(b);
+            binding.gridSeats.addView(b);
         }
     }
 
@@ -133,7 +129,7 @@ public class SeatSelectActivity extends AppCompatActivity {
         timer = new CountDownTimer(Data.HOLD_SECONDS * 1000L, 1000) {
             @Override
             public void onTick(long ms) {
-                tvTimer.setText("Seats held for " + (ms / 1000) + "s");
+                binding.tvTimer.setText("Seats held for " + (ms / 1000) + "s");
             }
 
             @Override
@@ -153,7 +149,7 @@ public class SeatSelectActivity extends AppCompatActivity {
     void stopTimer() {
         if (timer != null) timer.cancel();
         timer = null;
-        tvTimer.setText("");
+        binding.tvTimer.setText("");
     }
 
     @Override

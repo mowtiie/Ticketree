@@ -6,24 +6,23 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.mowtiie.ticketree.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        EditText etEmail = findViewById(R.id.etEmail);
-        EditText etPassword = findViewById(R.id.etPassword);
-
-        findViewById(R.id.btnLogin).setOnClickListener(v -> {
-            String email = etEmail.getText().toString().trim();
-            String password = etPassword.getText().toString().trim();
+        binding.btnLogin.setOnClickListener(v -> {
+            String email = binding.etEmail.getText().toString().trim();
+            String password = binding.etPassword.getText().toString().trim();
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Enter email and password", Toast.LENGTH_SHORT).show();
                 return;
@@ -55,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         });
 
-        findViewById(R.id.btnSignUp).setOnClickListener(v ->
+        binding.btnSignUp.setOnClickListener(v ->
                 startActivity(new Intent(this, SignUpActivity.class)));
     }
 }

@@ -7,31 +7,23 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.mowtiie.ticketree.databinding.ActivityEventListBinding;
 
 import java.util.ArrayList;
 
 public class EventListActivity extends AppCompatActivity {
 
-    Spinner spCategory, spDate, spLocation;
-    EditText etSearch;
-    ListView lvEvents;
+    ActivityEventListBinding binding;
     ArrayList<Integer> shown = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_list);
-
-        etSearch = findViewById(R.id.etSearch);
-        spCategory = findViewById(R.id.spCategory);
-        spDate = findViewById(R.id.spDate);
-        spLocation = findViewById(R.id.spLocation);
-        lvEvents = findViewById(R.id.lvEvents);
+        binding = ActivityEventListBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         ArrayList<String> categories = new ArrayList<>();
         ArrayList<String> dates = new ArrayList<>();
@@ -45,9 +37,9 @@ public class EventListActivity extends AppCompatActivity {
             if (!dates.contains(date)) dates.add(date);
             if (!locations.contains(Data.EVENT_LOCATIONS[i])) locations.add(Data.EVENT_LOCATIONS[i]);
         }
-        spCategory.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categories));
-        spDate.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, dates));
-        spLocation.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, locations));
+        binding.spCategory.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categories));
+        binding.spDate.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, dates));
+        binding.spLocation.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, locations));
 
         AdapterView.OnItemSelectedListener filterListener = new AdapterView.OnItemSelectedListener() {
             @Override
@@ -59,11 +51,11 @@ public class EventListActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         };
-        spCategory.setOnItemSelectedListener(filterListener);
-        spDate.setOnItemSelectedListener(filterListener);
-        spLocation.setOnItemSelectedListener(filterListener);
+        binding.spCategory.setOnItemSelectedListener(filterListener);
+        binding.spDate.setOnItemSelectedListener(filterListener);
+        binding.spLocation.setOnItemSelectedListener(filterListener);
 
-        etSearch.addTextChangedListener(new TextWatcher() {
+        binding.etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -78,7 +70,7 @@ public class EventListActivity extends AppCompatActivity {
             }
         });
 
-        lvEvents.setOnItemClickListener((parent, view, position, id) -> {
+        binding.lvEvents.setOnItemClickListener((parent, view, position, id) -> {
             Intent intent = new Intent(this, EventDetailActivity.class);
             intent.putExtra("event", shown.get(position));
             startActivity(intent);
@@ -88,23 +80,23 @@ public class EventListActivity extends AppCompatActivity {
     }
 
     void refresh() {
-        String query = etSearch.getText().toString().trim().toLowerCase();
-        String category = spCategory.getSelectedItem().toString();
-        String date = spDate.getSelectedItem().toString();
-        String location = spLocation.getSelectedItem().toString();
+        String query = binding.etSearch.getText().toString().trim().toLowerCase();
+        String category = binding.spCategory.getSelectedItem().toString();
+        String date = binding.spDate.getSelectedItem().toString();
+        String location = binding.spLocation.getSelectedItem().toString();
 
         shown.clear();
         ArrayList<String> rows = new ArrayList<>();
         for (int i = 0; i < Data.EVENT_NAMES.length; i++) {
             if (!query.isEmpty() && !Data.EVENT_NAMES[i].toLowerCase().contains(query)
                     && !Data.EVENT_DESCRIPTIONS[i].toLowerCase().contains(query)) continue;
-            if (spCategory.getSelectedItemPosition() > 0 && !Data.EVENT_CATEGORIES[i].equals(category)) continue;
-            if (spDate.getSelectedItemPosition() > 0 && !Data.EVENT_DATES[i].startsWith(date)) continue;
-            if (spLocation.getSelectedItemPosition() > 0 && !Data.EVENT_LOCATIONS[i].equals(location)) continue;
+            if (binding.spCategory.getSelectedItemPosition() > 0 && !Data.EVENT_CATEGORIES[i].equals(category)) continue;
+            if (binding.spDate.getSelectedItemPosition() > 0 && !Data.EVENT_DATES[i].startsWith(date)) continue;
+            if (binding.spLocation.getSelectedItemPosition() > 0 && !Data.EVENT_LOCATIONS[i].equals(location)) continue;
             shown.add(i);
             rows.add(Data.EVENT_NAMES[i] + "\n" + Data.EVENT_CATEGORIES[i] + " | "
                     + Data.EVENT_DATES[i] + " | " + Data.EVENT_LOCATIONS[i] + " | P" + Data.EVENT_PRICES[i]);
         }
-        lvEvents.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, rows));
+        binding.lvEvents.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, rows));
     }
 }

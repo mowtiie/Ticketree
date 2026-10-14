@@ -1,20 +1,22 @@
 package com.mowtiie.ticketree;
 
 import android.os.Bundle;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.mowtiie.ticketree.databinding.ActivityTicketViewBinding;
 
 public class TicketViewActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ticket_view);
+        ActivityTicketViewBinding binding = ActivityTicketViewBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         String[] p = Data.TICKETS.get(getIntent().getIntExtra("ticket", 0)).split("\\|");
-        ((TextView) findViewById(R.id.tvEvent)).setText(p[1]);
-        ((TextView) findViewById(R.id.tvInfo)).setText(p[2] + "\n" + p[3] + "\n" + p[4] + ", seat " + p[5]
+        binding.tvEvent.setText(p[1]);
+        binding.tvInfo.setText(p[2] + "\n" + p[3] + "\n" + p[4] + ", seat " + p[5]
                 + "\nOrder " + p[0] + "\nHolder: " + Data.USER_NAME);
     }
 }

@@ -7,12 +7,11 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.mowtiie.ticketree.databinding.ActivityCheckoutBinding;
 
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -21,6 +20,7 @@ import java.util.Locale;
 
 public class CheckoutActivity extends AppCompatActivity {
 
+    ActivityCheckoutBinding binding;
     CountDownTimer timer;
     boolean paying = false;
     String seatsText = "";
@@ -29,25 +29,19 @@ public class CheckoutActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_checkout);
+        binding = ActivityCheckoutBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        EditText etName = findViewById(R.id.etName);
-        EditText etEmail = findViewById(R.id.etEmail);
-        EditText etAddress = findViewById(R.id.etAddress);
-        Spinner spPayment = findViewById(R.id.spPayment);
-        TextView tvTimer = findViewById(R.id.tvTimer);
-        View progress = findViewById(R.id.progress);
-        View btnPay = findViewById(R.id.btnPay);
 
-        etName.setText(Data.USER_NAME);
-        etEmail.setText(Data.USER_EMAIL);
+        binding.etName.setText(Data.USER_NAME);
+        binding.etEmail.setText(Data.USER_EMAIL);
 
         if (Data.PAYMENT_METHODS.isEmpty()) {
             Data.PAYMENT_METHODS.add("GCash");
             Data.PAYMENT_METHODS.add("Maya");
             Data.PAYMENT_METHODS.add("Visa ****1234");
         }
-        spPayment.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, Data.PAYMENT_METHODS));
+        binding.spPayment.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, Data.PAYMENT_METHODS));
 
         Collections.sort(Data.SEL_SEATS);
         StringBuilder sb = new StringBuilder();
@@ -55,7 +49,7 @@ public class CheckoutActivity extends AppCompatActivity {
         seatsText = Data.BOX_NAMES[Data.SEL_BOX] + " seat " + sb;
         total = Data.TICKET_PRICES[Data.SEL_TYPE] * Data.SEL_QTY;
 
-        ((TextView) findViewById(R.id.tvSummary)).setText(
+        binding.tvSummary.setText(
                 "Event: " + Data.EVENT_NAMES[Data.SEL_EVENT]
                         + "\nTicket type: " + Data.TICKET_TYPES[Data.SEL_TYPE]
                         + "\nSeats: " + seatsText
@@ -70,7 +64,7 @@ public class CheckoutActivity extends AppCompatActivity {
         timer = new CountDownTimer(left, 1000) {
             @Override
             public void onTick(long ms) {
-                tvTimer.setText("Seats held for " + (ms / 1000) + "s");
+                binding.tvTimer.setText("Seats held for " + (ms / 1000) + "s");
             }
 
             @Override
@@ -79,19 +73,19 @@ public class CheckoutActivity extends AppCompatActivity {
             }
         }.start();
 
-        btnPay.setOnClickListener(v -> {
-            String name = etName.getText().toString().trim();
-            String email = etEmail.getText().toString().trim();
-            String address = etAddress.getText().toString().trim();
+        binding.btnPay.setOnClickListener(v -> {
+            String name = binding.etName.getText().toString().trim();
+            String email = binding.etEmail.getText().toString().trim();
+            String address = binding.etAddress.getText().toString().trim();
             if (name.isEmpty() || email.isEmpty() || address.isEmpty()) {
                 Toast.makeText(this, "Fill in all billing fields", Toast.LENGTH_SHORT).show();
                 return;
             }
-            String method = spPayment.getSelectedItem().toString();
+            String method = binding.spPayment.getSelectedItem().toString();
             paying = true;
-            btnPay.setEnabled(false);
-            progress.setVisibility(View.VISIBLE);
-            tvTimer.setText("Processing payment...");
+            binding.btnPay.setEnabled(false);
+            binding.progress.setVisibility(View.VISIBLE);
+            binding.tvTimer.setText("Processing payment...");
             if (timer != null) timer.cancel();
             Data.HOLD_END = 0;
 

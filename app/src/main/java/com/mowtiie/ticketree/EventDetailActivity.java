@@ -2,20 +2,22 @@ package com.mowtiie.ticketree;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.mowtiie.ticketree.databinding.ActivityEventDetailBinding;
 
 public class EventDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_detail);
+        ActivityEventDetailBinding binding = ActivityEventDetailBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         int i = getIntent().getIntExtra("event", 0);
 
-        ((TextView) findViewById(R.id.tvImage)).setText(Data.EVENT_NAMES[i]);
+        binding.tvImage.setText(Data.EVENT_NAMES[i]);
 
         StringBuilder sb = new StringBuilder();
         sb.append(Data.EVENT_NAMES[i]).append("\n\n");
@@ -32,9 +34,9 @@ public class EventDetailActivity extends AppCompatActivity {
             sb.append(Data.TICKET_TYPES[t]).append(" - P").append(Data.TICKET_PRICES[t])
                     .append(" (").append(Data.TICKET_REMAINING[t]).append(" left)\n");
         }
-        ((TextView) findViewById(R.id.tvDetails)).setText(sb.toString());
+        binding.tvDetails.setText(sb.toString());
 
-        findViewById(R.id.btnSelectTickets).setOnClickListener(v -> {
+        binding.btnSelectTickets.setOnClickListener(v -> {
             Intent intent = new Intent(this, TicketSelectActivity.class);
             intent.putExtra("event", i);
             startActivity(intent);
