@@ -20,25 +20,63 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.SignUpActivity" />
-        <activity android:name=".activities.HomeActivity" />
-        <activity android:name=".activities.EventListActivity" />
-        <activity android:name=".activities.EventDetailActivity" />
-        <activity android:name=".activities.TicketSelectActivity" />
-        <activity android:name=".activities.SeatSelectActivity" />
-        <activity android:name=".activities.CheckoutActivity" />
-        <activity android:name=".activities.ConfirmationActivity" />
-        <activity android:name=".activities.TicketWalletActivity" />
-        <activity android:name=".activities.TicketViewActivity" />
-        <activity android:name=".activities.HistoryActivity" />
-        <activity android:name=".activities.NotificationsActivity" />
-        <activity android:name=".activities.ProfileActivity" />
-        <activity android:name=".activities.ResetPasswordActivity" />
-        <activity android:name=".activities.PaymentMethodsActivity" />
-        <activity android:name=".activities.OrganizerHomeActivity" />
-        <activity android:name=".activities.EventFormActivity" />
-        <activity android:name=".activities.TicketPricingActivity" />
-        <activity android:name=".activities.OrganizerDashboardActivity" />
+        <activity
+            android:name=".activities.SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.EventListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.EventDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.TicketSelectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.SeatSelectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.CheckoutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ConfirmationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.TicketWalletActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.TicketViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.HistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.NotificationsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ResetPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.PaymentMethodsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.OrganizerHomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.EventFormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.TicketPricingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.OrganizerDashboardActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
