@@ -83,7 +83,7 @@ Navigation is `startActivity(new Intent(...))` with `putExtra`. After payment, `
 - Every `TextInputLayout` has helper text that says what to enter, with the format when it matters (dates, passwords).
 - Validate with inline `setError` on the field that is wrong, not a generic Snackbar. Clear the error on the next attempt.
 - Password fields use the password toggle end icon. Emails are checked with `Patterns.EMAIL_ADDRESS`. Passwords need 6 or more characters.
-- Event dates must match `Dec 20, 2026 9:00 AM`.
+- Event dates are picked with `MaterialDatePicker` then `MaterialTimePicker` (new events cannot be in the past) and stored as `Dec 20, 2026 9:00 AM`. The date field is read-only; the format is still checked on save.
 
 ## Code conventions
 

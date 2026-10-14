@@ -4,15 +4,73 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.DateValidatorPointForward;
+import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.timepicker.MaterialTimePicker;
+import com.google.android.material.timepicker.TimeFormat;
 
 import com.mowtiie.ticketree.data.Data;
 import com.mowtiie.ticketree.databinding.ActivityEventFormBinding;
 
 public class EventFormActivity extends AppCompatActivity {
+
+    void pickDateTime(ActivityEventFormBinding binding, boolean editing) {
+        long initial = MaterialDatePicker.todayInUtcMilliseconds();
+        int hour = 9;
+        int minute = 0;
+        String current = binding.etDate.getText().toString().trim();
+        if (current.matches("^[A-Z][a-z]{2} \\d{2}, \\d{4} \\d{1,2}:\\d{2} (AM|PM)$")) {
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
+                dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+                initial = dateFormat.parse(current.substring(0, 12)).getTime();
+                String[] time = current.substring(13).split("[: ]");
+                hour = Integer.parseInt(time[0]) % 12 + (time[2].equals("PM") ? 12 : 0);
+                minute = Integer.parseInt(time[1]);
+            } catch (Exception ignored) {
+            }
+        }
+        final int startHour = hour;
+        final int startMinute = minute;
+
+        CalendarConstraints.Builder constraints = new CalendarConstraints.Builder();
+        if (!editing) constraints.setValidator(DateValidatorPointForward.now());
+        MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Event date")
+                .setSelection(initial)
+                .setCalendarConstraints(constraints.build())
+                .build();
+        datePicker.addOnPositiveButtonClickListener(selection -> {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
+            dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+            String day = dateFormat.format(new Date(selection));
+            MaterialTimePicker timePicker = new MaterialTimePicker.Builder()
+                    .setTimeFormat(TimeFormat.CLOCK_12H)
+                    .setHour(startHour)
+                    .setMinute(startMinute)
+                    .setTitleText("Event time")
+                    .build();
+            timePicker.addOnPositiveButtonClickListener(view -> {
+                int h = timePicker.getHour();
+                int hour12 = h % 12 == 0 ? 12 : h % 12;
+                binding.etDate.setText(day + " " + String.format(Locale.US, "%d:%02d %s",
+                        hour12, timePicker.getMinute(), h < 12 ? "AM" : "PM"));
+                binding.tilDate.setError(null);
+            });
+            timePicker.show(getSupportFragmentManager(), "time");
+        });
+        datePicker.show(getSupportFragmentManager(), "date");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +82,7 @@ public class EventFormActivity extends AppCompatActivity {
 
         binding.tilName.setHelperText("Shown to customers");
         binding.tilCategory.setHelperText("For example AI Boot Camp or Toastmasters");
-        binding.tilDate.setHelperText("Format: Dec 20, 2026 9:00 AM");
+        binding.tilDate.setHelperText("Tap to choose the date and time");
         binding.tilLocation.setHelperText("City where the event takes place");
         binding.tilPrice.setHelperText("Starting price in pesos");
         binding.tilAge.setHelperText("For example 18+ or All ages");
@@ -41,6 +99,8 @@ public class EventFormActivity extends AppCompatActivity {
                 binding.ivPreview.setImageResource(Data.IMAGE_RES[position]));
         binding.etTerms.setText(Data.TERMS);
         binding.tilTerms.setHelperText("What attendees agree to when they buy a ticket");
+
+        binding.etDate.setOnClickListener(v -> pickDateTime(binding, event >= 0));
 
         if (event >= 0) {
             binding.toolbar.setTitle("Edit event");
