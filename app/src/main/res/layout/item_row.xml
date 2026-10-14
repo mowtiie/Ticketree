@@ -42,6 +42,7 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipBadge"
+                android:layout_marginTop="4dp"
                 style="@style/Widget.Material3.Chip.Assist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -50,6 +51,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAction"
+                android:layout_marginTop="4dp"
                 style="@style/Widget.Material3.Button.TonalButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

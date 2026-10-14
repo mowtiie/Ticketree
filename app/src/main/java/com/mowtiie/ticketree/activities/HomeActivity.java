@@ -43,7 +43,7 @@ public class HomeActivity extends AppCompatActivity {
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.tvWelcome.setText("Welcome, " + Data.USER_NAME);
+        binding.tvWelcome.setText(Data.greeting());
 
         ArrayList<String> categories = new ArrayList<>();
         for (int i = 0; i < Data.EVENT_NAMES.length; i++) {
@@ -77,6 +77,7 @@ public class HomeActivity extends AppCompatActivity {
             ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) row.getRoot().getLayoutParams();
             lp.width = (int) (300 * density);
             lp.setMarginEnd((int) (8 * density));
+            lp.bottomMargin = 0;
             row.getRoot().setOnClickListener(v -> {
                 Intent intent = new Intent(this, EventDetailActivity.class);
                 intent.putExtra("event", event);

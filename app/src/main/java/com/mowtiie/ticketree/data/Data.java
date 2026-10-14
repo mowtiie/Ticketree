@@ -246,6 +246,11 @@ public class Data {
             com.google.android.material.R.attr.colorOnTertiaryFixed
     };
 
+    public static String greeting() {
+        String first = USER_NAME.trim().split(" ")[0];
+        return "Hello, " + (first.isEmpty() ? "there" : first) + "!";
+    }
+
     public static int fromPrice() {
         int best = Integer.MAX_VALUE;
         for (int t = 0; t < TICKET_TYPES.length; t++) {

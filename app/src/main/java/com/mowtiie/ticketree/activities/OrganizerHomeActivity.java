@@ -29,7 +29,7 @@ public class OrganizerHomeActivity extends AppCompatActivity {
         binding = ActivityOrganizerHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.tvWelcome.setText("Organizer: " + Data.USER_NAME);
+        binding.tvWelcome.setText(Data.greeting());
 
         adapter = new GenericAdapter<>(events, (row, event, position) -> {
             Data.bindEvent(row, event);

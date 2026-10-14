@@ -194,3 +194,10 @@ The core flow must work end to end before anything else is polished. Remaining w
 - Secondary actions (Remove, Edit stock, Reset password, quantity +/-) are tonal buttons. The main action on a screen is the filled button.
 - Dashboard: stat cards use the primary, secondary, tertiary and surface container colors. Ticket type bars use primary, tertiary, secondary and `colorPrimaryFixedDim`.
 - Selected ticket type card: `res/color/ticket_card_bg.xml` and `ticket_card_stroke.xml` (primary container and primary stroke when checked).
+
+## Spacing
+
+- Screen padding is 16dp (24dp on the centered auth screens). Gaps between fields and cards are 8dp, between sections 16dp (24dp between the Home carousel and the grid). Use 4dp only inside a card to attach a chip or button to its text.
+- Scrolling lists use `clipToPadding="false"` with 8dp bottom padding so the last card is not flush with the screen edge.
+- Multi-line text blocks (event details, order summary, receipt) use `lineSpacingMultiplier="1.15"`.
+- Greetings use `Data.greeting()` ("Hello, <first name>!") on both the customer and organizer home screens.
