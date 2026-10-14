@@ -30,6 +30,11 @@
         <activity android:name=".ConfirmationActivity" />
         <activity android:name=".TicketWalletActivity" />
         <activity android:name=".TicketViewActivity" />
+        <activity android:name=".HistoryActivity" />
+        <activity android:name=".NotificationsActivity" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".ResetPasswordActivity" />
+        <activity android:name=".PaymentMethodsActivity" />
     </application>
 
 </manifest>

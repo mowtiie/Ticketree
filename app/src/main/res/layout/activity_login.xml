@@ -37,6 +37,13 @@
         android:text="Log in" />
 
     <Button
+        android:id="@+id/btnForgot"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Forgot password?" />
+
+    <Button
         android:id="@+id/btnSignUp"
         style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="match_parent"

@@ -54,6 +54,9 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         });
 
+        binding.btnForgot.setOnClickListener(v ->
+                startActivity(new Intent(this, ResetPasswordActivity.class)));
+
         binding.btnSignUp.setOnClickListener(v ->
                 startActivity(new Intent(this, SignUpActivity.class)));
     }

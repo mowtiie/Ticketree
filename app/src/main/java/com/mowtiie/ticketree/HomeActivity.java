@@ -2,9 +2,7 @@ package com.mowtiie.ticketree;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -38,11 +36,13 @@ public class HomeActivity extends AppCompatActivity {
         binding.btnTickets.setOnClickListener(v ->
                 startActivity(new Intent(this, TicketWalletActivity.class)));
 
-        View.OnClickListener soon = v ->
-                Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
-        binding.btnHistory.setOnClickListener(soon);
-        binding.btnNotifications.setOnClickListener(soon);
-        binding.btnProfile.setOnClickListener(soon);
-        binding.btnPayments.setOnClickListener(soon);
+        binding.btnHistory.setOnClickListener(v ->
+                startActivity(new Intent(this, HistoryActivity.class)));
+        binding.btnNotifications.setOnClickListener(v ->
+                startActivity(new Intent(this, NotificationsActivity.class)));
+        binding.btnProfile.setOnClickListener(v ->
+                startActivity(new Intent(this, ProfileActivity.class)));
+        binding.btnPayments.setOnClickListener(v ->
+                startActivity(new Intent(this, PaymentMethodsActivity.class)));
     }
 }
