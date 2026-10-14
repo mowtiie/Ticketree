@@ -93,11 +93,6 @@
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="8dp" />
-
         <include
             android:id="@+id/empty"
             layout="@layout/view_empty"
@@ -109,6 +104,7 @@
             android:id="@+id/rvList"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="12dp"
             android:layout_weight="1" />
     </LinearLayout>
 </LinearLayout>

@@ -36,8 +36,6 @@ public class HomeActivity extends AppCompatActivity {
 
         binding.tvWelcome.setText("Welcome, " + Data.USER_NAME);
 
-        binding.etHomeSearch.setOnClickListener(v ->
-                startActivity(new Intent(this, EventListActivity.class)));
         ArrayList<String> categories = new ArrayList<>();
         for (int i = 0; i < Data.EVENT_NAMES.length; i++) {
             if (Data.EVENT_PUBLISHED[i] && !categories.contains(Data.EVENT_CATEGORIES[i])) categories.add(Data.EVENT_CATEGORIES[i]);

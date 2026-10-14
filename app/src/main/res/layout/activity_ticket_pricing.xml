@@ -24,11 +24,6 @@
         android:layout_height="wrap_content"
         android:text="Tap a ticket type to change its price." />
 
-    <com.google.android.material.divider.MaterialDivider
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="8dp" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvList"
         android:layout_width="match_parent"

@@ -171,8 +171,9 @@ The core flow must work end to end before anything else is polished. Remaining w
 
 - Booking screens show a step indicator (`view_steps.xml`): Tickets (1 of 3), Seats (2 of 3), Payment (3 of 3). Event detail, Ticket select and Seat select have a sticky bottom bar with the price or selection summary and the main action button.
 - Ticket types are selectable cards (`item_ticket_type.xml`), not a dropdown. Sold-out types are dimmed and disabled.
-- Home has a hero card with a read-only search field and category chips that open the event list pre-filtered (`category` extra).
+- Home shows a plain welcome line, a row of category chips that open the event list pre-filtered (`category` extra), featured events and the section grid. There is no banner card.
 - Payment methods are added in a bottom sheet with an E-wallet / Card tab layout. Tapping a method makes it the default (`Data.DEFAULT_PAYMENT`), which checkout preselects. Labels are built from the input, for example `GCash 0917 *** 4567` or `Visa ****1234`.
 - Organizer lists show status as a colored chip (green Published, gray Unpublished). The dashboard colors each ticket type's bar and shows a "Best seller" chip.
 - Screen transitions are a short slide and fade (`Animation.Ticketree` in `values/app_themes.xml`).
 - Accessibility: back arrows have a content description, seat buttons announce number and state, decorative emoji views are hidden from screen readers.
+- Use a `MaterialDivider` only to separate a sticky bottom bar from the content above it (event detail, ticket select, seat select) or to split distinct sections inside one screen (checkout, profile). Do not put a divider directly under a toolbar or tab bar, or between a heading and a list.
