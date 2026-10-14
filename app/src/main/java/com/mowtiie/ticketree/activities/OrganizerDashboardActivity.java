@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.color.MaterialColors;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textview.MaterialTextView;
-import com.mowtiie.ticketree.R;
 import com.mowtiie.ticketree.data.Data;
 import com.mowtiie.ticketree.databinding.ActivityOrganizerDashboardBinding;
 
@@ -103,7 +102,7 @@ public class OrganizerDashboardActivity extends AppCompatActivity {
         if (t == 0) return MaterialColors.getColor(root, androidx.appcompat.R.attr.colorPrimary);
         if (t == 1) return MaterialColors.getColor(root, com.google.android.material.R.attr.colorTertiary);
         if (t == 2) return MaterialColors.getColor(root, com.google.android.material.R.attr.colorSecondary);
-        return getColor(R.color.success);
+        return MaterialColors.getColor(root, com.google.android.material.R.attr.colorPrimaryFixedDim);
     }
 
     void addBar(LinearLayout container, String label, int value, int max, int color) {

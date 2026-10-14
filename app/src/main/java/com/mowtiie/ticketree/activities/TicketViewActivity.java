@@ -20,7 +20,8 @@ public class TicketViewActivity extends AppCompatActivity {
 
         String[] p = Data.TICKETS.get(getIntent().getIntExtra("ticket", 0)).split("\\|");
         String category = Data.EVENT_CATEGORIES[Data.eventIndex(p[1])];
-        binding.header.setBackgroundColor(Data.categoryColor(category));
+        binding.header.setBackgroundColor(Data.categoryColor(binding.getRoot(), category));
+        binding.tvEvent.setTextColor(Data.categoryOnColor(binding.getRoot(), category));
         binding.tvEmoji.setText(Data.categoryEmoji(category));
         binding.tvEvent.setText(p[1]);
         binding.tvDate.setText(p[2]);

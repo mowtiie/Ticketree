@@ -8,6 +8,7 @@
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
+        android:background="?attr/colorSurfaceContainer"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:navigationContentDescription="Back"
@@ -112,6 +113,7 @@
         android:layout_height="wrap_content" />
 
     <LinearLayout
+        android:background="?attr/colorSurfaceContainerHigh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"

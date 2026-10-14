@@ -8,6 +8,7 @@
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
+        android:background="?attr/colorSurfaceContainer"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:navigationContentDescription="Back"
@@ -64,7 +65,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnMinus"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    style="@style/Widget.Material3.Button.TonalButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="Fewer tickets"
@@ -79,7 +80,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnPlus"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    style="@style/Widget.Material3.Button.TonalButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="More tickets"
@@ -100,6 +101,7 @@
         android:layout_height="wrap_content" />
 
     <LinearLayout
+        android:background="?attr/colorSurfaceContainerHigh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -111,7 +113,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textAppearance="?attr/textAppearanceTitleLarge" />
+            android:textAppearance="?attr/textAppearanceTitleLarge"
+            android:textColor="?attr/colorPrimary" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnContinue"

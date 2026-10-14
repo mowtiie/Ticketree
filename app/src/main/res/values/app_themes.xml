@@ -10,5 +10,6 @@
     <style name="Theme.Ticketree" parent="AppTheme">
         <item name="android:windowSoftInputMode">adjustResize</item>
         <item name="android:windowAnimationStyle">@style/Animation.Ticketree</item>
+        <item name="android:windowBackground">?attr/colorSurfaceContainer</item>
     </style>
 </resources>

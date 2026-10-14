@@ -8,6 +8,7 @@
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
+        android:background="?attr/colorSurfaceContainer"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:navigationContentDescription="Back"
@@ -44,7 +45,6 @@
                         android:importantForAccessibility="no"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#212121"
                         android:textSize="40sp" />
 
                     <com.google.android.material.textview.MaterialTextView
@@ -52,8 +52,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:textAppearance="?attr/textAppearanceTitleLarge"
-                        android:textColor="#212121" />
+                        android:textAppearance="?attr/textAppearanceTitleLarge" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -115,7 +114,8 @@
                         android:layout_marginTop="12dp"
                         android:clickable="false"
                         android:text="Valid"
-                        android:textColor="@color/success" />
+                        android:textColor="?attr/colorOnTertiaryContainer"
+                        app:chipBackgroundColor="?attr/colorTertiaryContainer" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvOrder"

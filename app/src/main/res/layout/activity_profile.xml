@@ -7,6 +7,7 @@
     android:orientation="vertical">
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
+        android:background="?attr/colorSurfaceContainer"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:navigationContentDescription="Back"
@@ -125,7 +126,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnReset"
-            style="@style/Widget.Material3.Button.OutlinedButton"
+            style="@style/Widget.Material3.Button.TonalButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Reset password" />

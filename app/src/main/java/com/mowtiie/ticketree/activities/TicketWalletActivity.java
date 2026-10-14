@@ -9,7 +9,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.mowtiie.ticketree.R;
+import com.google.android.material.color.MaterialColors;
 import com.mowtiie.ticketree.adapters.GenericAdapter;
 import com.mowtiie.ticketree.data.Data;
 import com.mowtiie.ticketree.databinding.ActivityTicketWalletBinding;
@@ -38,12 +38,13 @@ public class TicketWalletActivity extends AppCompatActivity {
             String category = Data.EVENT_CATEGORIES[Data.eventIndex(p[1])];
             row.tvIcon.setVisibility(View.VISIBLE);
             row.tvIcon.setText(Data.categoryEmoji(category));
-            row.tvIcon.setBackgroundTintList(ColorStateList.valueOf(Data.categoryColor(category)));
+            row.tvIcon.setBackgroundTintList(ColorStateList.valueOf(Data.categoryColor(row.getRoot(), category)));
             row.tvTitle.setText(p[1]);
             row.tvSubtitle.setText(p[2] + "\n" + p[3] + " | " + p[4] + ", seat " + p[5]);
             row.chipBadge.setVisibility(View.VISIBLE);
             row.chipBadge.setText("Valid");
-            row.chipBadge.setTextColor(getColor(R.color.success));
+            row.chipBadge.setChipBackgroundColor(ColorStateList.valueOf(MaterialColors.getColor(row.getRoot(), com.google.android.material.R.attr.colorTertiaryContainer)));
+            row.chipBadge.setTextColor(MaterialColors.getColor(row.getRoot(), com.google.android.material.R.attr.colorOnTertiaryContainer));
             row.getRoot().setOnClickListener(v -> {
                 Intent intent = new Intent(this, TicketViewActivity.class);
                 intent.putExtra("ticket", position);

@@ -1,6 +1,5 @@
 package com.mowtiie.ticketree.activities;
 
-import com.mowtiie.ticketree.R;
 import com.mowtiie.ticketree.data.Data;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -130,14 +129,14 @@ public class SeatSelectActivity extends AppCompatActivity {
     int colorOf(int state, boolean text) {
         View v = binding.getRoot();
         if (state == 1) {
-            return text ? MaterialColors.getColor(v, com.google.android.material.R.attr.colorSurface)
-                    : getColor(R.color.success);
+            return MaterialColors.getColor(v, text ? com.google.android.material.R.attr.colorOnPrimary
+                    : androidx.appcompat.R.attr.colorPrimary);
         } else if (state == 2) {
-            return MaterialColors.getColor(v, text ? com.google.android.material.R.attr.colorOutline
-                    : com.google.android.material.R.attr.colorSurfaceVariant);
+            return MaterialColors.getColor(v, text ? com.google.android.material.R.attr.colorOnSurfaceVariant
+                    : com.google.android.material.R.attr.colorOutlineVariant);
         }
-        return MaterialColors.getColor(v, text ? com.google.android.material.R.attr.colorOnSecondaryContainer
-                : com.google.android.material.R.attr.colorSecondaryContainer);
+        return MaterialColors.getColor(v, text ? com.google.android.material.R.attr.colorOnSurface
+                : com.google.android.material.R.attr.colorSurfaceContainerHighest);
     }
 
     void paint(MaterialButton b, int seat) {

@@ -19,7 +19,6 @@
             android:layout_marginEnd="16dp"
             android:background="@drawable/bg_icon"
             android:gravity="center"
-            android:textColor="#212121"
             android:textSize="28sp"
             android:visibility="gone" />
 
@@ -51,7 +50,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAction"
-                style="@style/Widget.Material3.Button.TextButton"
+                style="@style/Widget.Material3.Button.TonalButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"

@@ -8,6 +8,7 @@
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
+        android:background="?attr/colorSurfaceContainer"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:title="Order complete" />
@@ -38,7 +39,7 @@
                 android:gravity="center"
                 android:text="Payment successful"
                 android:textAppearance="?attr/textAppearanceHeadlineSmall"
-                android:textColor="@color/success" />
+                android:textColor="?attr/colorPrimary" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"

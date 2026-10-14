@@ -229,8 +229,21 @@ public class Data {
             "🎤", "🤖", "🗣", "💼",
             "🎪", "🛠", "🌟"
     };
-    static final int[] CATEGORY_COLORS = {
-            0xFFFFCDD2, 0xFFC5CAE9, 0xFFB2DFDB, 0xFFFFE0B2, 0xFFD1C4E9, 0xFFC8E6C9, 0xFFB3E5FC
+    static final int[] CATEGORY_BG = {
+            com.google.android.material.R.attr.colorPrimaryContainer,
+            com.google.android.material.R.attr.colorSecondaryContainer,
+            com.google.android.material.R.attr.colorTertiaryContainer,
+            com.google.android.material.R.attr.colorPrimaryFixed,
+            com.google.android.material.R.attr.colorSecondaryFixed,
+            com.google.android.material.R.attr.colorTertiaryFixed
+    };
+    static final int[] CATEGORY_ON = {
+            com.google.android.material.R.attr.colorOnPrimaryContainer,
+            com.google.android.material.R.attr.colorOnSecondaryContainer,
+            com.google.android.material.R.attr.colorOnTertiaryContainer,
+            com.google.android.material.R.attr.colorOnPrimaryFixed,
+            com.google.android.material.R.attr.colorOnSecondaryFixed,
+            com.google.android.material.R.attr.colorOnTertiaryFixed
     };
 
     public static int fromPrice() {
@@ -252,8 +265,12 @@ public class Data {
         return CATEGORY_EMOJI[Math.abs(category.hashCode()) % CATEGORY_EMOJI.length];
     }
 
-    public static int categoryColor(String category) {
-        return CATEGORY_COLORS[Math.abs(category.hashCode()) % CATEGORY_COLORS.length];
+    public static int categoryColor(View view, String category) {
+        return MaterialColors.getColor(view, CATEGORY_BG[Math.abs(category.hashCode()) % CATEGORY_BG.length]);
+    }
+
+    public static int categoryOnColor(View view, String category) {
+        return MaterialColors.getColor(view, CATEGORY_ON[Math.abs(category.hashCode()) % CATEGORY_ON.length]);
     }
 
     public static int eventIndex(String name) {
@@ -278,7 +295,8 @@ public class Data {
     public static void bindEvent(ItemRowBinding row, int e) {
         row.tvIcon.setVisibility(View.VISIBLE);
         row.tvIcon.setText(categoryEmoji(EVENT_CATEGORIES[e]));
-        row.tvIcon.setBackgroundTintList(ColorStateList.valueOf(categoryColor(EVENT_CATEGORIES[e])));
+        row.tvIcon.setBackgroundTintList(ColorStateList.valueOf(categoryColor(row.getRoot(), EVENT_CATEGORIES[e])));
+        row.chipBadge.setTextColor(MaterialColors.getColor(row.getRoot(), androidx.appcompat.R.attr.colorPrimary));
         row.tvTitle.setText(EVENT_NAMES[e]);
         row.tvSubtitle.setText(EVENT_DATES[e] + "\n" + EVENT_LOCATIONS[e] + " | " + EVENT_VENUES[e]);
         row.chipBadge.setVisibility(View.VISIBLE);

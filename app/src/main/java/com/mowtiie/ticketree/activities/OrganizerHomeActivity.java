@@ -37,10 +37,10 @@ public class OrganizerHomeActivity extends AppCompatActivity {
             boolean published = Data.EVENT_PUBLISHED[event];
             row.chipBadge.setText(published ? "Published" : "Unpublished");
             row.chipBadge.setChipBackgroundColor(ColorStateList.valueOf(published
-                    ? getColor(R.color.success)
+                    ? MaterialColors.getColor(row.getRoot(), com.google.android.material.R.attr.colorTertiaryContainer)
                     : MaterialColors.getColor(row.getRoot(), com.google.android.material.R.attr.colorSurfaceVariant)));
             row.chipBadge.setTextColor(published
-                    ? MaterialColors.getColor(row.getRoot(), com.google.android.material.R.attr.colorSurface)
+                    ? MaterialColors.getColor(row.getRoot(), com.google.android.material.R.attr.colorOnTertiaryContainer)
                     : MaterialColors.getColor(row.getRoot(), com.google.android.material.R.attr.colorOnSurfaceVariant));
             row.btnAction.setVisibility(android.view.View.VISIBLE);
             row.btnAction.setText(Data.EVENT_PUBLISHED[event] ? "Unpublish" : "Publish");
