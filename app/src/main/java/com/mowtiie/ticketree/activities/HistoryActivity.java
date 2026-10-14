@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.tabs.TabLayout;
 import com.mowtiie.ticketree.adapters.GenericAdapter;
 import com.mowtiie.ticketree.data.Data;
@@ -52,7 +52,8 @@ public class HistoryActivity extends AppCompatActivity {
                 row.tvSubtitle.setText("Tap to view receipt");
             }
             row.getRoot().setOnClickListener(v ->
-                    new AlertDialog.Builder(this)
+                    new MaterialAlertDialogBuilder(this)
+                            .setTitle("Receipt")
                             .setMessage(Data.RECEIPTS.get(index))
                             .setPositiveButton("Close", null)
                             .show());

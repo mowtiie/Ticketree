@@ -1,21 +1,18 @@
 package com.mowtiie.ticketree.activities;
 
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.material.snackbar.Snackbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.mowtiie.ticketree.adapters.GenericAdapter;
 import com.mowtiie.ticketree.data.Data;
 import com.mowtiie.ticketree.databinding.ActivityTicketPricingBinding;
+import com.mowtiie.ticketree.databinding.DialogNumberBinding;
 
 import java.util.ArrayList;
 
@@ -36,34 +33,49 @@ public class TicketPricingActivity extends AppCompatActivity {
 
         adapter = new GenericAdapter<>(types, (row, type, position) -> {
             row.tvTitle.setText(Data.TICKET_TYPES[type]);
-            row.tvSubtitle.setText(Data.money(Data.TICKET_PRICES[type]) + " | " + Data.TICKET_REMAINING[type] + " left");
+            row.tvSubtitle.setText(Data.money(Data.TICKET_PRICES[type]) + " | " + Data.TICKET_REMAINING[type]
+                    + " in stock\nTap the card to change the price");
             row.btnAction.setVisibility(View.VISIBLE);
-            row.btnAction.setText("Add 10 seats");
-            row.btnAction.setOnClickListener(v -> {
-                Data.TICKET_REMAINING[type] += 10;
-                adapter.notifyDataSetChanged();
-            });
-            row.getRoot().setOnClickListener(v -> {
-                EditText input = new EditText(this);
-                input.setInputType(InputType.TYPE_CLASS_NUMBER);
-                input.setText(String.valueOf(Data.TICKET_PRICES[type]));
-                new AlertDialog.Builder(this)
-                        .setTitle("New price for " + Data.TICKET_TYPES[type])
-                        .setView(input)
-                        .setPositiveButton("Save", (d, w) -> {
-                            String text = input.getText().toString().trim();
-                            if (text.isEmpty()) {
-                                Snackbar.make(binding.getRoot(), "Enter a price", Snackbar.LENGTH_SHORT).show();
-                                return;
-                            }
-                            Data.TICKET_PRICES[type] = Integer.parseInt(text);
-                            adapter.notifyDataSetChanged();
-                        })
-                        .setNegativeButton("Cancel", null)
-                        .show();
-            });
+            row.btnAction.setText("Edit stock");
+            row.btnAction.setOnClickListener(v -> askNumber("Stock for " + Data.TICKET_TYPES[type],
+                    "Number of tickets available", Data.TICKET_REMAINING[type], 0, value -> {
+                        Data.TICKET_REMAINING[type] = value;
+                        adapter.notifyDataSetChanged();
+                    }));
+            row.getRoot().setOnClickListener(v -> askNumber("Price for " + Data.TICKET_TYPES[type],
+                    "Price in pesos", Data.TICKET_PRICES[type], 1, value -> {
+                        Data.TICKET_PRICES[type] = value;
+                        adapter.notifyDataSetChanged();
+                    }));
         });
         binding.rvList.setLayoutManager(new LinearLayoutManager(this));
         binding.rvList.setAdapter(adapter);
+    }
+
+    interface OnNumber {
+        void accept(int value);
+    }
+
+    void askNumber(String title, String hint, int current, int min, OnNumber onSave) {
+        DialogNumberBinding dialogBinding = DialogNumberBinding.inflate(getLayoutInflater());
+        dialogBinding.tilNumber.setHint(hint);
+        dialogBinding.etNumber.setText(String.valueOf(current));
+
+        AlertDialog dialog = new MaterialAlertDialogBuilder(this)
+                .setTitle(title)
+                .setView(dialogBinding.getRoot())
+                .setPositiveButton("Save", null)
+                .setNegativeButton("Cancel", null)
+                .create();
+        dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            String text = dialogBinding.etNumber.getText().toString().trim();
+            if (text.isEmpty() || Integer.parseInt(text) < min) {
+                dialogBinding.tilNumber.setError(min > 0 ? "Enter a number above 0" : "Enter 0 or more");
+                return;
+            }
+            onSave.accept(Integer.parseInt(text));
+            dialog.dismiss();
+        });
     }
 }
