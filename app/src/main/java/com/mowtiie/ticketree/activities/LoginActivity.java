@@ -10,7 +10,6 @@ import android.util.Patterns;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.mowtiie.ticketree.data.Data;
 import com.mowtiie.ticketree.data.DbHelper;
@@ -30,7 +29,6 @@ public class LoginActivity extends AppCompatActivity {
         binding.btnLogin.setOnClickListener(v -> {
             String email = binding.etEmail.getText().toString().trim();
             String password = binding.etPassword.getText().toString().trim();
-            boolean asOrganizer = binding.swOrganizer.isChecked();
 
             binding.tilEmail.setError(null);
             binding.tilPassword.setError(null);
@@ -51,26 +49,17 @@ public class LoginActivity extends AppCompatActivity {
             Cursor c = db.rawQuery("SELECT name, organizer FROM users WHERE email=? AND password=?",
                     new String[]{email, password});
             if (c.moveToFirst()) {
-                boolean isOrganizer = c.getInt(1) == 1;
-                if (isOrganizer != asOrganizer) {
-                    c.close();
-                    Snackbar.make(binding.getRoot(), isOrganizer
-                            ? "This is an organizer account. Turn on \"Log in as organizer\"."
-                            : "This is a customer account. Turn off \"Log in as organizer\".",
-                            Snackbar.LENGTH_LONG).show();
-                    return;
-                }
                 Data.USER_NAME = c.getString(0);
-                Data.USER_IS_ORGANIZER = isOrganizer;
+                Data.USER_IS_ORGANIZER = c.getInt(1) == 1;
             } else if (DatabaseUtils.queryNumEntries(db, "users") == 0) {
                 ContentValues cv = new ContentValues();
                 cv.put("name", email);
                 cv.put("email", email);
                 cv.put("password", password);
-                cv.put("organizer", asOrganizer ? 1 : 0);
+                cv.put("organizer", 0);
                 db.insert("users", null, cv);
                 Data.USER_NAME = email;
-                Data.USER_IS_ORGANIZER = asOrganizer;
+                Data.USER_IS_ORGANIZER = false;
             } else {
                 c.close();
                 binding.tilPassword.setError("Wrong email or password");

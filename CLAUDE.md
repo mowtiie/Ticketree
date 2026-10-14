@@ -80,7 +80,7 @@ This is a **simulation**. Nothing is real: no backend, no database, no payment g
 - Availability decreases after every successful order.
 
 **9. Organizer management**
-- Organizer registration and profile are fake, same as customer accounts. Role is chosen with a switch on sign up or login.
+- Organizer registration and profile are fake, same as customer accounts. Role is chosen with a Customer / Organizer tab layout on sign up. Login detects the role from the stored account.
 - Create event, edit event, publish/unpublish toggle, venue management and pricing management all edit the same `Data` arrays. Published events appear in customer discovery.
 
 **10. Organizer dashboard**
@@ -125,5 +125,5 @@ The core flow must work end to end before anything else is polished.
 - Every `TextInputLayout` has helper text that says what to enter and the format when it matters (dates, passwords).
 - Validate with inline `setError` on the field that is wrong, not a generic Snackbar. Clear the error on the next attempt.
 - Password fields use the password toggle end icon. Emails are checked with `Patterns.EMAIL_ADDRESS`. Passwords need 6 or more characters.
-- Login has the organizer switch, and it must match the account role.
+- Login has no role switch: the stored account decides whether you land on Home (customer) or OrganizerHome (organizer). Sign-up picks the role with a Customer / Organizer `TabLayout`.
 - Group tickets need at least 4 seats (`Data.TICKET_MIN_QTY`). All other ticket types start at 1. Maximum is 6 per order.

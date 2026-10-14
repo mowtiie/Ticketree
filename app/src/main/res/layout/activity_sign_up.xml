@@ -19,6 +19,30 @@
     android:orientation="vertical"
     android:padding="24dp">
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabRole"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Customer" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Organizer" />
+    </com.google.android.material.tabs.TabLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvRoleHint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:textAppearance="?attr/textAppearanceBodyMedium" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilName"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
@@ -62,13 +86,6 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.materialswitch.MaterialSwitch
-        android:id="@+id/swOrganizer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Register as organizer" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCreate"
