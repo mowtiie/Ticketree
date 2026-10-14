@@ -40,6 +40,9 @@ public class CheckoutActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         binding.toolbar.setNavigationOnClickListener(v -> finish());
 
+        binding.steps.tvStepLabel.setText("Step 3 of 3 - Payment");
+        binding.steps.stepBar.setProgress(3);
+
 
         binding.etName.setText(Data.USER_NAME);
         binding.etEmail.setText(Data.USER_EMAIL);

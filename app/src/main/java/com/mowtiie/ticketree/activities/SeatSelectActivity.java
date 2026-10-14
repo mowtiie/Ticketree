@@ -37,6 +37,9 @@ public class SeatSelectActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         binding.toolbar.setNavigationOnClickListener(v -> finish());
 
+        binding.steps.tvStepLabel.setText("Step 2 of 3 - Seats");
+        binding.steps.stepBar.setProgress(2);
+
         Data.SEL_BOX = 0;
 
         binding.chipFree.setChipBackgroundColor(ColorStateList.valueOf(colorOf(0, false)));
@@ -77,6 +80,11 @@ public class SeatSelectActivity extends AppCompatActivity {
         forward = false;
     }
 
+    void updateSelection() {
+        binding.tvSelection.setText(Data.SEL_SEATS.size() + " of " + Data.SEL_QTY + " seats - "
+                + Data.money(Data.TICKET_PRICES[Data.SEL_TYPE] * Data.SEL_QTY));
+    }
+
     void buildGrid() {
         binding.gridSeats.removeAllViews();
         for (int s = 0; s < 20; s++) {
@@ -112,9 +120,11 @@ public class SeatSelectActivity extends AppCompatActivity {
                     if (Data.HOLD_END == 0) startHold();
                 }
                 paint(b, seat);
+                updateSelection();
             });
             binding.gridSeats.addView(b);
         }
+        updateSelection();
     }
 
     int colorOf(int state, boolean text) {
@@ -136,6 +146,7 @@ public class SeatSelectActivity extends AppCompatActivity {
         int state = selected ? 1 : (taken ? 2 : 0);
         b.setBackgroundTintList(ColorStateList.valueOf(colorOf(state, false)));
         b.setTextColor(colorOf(state, true));
+        b.setContentDescription("Seat " + (seat + 1) + ", " + (selected ? "selected" : taken ? "taken" : "free"));
     }
 
     void startHold() {

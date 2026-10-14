@@ -23,6 +23,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
         binding.ivImage.setImageResource(Data.IMAGE_RES[Data.EVENT_IMAGES[i]]);
         binding.tvImage.setText(Data.EVENT_NAMES[i]);
+        binding.tvFromPrice.setText(Data.money(Data.EVENT_PRICES[i]));
         binding.chipCategory.setText(Data.EVENT_CATEGORIES[i]);
         binding.chipVenue.setText(Data.EVENT_VENUES[i]);
         binding.chipAge.setText("Age " + Data.EVENT_AGE_RESTRICTIONS[i]);
