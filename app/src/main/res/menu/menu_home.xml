@@ -7,14 +7,4 @@
         android:icon="@drawable/ic_bell"
         android:title="Notifications"
         app:showAsAction="always" />
-
-    <item
-        android:id="@+id/action_profile"
-        android:title="Profile"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/action_logout"
-        android:title="Log out"
-        app:showAsAction="never" />
 </menu>

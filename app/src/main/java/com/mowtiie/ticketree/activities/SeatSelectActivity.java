@@ -37,7 +37,7 @@ public class SeatSelectActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         binding.toolbar.setNavigationOnClickListener(v -> finish());
 
-        binding.steps.tvStepLabel.setText("Step 2 of 3 - Seats");
+        binding.steps.tvStepLabel.setText("Step 2 of 3");
         binding.steps.stepBar.setProgress(2);
 
         Data.SEL_BOX = 0;
@@ -49,7 +49,7 @@ public class SeatSelectActivity extends AppCompatActivity {
         binding.chipTaken.setChipBackgroundColor(ColorStateList.valueOf(colorOf(2, false)));
         binding.chipTaken.setTextColor(colorOf(2, true));
 
-        binding.tvInfo.setText("Pick " + Data.SEL_QTY + " seat(s) in one box. Seats are held for "
+        binding.tvInfo.setText("Select " + Data.SEL_QTY + (Data.SEL_QTY == 1 ? " seat" : " seats") + " in one box. Seats are held for "
                 + Data.HOLD_SECONDS + " seconds once you pick one.");
 
         binding.ddBox.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Data.BOX_NAMES));

@@ -34,7 +34,8 @@ public class PaymentMethodsActivity extends AppCompatActivity {
 
         adapter = new GenericAdapter<>(Data.PAYMENT_METHODS, (row, method, position) -> {
             row.tvTitle.setText(method);
-            row.tvSubtitle.setText(method.contains("****") ? "Credit / debit card" : "E-wallet");
+            row.tvSubtitle.setText((method.contains("****") ? "Credit / debit card" : "E-wallet")
+                    + (position == Data.DEFAULT_PAYMENT ? "" : " - tap to make default"));
             row.chipBadge.setVisibility(position == Data.DEFAULT_PAYMENT ? View.VISIBLE : View.GONE);
             row.chipBadge.setText("Default");
             row.btnAction.setVisibility(View.VISIBLE);

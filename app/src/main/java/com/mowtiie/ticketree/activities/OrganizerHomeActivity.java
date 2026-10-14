@@ -33,7 +33,7 @@ public class OrganizerHomeActivity extends AppCompatActivity {
 
         adapter = new GenericAdapter<>(events, (row, event, position) -> {
             Data.bindEvent(row, event);
-            row.tvSubtitle.setText(Data.EVENT_DATES[event] + "\nFrom " + Data.money(Data.EVENT_PRICES[event]));
+            row.tvSubtitle.setText(Data.EVENT_DATES[event] + "\nFrom " + Data.money(Data.fromPrice()));
             boolean published = Data.EVENT_PUBLISHED[event];
             row.chipBadge.setText(published ? "Published" : "Unpublished");
             row.chipBadge.setChipBackgroundColor(ColorStateList.valueOf(published
@@ -69,14 +69,6 @@ public class OrganizerHomeActivity extends AppCompatActivity {
                 startActivity(new Intent(this, TicketPricingActivity.class));
             } else if (id == R.id.action_profile) {
                 startActivity(new Intent(this, ProfileActivity.class));
-            } else if (id == R.id.action_logout) {
-                Data.USER_NAME = "";
-                Data.USER_EMAIL = "";
-                Data.USER_PASSWORD = "";
-                Data.USER_IS_ORGANIZER = false;
-                Intent intent = new Intent(this, LoginActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
             } else {
                 return false;
             }

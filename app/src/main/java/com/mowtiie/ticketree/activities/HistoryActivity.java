@@ -42,14 +42,17 @@ public class HistoryActivity extends AppCompatActivity {
                 String receipt = Data.RECEIPTS.get(index);
                 String[] lines = receipt.split("\n");
                 String total = "";
+                String paidWith = "";
                 for (String line : lines) {
-                    if (line.startsWith("TOTAL")) total = line;
+                    if (line.startsWith("TOTAL")) total = line.replace("TOTAL: ", "");
+                    if (line.startsWith("Paid with")) paidWith = line.replace("Paid with: ", "");
                 }
-                row.tvTitle.setText(lines[0]);
-                row.tvSubtitle.setText(lines[1] + "\n" + total);
+                row.tvTitle.setText(lines[0].replace("RECEIPT", "Receipt"));
+                row.tvSubtitle.setText("Paid " + total + " with " + paidWith + "\n" + lines[1].replace("Date: ", ""));
             } else {
-                row.tvTitle.setText(Data.ORDERS.get(index));
-                row.tvSubtitle.setText("Tap to view receipt");
+                String[] parts = Data.ORDERS.get(index).split(" - ");
+                row.tvTitle.setText(parts[1]);
+                row.tvSubtitle.setText(parts[2] + "\nOrder " + parts[0] + " - " + Data.ORDER_TIMES.get(index));
             }
             row.getRoot().setOnClickListener(v ->
                     new MaterialAlertDialogBuilder(this)

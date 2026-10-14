@@ -21,12 +21,6 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tap a method to make it your default for checkout."
-            android:textAppearance="?attr/textAppearanceBodyMedium" />
-
         <include
             android:id="@+id/empty"
             layout="@layout/view_empty"

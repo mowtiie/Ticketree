@@ -8,6 +8,10 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import androidx.annotation.OptIn;
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.badge.BadgeUtils;
+import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.google.android.material.chip.Chip;
 import com.mowtiie.ticketree.R;
 import com.mowtiie.ticketree.adapters.GenericAdapter;
@@ -19,12 +23,17 @@ import java.util.ArrayList;
 public class HomeActivity extends AppCompatActivity {
 
     ActivityHomeBinding binding;
+    BadgeDrawable badge;
 
+    @OptIn(markerClass = ExperimentalBadgeUtils.class)
     @Override
     protected void onResume() {
         super.onResume();
-        binding.tvNotifLabel.setText("🔔\nNotifications"
-                + (Data.UNREAD > 0 ? " (" + Data.UNREAD + " new)" : ""));
+        if (badge != null) BadgeUtils.detachBadgeDrawable(badge, binding.toolbar, R.id.action_notifications);
+        badge = BadgeDrawable.create(this);
+        badge.setNumber(Data.UNREAD);
+        badge.setVisible(Data.UNREAD > 0);
+        BadgeUtils.attachBadgeDrawable(badge, binding.toolbar, R.id.action_notifications);
     }
 
     @Override
@@ -52,22 +61,8 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         binding.toolbar.setOnMenuItemClickListener(item -> {
-            int id = item.getItemId();
-            if (id == R.id.action_notifications) {
-                startActivity(new Intent(this, NotificationsActivity.class));
-            } else if (id == R.id.action_profile) {
-                startActivity(new Intent(this, ProfileActivity.class));
-            } else if (id == R.id.action_logout) {
-                Data.USER_NAME = "";
-                Data.USER_EMAIL = "";
-                Data.USER_PASSWORD = "";
-                Data.USER_IS_ORGANIZER = false;
-                Intent intent = new Intent(this, LoginActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            } else {
-                return false;
-            }
+            if (item.getItemId() != R.id.action_notifications) return false;
+            startActivity(new Intent(this, NotificationsActivity.class));
             return true;
         });
 
@@ -95,8 +90,6 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(new Intent(this, TicketWalletActivity.class)));
         binding.cardHistory.setOnClickListener(v ->
                 startActivity(new Intent(this, HistoryActivity.class)));
-        binding.cardNotifications.setOnClickListener(v ->
-                startActivity(new Intent(this, NotificationsActivity.class)));
         binding.cardProfile.setOnClickListener(v ->
                 startActivity(new Intent(this, ProfileActivity.class)));
         binding.cardPayments.setOnClickListener(v ->

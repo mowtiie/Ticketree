@@ -40,7 +40,7 @@ public class CheckoutActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         binding.toolbar.setNavigationOnClickListener(v -> finish());
 
-        binding.steps.tvStepLabel.setText("Step 3 of 3 - Payment");
+        binding.steps.tvStepLabel.setText("Step 3 of 3");
         binding.steps.stepBar.setProgress(3);
 
 
@@ -161,9 +161,10 @@ public class CheckoutActivity extends AppCompatActivity {
         Data.RECEIPTS.add(receipt);
 
         Context app = getApplicationContext();
-        Data.notify(app, "Booking confirmed: " + eventName + " (" + orderId + ")");
-        Data.notify(app, "Payment received: " + Data.money(total) + " via " + method);
-        Data.notify(app, "Tickets delivered to " + email);
+        Data.addNotification("Booking confirmed: " + eventName + " (" + orderId + ")");
+        Data.addNotification("Payment received: " + Data.money(total) + " via " + method);
+        Data.addNotification("Tickets delivered to " + email);
+        Toast.makeText(app, "Booking confirmed, payment received, tickets delivered", Toast.LENGTH_LONG).show();
         new Handler(Looper.getMainLooper()).postDelayed(() ->
                 Data.notify(app, "Reminder: " + eventName + " starts soon. Bring your QR ticket!"), 15000);
 

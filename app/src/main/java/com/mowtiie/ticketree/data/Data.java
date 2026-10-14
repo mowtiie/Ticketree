@@ -74,7 +74,6 @@ public class Data {
             "Onsite",
             "Training Camp"
     };
-    public static int[] EVENT_PRICES = {1500, 2500, 500, 800, 1200, 1800, 1000, 600};
     public static String[] EVENT_DESCRIPTIONS = {
             "A full-day summit on leading teams, with keynotes and breakout sessions.",
             "Hands-on bootcamp covering machine learning basics and prompt engineering.",
@@ -155,7 +154,6 @@ public class Data {
         EVENT_DATES = Arrays.copyOf(EVENT_DATES, n);
         EVENT_LOCATIONS = Arrays.copyOf(EVENT_LOCATIONS, n);
         EVENT_VENUES = Arrays.copyOf(EVENT_VENUES, n);
-        EVENT_PRICES = Arrays.copyOf(EVENT_PRICES, n);
         EVENT_DESCRIPTIONS = Arrays.copyOf(EVENT_DESCRIPTIONS, n);
         EVENT_ORGANIZERS = Arrays.copyOf(EVENT_ORGANIZERS, n);
         EVENT_AGE_RESTRICTIONS = Arrays.copyOf(EVENT_AGE_RESTRICTIONS, n);
@@ -235,6 +233,17 @@ public class Data {
             0xFFFFCDD2, 0xFFC5CAE9, 0xFFB2DFDB, 0xFFFFE0B2, 0xFFD1C4E9, 0xFFC8E6C9, 0xFFB3E5FC
     };
 
+    public static int fromPrice() {
+        int best = Integer.MAX_VALUE;
+        for (int t = 0; t < TICKET_TYPES.length; t++) {
+            if (TICKET_REMAINING[t] >= TICKET_MIN_QTY[t]) best = Math.min(best, TICKET_PRICES[t]);
+        }
+        if (best == Integer.MAX_VALUE) {
+            for (int price : TICKET_PRICES) best = Math.min(best, price);
+        }
+        return best;
+    }
+
     public static String money(int amount) {
         return "₱" + String.format(Locale.US, "%,d", amount);
     }
@@ -273,7 +282,7 @@ public class Data {
         row.tvTitle.setText(EVENT_NAMES[e]);
         row.tvSubtitle.setText(EVENT_DATES[e] + "\n" + EVENT_LOCATIONS[e] + " | " + EVENT_VENUES[e]);
         row.chipBadge.setVisibility(View.VISIBLE);
-        row.chipBadge.setText("From " + money(EVENT_PRICES[e]));
+        row.chipBadge.setText("From " + money(fromPrice()));
     }
 
     public static final String DEMO_CUSTOMER_EMAIL = "customer@demo.com";

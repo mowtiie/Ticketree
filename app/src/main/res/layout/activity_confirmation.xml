@@ -40,13 +40,6 @@
                 android:textAppearance="?attr/textAppearanceHeadlineSmall"
                 android:textColor="@color/success" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:gravity="center"
-                android:text="Your tickets are ready in your wallet." />
-
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

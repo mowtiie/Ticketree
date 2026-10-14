@@ -28,7 +28,7 @@ public class TicketSelectActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         binding.toolbar.setNavigationOnClickListener(v -> finish());
 
-        binding.steps.tvStepLabel.setText("Step 1 of 3 - Tickets");
+        binding.steps.tvStepLabel.setText("Step 1 of 3");
         binding.steps.stepBar.setProgress(1);
 
         event = getIntent().getIntExtra("event", 0);

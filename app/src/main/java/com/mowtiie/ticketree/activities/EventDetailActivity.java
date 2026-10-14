@@ -23,7 +23,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
         binding.ivImage.setImageResource(Data.IMAGE_RES[Data.EVENT_IMAGES[i]]);
         binding.tvImage.setText(Data.EVENT_NAMES[i]);
-        binding.tvFromPrice.setText(Data.money(Data.EVENT_PRICES[i]));
+        binding.tvFromPrice.setText(Data.money(Data.fromPrice()));
         binding.chipCategory.setText(Data.EVENT_CATEGORIES[i]);
         binding.chipVenue.setText(Data.EVENT_VENUES[i]);
         binding.chipAge.setText("Age " + Data.EVENT_AGE_RESTRICTIONS[i]);
@@ -34,7 +34,6 @@ public class EventDetailActivity extends AppCompatActivity {
         sb.append("Organizer: ").append(Data.EVENT_ORGANIZERS[i]).append("\n");
         sb.append("Contact: ").append(Data.EVENT_ORG_CONTACTS[i]).append("\n");
         sb.append("About the organizer: ").append(Data.EVENT_ORG_ABOUT[i]).append("\n");
-        sb.append("Starting price: ").append(Data.money(Data.EVENT_PRICES[i])).append("\n\n");
         sb.append(Data.EVENT_DESCRIPTIONS[i]).append("\n\n");
         sb.append("Speaker lineup\n").append(Data.EVENT_SPEAKERS[i]).append("\n\n");
         sb.append("Ticket types\n");

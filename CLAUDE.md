@@ -58,7 +58,7 @@ Navigation is `startActivity(new Intent(...))` with `putExtra`. After payment, `
 
 - Use Material 3 components, not plain framework widgets: `MaterialToolbar`, `MaterialTextView`, `MaterialButton`, `MaterialCardView`, `MaterialDivider`, `TextInputLayout` with `TextInputEditText`, `MaterialSwitch`, `TabLayout`, `Chip`/`ChipGroup`, `CircularProgressIndicator`, `LinearProgressIndicator`.
 - Every screen except Login has a `MaterialToolbar` with a title. Show the back arrow on every screen except the root screens (Home, OrganizerHome, Confirmation).
-- Toolbar actions use menu resources in `res/menu/` via `app:menu` and `binding.toolbar.setOnMenuItemClickListener` (no `setSupportActionBar`). Home has a bell action plus an overflow with Profile and Log out. OrganizerHome has an add action plus an overflow with Dashboard, Ticket pricing, Venue management, Profile and Log out. The event list has "Clear filters" and Notifications has "Simulate reminder" in the overflow.
+- Toolbar actions use menu resources in `res/menu/` via `app:menu` and `binding.toolbar.setOnMenuItemClickListener` (no `setSupportActionBar`). Home has only a bell action with an unread badge. OrganizerHome has an add action plus an overflow with Dashboard, Ticket pricing, Venue management and Profile. Logging out is only on the Profile screen. The event list has "Clear filters" and Notifications has "Simulate reminder" in the overflow.
 - Empty lists use the shared `view_empty.xml` through `<include android:id="@+id/empty">` (emoji, message, optional button). Show or hide `binding.empty.getRoot()`.
 - Events everywhere are shown with `Data.bindEvent(row, event)`: category emoji on a pastel block, title, date, location and venue, and a "From ₱X" chip.
 - Money is always formatted with `Data.money(int)`. Never write a raw "P" prefix.
@@ -117,7 +117,7 @@ Navigation is `startActivity(new Intent(...))` with `putExtra`. After payment, `
 **5. Notifications (simulated only)**
 - Never use real Android notifications or notification channels.
 - Store messages newest first with a time in `Data.NOTIFICATIONS`. Use `Data.notify(appContext, message)` when the screen may close (it stores the message and shows a Toast). Use `Data.addNotification` plus a Snackbar on a screen that stays.
-- Triggers: booking confirmation, payment confirmation and ticket delivery (all right after payment), and an automatic event reminder 15 seconds after purchase. The Notifications toolbar overflow has "Simulate reminder". `Data.UNREAD` drives the "(n new)" label on the Home card.
+- Triggers: booking confirmation, payment confirmation and ticket delivery (all right after payment), and an automatic event reminder 15 seconds after purchase. The Notifications toolbar overflow has "Simulate reminder". `Data.UNREAD` drives the badge on the Home bell. After payment the three purchase notifications are stored silently and shown as one combined Toast.
 
 **6. History**
 - History has two tabs: Orders (`Data.ORDERS`) and Payment receipts (`Data.RECEIPTS`). Tapping either shows the receipt text in a dialog.
@@ -177,3 +177,10 @@ The core flow must work end to end before anything else is polished. Remaining w
 - Screen transitions are a short slide and fade (`Animation.Ticketree` in `values/app_themes.xml`).
 - Accessibility: back arrows have a content description, seat buttons announce number and state, decorative emoji views are hidden from screen readers.
 - Use a `MaterialDivider` only to separate a sticky bottom bar from the content above it (event detail, ticket select, seat select) or to split distinct sections inside one screen (checkout, profile). Do not put a divider directly under a toolbar or tab bar, or between a heading and a list.
+
+## Avoiding redundancy
+
+- Prices come only from the ticket types. There is no per-event price. "From" prices use `Data.fromPrice()` (the lowest ticket price still in stock). The event form has no price field.
+- Each destination has one obvious entry point: Notifications is the Home bell (with badge), Profile is a Home grid card, Log out is on Profile only.
+- Do not repeat a value on the same screen (for example the starting price or the page title). Step labels are just "Step N of 3".
+- The Orders tab shows what was bought (event, ticket, order number and time). The Receipts tab shows what was paid (receipt number, amount, method and date). Both open the same receipt dialog.

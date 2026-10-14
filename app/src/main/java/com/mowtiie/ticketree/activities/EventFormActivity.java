@@ -84,7 +84,6 @@ public class EventFormActivity extends AppCompatActivity {
         binding.tilCategory.setHelperText("For example AI Boot Camp or Toastmasters");
         binding.tilDate.setHelperText("Tap to choose the date and time");
         binding.tilLocation.setHelperText("City where the event takes place");
-        binding.tilPrice.setHelperText("Starting price in pesos");
         binding.tilAge.setHelperText("For example 18+ or All ages");
         binding.tilDescription.setHelperText("What attendees will learn or see");
         binding.tilSpeakers.setHelperText("Separate names with commas");
@@ -108,7 +107,6 @@ public class EventFormActivity extends AppCompatActivity {
             binding.etCategory.setText(Data.EVENT_CATEGORIES[event]);
             binding.etDate.setText(Data.EVENT_DATES[event]);
             binding.etLocation.setText(Data.EVENT_LOCATIONS[event]);
-            binding.etPrice.setText(String.valueOf(Data.EVENT_PRICES[event]));
             binding.etAge.setText(Data.EVENT_AGE_RESTRICTIONS[event]);
             binding.etDescription.setText(Data.EVENT_DESCRIPTIONS[event]);
             binding.etSpeakers.setText(Data.EVENT_SPEAKERS[event]);
@@ -126,7 +124,6 @@ public class EventFormActivity extends AppCompatActivity {
             String category = binding.etCategory.getText().toString().trim();
             String date = binding.etDate.getText().toString().trim();
             String location = binding.etLocation.getText().toString().trim();
-            String price = binding.etPrice.getText().toString().trim();
             String age = binding.etAge.getText().toString().trim();
             String description = binding.etDescription.getText().toString().trim();
             String speakers = binding.etSpeakers.getText().toString().trim();
@@ -137,7 +134,6 @@ public class EventFormActivity extends AppCompatActivity {
             binding.tilCategory.setError(null);
             binding.tilDate.setError(null);
             binding.tilLocation.setError(null);
-            binding.tilPrice.setError(null);
             binding.tilAge.setError(null);
             binding.tilDescription.setError(null);
             binding.tilSpeakers.setError(null);
@@ -156,10 +152,6 @@ public class EventFormActivity extends AppCompatActivity {
             }
             if (location.isEmpty()) {
                 binding.tilLocation.setError("Enter the city");
-                return;
-            }
-            if (price.isEmpty() || Integer.parseInt(price) <= 0) {
-                binding.tilPrice.setError("Enter a price above 0");
                 return;
             }
             if (age.isEmpty()) {
@@ -191,7 +183,6 @@ public class EventFormActivity extends AppCompatActivity {
             Data.EVENT_DATES[i] = date;
             Data.EVENT_LOCATIONS[i] = location;
             Data.EVENT_VENUES[i] = binding.ddVenue.getText().toString();
-            Data.EVENT_PRICES[i] = Integer.parseInt(price);
             Data.EVENT_AGE_RESTRICTIONS[i] = age;
             Data.EVENT_DESCRIPTIONS[i] = description;
             Data.EVENT_SPEAKERS[i] = speakers;
