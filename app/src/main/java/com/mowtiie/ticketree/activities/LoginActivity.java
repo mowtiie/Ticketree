@@ -1,9 +1,7 @@
 package com.mowtiie.ticketree.activities;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -25,7 +23,8 @@ public class LoginActivity extends AppCompatActivity {
         ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.tilEmail.setHelperText("Use the email you signed up with");
+        binding.tilEmail.setHelperText("Demo: customer@demo.com or organizer@demo.com");
+        binding.tilPassword.setHelperText("Demo password: demo1234");
         binding.tilPassword.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
 
         binding.btnLogin.setOnClickListener(v -> {
@@ -55,17 +54,6 @@ public class LoginActivity extends AppCompatActivity {
                 Data.USER_IS_ORGANIZER = c.getInt(1) == 1;
                 Data.USER_PHONE = c.getString(2);
                 Data.USER_ABOUT = c.getString(3);
-            } else if (DatabaseUtils.queryNumEntries(db, "users") == 0) {
-                ContentValues cv = new ContentValues();
-                cv.put("name", email);
-                cv.put("email", email);
-                cv.put("password", password);
-                cv.put("organizer", 0);
-                db.insert("users", null, cv);
-                Data.USER_NAME = email;
-                Data.USER_IS_ORGANIZER = false;
-                Data.USER_PHONE = "";
-                Data.USER_ABOUT = "";
             } else {
                 c.close();
                 binding.tilPassword.setError("Wrong email or password");
@@ -73,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
             }
             c.close();
             Data.USER_EMAIL = email;
+            if (email.equals(Data.DEMO_CUSTOMER_EMAIL)) Data.seedDemoPurchase();
             Data.USER_PASSWORD = password;
             startActivity(new Intent(this, Data.USER_IS_ORGANIZER ? OrganizerHomeActivity.class : HomeActivity.class));
             finish();

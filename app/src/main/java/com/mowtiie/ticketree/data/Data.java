@@ -273,4 +273,50 @@ public class Data {
         row.chipBadge.setVisibility(View.VISIBLE);
         row.chipBadge.setText("From " + money(EVENT_PRICES[e]));
     }
+
+    public static final String DEMO_CUSTOMER_EMAIL = "customer@demo.com";
+    public static final String DEMO_ORGANIZER_EMAIL = "organizer@demo.com";
+    public static final String DEMO_PASSWORD = "demo1234";
+    static boolean demoSeeded = false;
+
+    public static void seedDemoPurchase() {
+        if (demoSeeded) return;
+        demoSeeded = true;
+
+        String orderId = "TKT-" + (1001 + ORDERS.size());
+        String time = "Oct 10, 2026 2:15 PM";
+        int event = 0;
+        int type = 1;
+        int qty = 2;
+        int total = TICKET_PRICES[type] * qty;
+        int[] seats = {3, 4};
+
+        TICKET_REMAINING[type] -= qty;
+        for (int s : seats) {
+            SEAT_TAKEN[event][0][s] = true;
+            TICKETS.add(orderId + "|" + EVENT_NAMES[event] + "|" + EVENT_DATES[event] + "|"
+                    + TICKET_TYPES[type] + "|" + BOX_NAMES[0] + "|" + (s + 1));
+        }
+        ORDERS.add(orderId + " - " + EVENT_NAMES[event] + " - " + TICKET_TYPES[type] + " x" + qty + " - " + money(total));
+        ORDER_TYPES.add(type);
+        ORDER_QTYS.add(qty);
+        ORDER_TOTALS.add(total);
+        ORDER_TIMES.add(time);
+        RECEIPTS.add("RECEIPT " + orderId
+                + "\nDate: " + time
+                + "\n\nEvent: " + EVENT_NAMES[event]
+                + "\nWhen: " + EVENT_DATES[event]
+                + "\nTicket: " + TICKET_TYPES[type] + " x" + qty
+                + "\nSeats: " + BOX_NAMES[0] + " seat 4, 5"
+                + "\n\nBilled to: Demo Customer"
+                + "\nEmail: " + DEMO_CUSTOMER_EMAIL
+                + "\nAddress: 123 Rizal Street, Manila"
+                + "\nPaid with: GCash"
+                + "\n\nTOTAL: " + money(total));
+
+        addNotification("Booking confirmed: " + EVENT_NAMES[event] + " (" + orderId + ")");
+        addNotification("Payment received: " + money(total) + " via GCash");
+        addNotification("Tickets delivered to " + DEMO_CUSTOMER_EMAIL);
+        addNotification("Reminder: " + EVENT_NAMES[event] + " starts soon. Bring your QR ticket!");
+    }
 }
