@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
             c.close();
             Data.USER_EMAIL = email;
             Data.USER_PASSWORD = password;
-            startActivity(new Intent(this, HomeActivity.class));
+            startActivity(new Intent(this, Data.USER_IS_ORGANIZER ? OrganizerHomeActivity.class : HomeActivity.class));
             finish();
         });
 

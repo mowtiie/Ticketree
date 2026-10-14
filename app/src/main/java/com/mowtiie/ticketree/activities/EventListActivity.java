@@ -36,7 +36,8 @@ public class EventListActivity extends AppCompatActivity {
         dates.add("All dates");
         locations.add("All locations");
         for (int i = 0; i < Data.EVENT_NAMES.length; i++) {
-            String date = Data.EVENT_DATES[i].substring(0, 12);
+            if (!Data.EVENT_PUBLISHED[i]) continue;
+            String date = Data.EVENT_DATES[i].substring(0, Math.min(12, Data.EVENT_DATES[i].length()));
             if (!categories.contains(Data.EVENT_CATEGORIES[i])) categories.add(Data.EVENT_CATEGORIES[i]);
             if (!dates.contains(date)) dates.add(date);
             if (!locations.contains(Data.EVENT_LOCATIONS[i])) locations.add(Data.EVENT_LOCATIONS[i]);
@@ -98,6 +99,7 @@ public class EventListActivity extends AppCompatActivity {
 
         shown.clear();
         for (int i = 0; i < Data.EVENT_NAMES.length; i++) {
+            if (!Data.EVENT_PUBLISHED[i]) continue;
             if (!query.isEmpty() && !Data.EVENT_NAMES[i].toLowerCase().contains(query)
                     && !Data.EVENT_DESCRIPTIONS[i].toLowerCase().contains(query)) continue;
             if (binding.spCategory.getSelectedItemPosition() > 0 && !Data.EVENT_CATEGORIES[i].equals(category)) continue;

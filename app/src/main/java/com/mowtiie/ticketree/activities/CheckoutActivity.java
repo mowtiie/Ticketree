@@ -118,6 +118,10 @@ public class CheckoutActivity extends AppCompatActivity {
                     + typeName + "|" + Data.BOX_NAMES[Data.SEL_BOX] + "|" + (s + 1));
         }
         Data.ORDERS.add(orderId + " - " + eventName + " - " + typeName + " x" + Data.SEL_QTY + " - P" + total);
+        Data.ORDER_TYPES.add(Data.SEL_TYPE);
+        Data.ORDER_QTYS.add(Data.SEL_QTY);
+        Data.ORDER_TOTALS.add(total);
+        Data.ORDER_TIMES.add(now);
 
         String receipt = "RECEIPT " + orderId
                 + "\nDate: " + now

@@ -23,7 +23,9 @@ public class HomeActivity extends AppCompatActivity {
         binding.tvWelcome.setText("Welcome, " + Data.USER_NAME);
 
         ArrayList<Integer> featured = new ArrayList<>();
-        for (int i = 0; i < 3; i++) featured.add(i);
+        for (int i = 0; i < Data.EVENT_NAMES.length && featured.size() < 3; i++) {
+            if (Data.EVENT_PUBLISHED[i]) featured.add(i);
+        }
         binding.rvFeatured.setLayoutManager(new LinearLayoutManager(this));
         binding.rvFeatured.setAdapter(new GenericAdapter<Integer>(featured, (row, event, position) -> {
             row.tvTitle.setText(Data.EVENT_NAMES[event]);

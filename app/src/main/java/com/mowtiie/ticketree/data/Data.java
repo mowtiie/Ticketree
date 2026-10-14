@@ -1,6 +1,7 @@
 package com.mowtiie.ticketree.data;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Data {
 
@@ -9,7 +10,7 @@ public class Data {
     public static String USER_PASSWORD = "";
     public static boolean USER_IS_ORGANIZER = false;
 
-    public static final String[] EVENT_NAMES = {
+    public static String[] EVENT_NAMES = {
             "Leadership Summit 2026",
             "AI Boot Camp",
             "Toastmasters Speech Night",
@@ -19,7 +20,7 @@ public class Data {
             "Public Speaking Masterclass",
             "Youth Innovation Expo"
     };
-    public static final String[] EVENT_CATEGORIES = {
+    public static String[] EVENT_CATEGORIES = {
             "Leadership Training",
             "AI Boot Camp",
             "Toastmasters",
@@ -29,7 +30,7 @@ public class Data {
             "Toastmasters",
             "Conference"
     };
-    public static final String[] EVENT_DATES = {
+    public static String[] EVENT_DATES = {
             "Nov 08, 2026 9:00 AM",
             "Nov 15, 2026 8:00 AM",
             "Nov 15, 2026 6:00 PM",
@@ -39,7 +40,7 @@ public class Data {
             "Dec 12, 2026 10:00 AM",
             "Dec 19, 2026 9:00 AM"
     };
-    public static final String[] EVENT_LOCATIONS = {
+    public static String[] EVENT_LOCATIONS = {
             "Manila",
             "Quezon City",
             "Makati",
@@ -49,7 +50,7 @@ public class Data {
             "Makati",
             "Quezon City"
     };
-    public static final String[] EVENT_VENUES = {
+    public static String[] EVENT_VENUES = {
             "Hotel",
             "Onsite",
             "Hotel",
@@ -59,8 +60,8 @@ public class Data {
             "Onsite",
             "Training Camp"
     };
-    public static final int[] EVENT_PRICES = {1500, 2500, 500, 800, 1200, 1800, 1000, 600};
-    public static final String[] EVENT_DESCRIPTIONS = {
+    public static int[] EVENT_PRICES = {1500, 2500, 500, 800, 1200, 1800, 1000, 600};
+    public static String[] EVENT_DESCRIPTIONS = {
             "A full-day summit on leading teams, with keynotes and breakout sessions.",
             "Hands-on bootcamp covering machine learning basics and prompt engineering.",
             "An evening of prepared speeches, table topics and evaluations.",
@@ -70,7 +71,7 @@ public class Data {
             "Build confidence and stage presence with live coaching and feedback.",
             "Student teams showcase prototypes, robotics and community projects."
     };
-    public static final String[] EVENT_ORGANIZERS = {
+    public static String[] EVENT_ORGANIZERS = {
             "Lead PH Network",
             "TechForward Academy",
             "Manila Toastmasters Club",
@@ -80,7 +81,7 @@ public class Data {
             "Voice Forward Coaching",
             "Youth Innovators Guild"
     };
-    public static final String[] EVENT_AGE_RESTRICTIONS = {
+    public static String[] EVENT_AGE_RESTRICTIONS = {
             "18+", "15+", "All ages", "18+", "16+", "18+", "15+", "All ages"
     };
 
@@ -89,8 +90,38 @@ public class Data {
     public static final int[] TICKET_REMAINING = {120, 30, 50, 20};
 
     public static final String[] BOX_NAMES = {"Lower Box", "Middle Box", "Upper Box"};
+    public static boolean[] EVENT_PUBLISHED = {true, true, true, true, true, true, true, true};
+
+    public static void addEvent() {
+        int n = EVENT_NAMES.length + 1;
+        EVENT_NAMES = Arrays.copyOf(EVENT_NAMES, n);
+        EVENT_CATEGORIES = Arrays.copyOf(EVENT_CATEGORIES, n);
+        EVENT_DATES = Arrays.copyOf(EVENT_DATES, n);
+        EVENT_LOCATIONS = Arrays.copyOf(EVENT_LOCATIONS, n);
+        EVENT_VENUES = Arrays.copyOf(EVENT_VENUES, n);
+        EVENT_PRICES = Arrays.copyOf(EVENT_PRICES, n);
+        EVENT_DESCRIPTIONS = Arrays.copyOf(EVENT_DESCRIPTIONS, n);
+        EVENT_ORGANIZERS = Arrays.copyOf(EVENT_ORGANIZERS, n);
+        EVENT_AGE_RESTRICTIONS = Arrays.copyOf(EVENT_AGE_RESTRICTIONS, n);
+        EVENT_PUBLISHED = Arrays.copyOf(EVENT_PUBLISHED, n);
+        SEAT_TAKEN = Arrays.copyOf(SEAT_TAKEN, n);
+        SEAT_TAKEN[n - 1] = new boolean[3][20];
+    }
+
+    public static final String[] VENUE_TYPES = {"Onsite", "Hotel", "Training Camp"};
+
+    public static final ArrayList<Integer> ORDER_TYPES = new ArrayList<>();
+    public static final ArrayList<Integer> ORDER_QTYS = new ArrayList<>();
+    public static final ArrayList<Integer> ORDER_TOTALS = new ArrayList<>();
+    public static final ArrayList<String> ORDER_TIMES = new ArrayList<>();
+
+    public static final int[] DEMO_SOLD_BY_TYPE = {45, 12, 30, 5};
+    public static final String[] DEMO_SALE_DATES = {"Oct 20, 2026", "Oct 27, 2026", "Nov 03, 2026"};
+    public static final int[] DEMO_SALE_TICKETS = {20, 35, 37};
+    public static final int DEMO_ORDERS = 24;
+
     public static final int HOLD_SECONDS = 120;
-    public static final boolean[][][] SEAT_TAKEN = new boolean[8][3][20];
+    public static boolean[][][] SEAT_TAKEN = new boolean[8][3][20];
 
     static {
         for (int e = 0; e < 8; e++) {
