@@ -1,5 +1,6 @@
-package com.mowtiie.ticketree;
+package com.mowtiie.ticketree.activities;
 
+import com.mowtiie.ticketree.data.Data;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;

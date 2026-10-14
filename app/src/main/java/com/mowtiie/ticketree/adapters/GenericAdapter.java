@@ -1,4 +1,4 @@
-package com.mowtiie.ticketree;
+package com.mowtiie.ticketree.adapters;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;

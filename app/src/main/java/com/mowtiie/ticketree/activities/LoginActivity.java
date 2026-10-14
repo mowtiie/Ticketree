@@ -1,5 +1,7 @@
-package com.mowtiie.ticketree;
+package com.mowtiie.ticketree.activities;
 
+import com.mowtiie.ticketree.data.Data;
+import com.mowtiie.ticketree.data.DbHelper;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;

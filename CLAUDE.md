@@ -12,7 +12,11 @@ This is a **simulation**. Nothing is real: no backend, no database, no payment g
 
 - Speed beats elegance. Pick the shortest path that works in a live demo.
 - **No structures.** No architecture patterns (MVVM, MVP, repositories, use cases, DI), no layers, no feature packages, no interfaces or abstract classes, no custom model/POJO classes. Keep everything flat.
-- One package, one Activity per screen, one shared `Data.java` holding public static fields and arrays for all app state.
+- One Activity per screen, one shared `Data.java` holding public static fields and arrays for all app state.
+- Keep the Java source tree simple: three flat folders under `com.mowtiie.ticketree`, with no nesting and no per-feature packages.
+  - `activities/` holds every Activity.
+  - `data/` holds `Data.java` and `DbHelper.java`.
+  - `adapters/` holds `GenericAdapter.java`.
 - Represent records with parallel arrays (`String[] EVENT_NAMES`, `int[] EVENT_PRICES`, ...) and `ArrayList<String>` for lists that grow (orders, tickets, notifications).
 - Hardcode seed data. Never fetch or sync anything. Persistence uses pure SQLite only (see Stack); everything else lives in memory.
 - Duplicate code freely if it is faster than abstracting it.

@@ -1,5 +1,6 @@
-package com.mowtiie.ticketree;
+package com.mowtiie.ticketree.activities;
 
+import com.mowtiie.ticketree.data.Data;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;

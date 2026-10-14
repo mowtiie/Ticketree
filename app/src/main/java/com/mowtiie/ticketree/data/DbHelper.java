@@ -1,4 +1,4 @@
-package com.mowtiie.ticketree;
+package com.mowtiie.ticketree.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

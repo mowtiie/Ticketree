@@ -1,5 +1,6 @@
-package com.mowtiie.ticketree;
+package com.mowtiie.ticketree.activities;
 
+import com.mowtiie.ticketree.data.DbHelper;
 import android.content.ContentValues;
 import android.os.Bundle;
 import android.widget.Toast;

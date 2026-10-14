@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ticketree">
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,21 +20,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".HomeActivity" />
-        <activity android:name=".EventListActivity" />
-        <activity android:name=".EventDetailActivity" />
-        <activity android:name=".TicketSelectActivity" />
-        <activity android:name=".SeatSelectActivity" />
-        <activity android:name=".CheckoutActivity" />
-        <activity android:name=".ConfirmationActivity" />
-        <activity android:name=".TicketWalletActivity" />
-        <activity android:name=".TicketViewActivity" />
-        <activity android:name=".HistoryActivity" />
-        <activity android:name=".NotificationsActivity" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".ResetPasswordActivity" />
-        <activity android:name=".PaymentMethodsActivity" />
+        <activity android:name=".activities.SignUpActivity" />
+        <activity android:name=".activities.HomeActivity" />
+        <activity android:name=".activities.EventListActivity" />
+        <activity android:name=".activities.EventDetailActivity" />
+        <activity android:name=".activities.TicketSelectActivity" />
+        <activity android:name=".activities.SeatSelectActivity" />
+        <activity android:name=".activities.CheckoutActivity" />
+        <activity android:name=".activities.ConfirmationActivity" />
+        <activity android:name=".activities.TicketWalletActivity" />
+        <activity android:name=".activities.TicketViewActivity" />
+        <activity android:name=".activities.HistoryActivity" />
+        <activity android:name=".activities.NotificationsActivity" />
+        <activity android:name=".activities.ProfileActivity" />
+        <activity android:name=".activities.ResetPasswordActivity" />
+        <activity android:name=".activities.PaymentMethodsActivity" />
     </application>
 
 </manifest>

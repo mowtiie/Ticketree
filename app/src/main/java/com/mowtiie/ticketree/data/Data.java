@@ -1,4 +1,4 @@
-package com.mowtiie.ticketree;
+package com.mowtiie.ticketree.data;
 
 import java.util.ArrayList;
 

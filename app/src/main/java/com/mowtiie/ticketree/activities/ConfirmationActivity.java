@@ -1,4 +1,4 @@
-package com.mowtiie.ticketree;
+package com.mowtiie.ticketree.activities;
 
 import android.content.Intent;
 import android.os.Bundle;

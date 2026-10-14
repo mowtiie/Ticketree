@@ -1,5 +1,7 @@
-package com.mowtiie.ticketree;
+package com.mowtiie.ticketree.activities;
 
+import com.mowtiie.ticketree.data.Data;
+import com.mowtiie.ticketree.adapters.GenericAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 
