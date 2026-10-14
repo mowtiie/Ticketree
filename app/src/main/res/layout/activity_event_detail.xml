@@ -25,5 +25,12 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:textSize="16sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSelectTickets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="Select tickets" />
     </LinearLayout>
 </ScrollView>

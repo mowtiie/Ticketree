@@ -88,6 +88,33 @@ public class Data {
     public static final int[] TICKET_PRICES = {1000, 3000, 750, 4500};
     public static final int[] TICKET_REMAINING = {120, 30, 50, 20};
 
+    public static final String[] BOX_NAMES = {"Lower Box", "Middle Box", "Upper Box"};
+    public static final int HOLD_SECONDS = 120;
+    public static final boolean[][][] SEAT_TAKEN = new boolean[8][3][20];
+
+    static {
+        for (int e = 0; e < 8; e++) {
+            for (int b = 0; b < 3; b++) {
+                for (int s = 0; s < 20; s++) {
+                    SEAT_TAKEN[e][b][s] = (s * 7 + e * 3 + b * 5) % 6 == 0;
+                }
+            }
+        }
+    }
+
+    public static int SEL_EVENT = 0;
+    public static int SEL_TYPE = 0;
+    public static int SEL_QTY = 1;
+    public static int SEL_BOX = 0;
+    public static final ArrayList<Integer> SEL_SEATS = new ArrayList<>();
+    public static long HOLD_END = 0;
+
+    public static void releaseHold() {
+        for (int s : SEL_SEATS) SEAT_TAKEN[SEL_EVENT][SEL_BOX][s] = false;
+        SEL_SEATS.clear();
+        HOLD_END = 0;
+    }
+
     public static final ArrayList<String> ORDERS = new ArrayList<>();
     public static final ArrayList<String> TICKETS = new ArrayList<>();
     public static final ArrayList<String> NOTIFICATIONS = new ArrayList<>();

@@ -1,5 +1,6 @@
 package com.mowtiie.ticketree;
 
+import android.content.ContentValues;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -28,10 +29,16 @@ public class SignUpActivity extends AppCompatActivity {
                 Toast.makeText(this, "Fill in all fields", Toast.LENGTH_SHORT).show();
                 return;
             }
-            Data.USER_NAME = name;
-            Data.USER_EMAIL = email;
-            Data.USER_PASSWORD = password;
-            Data.USER_IS_ORGANIZER = swOrganizer.isChecked();
+            ContentValues cv = new ContentValues();
+            cv.put("name", name);
+            cv.put("email", email);
+            cv.put("password", password);
+            cv.put("organizer", swOrganizer.isChecked() ? 1 : 0);
+            long id = new DbHelper(this).getWritableDatabase().insert("users", null, cv);
+            if (id == -1) {
+                Toast.makeText(this, "Email already registered", Toast.LENGTH_SHORT).show();
+                return;
+            }
             Toast.makeText(this, "Account created. Please log in.", Toast.LENGTH_SHORT).show();
             finish();
         });

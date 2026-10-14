@@ -1,5 +1,6 @@
 package com.mowtiie.ticketree;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -32,5 +33,11 @@ public class EventDetailActivity extends AppCompatActivity {
                     .append(" (").append(Data.TICKET_REMAINING[t]).append(" left)\n");
         }
         ((TextView) findViewById(R.id.tvDetails)).setText(sb.toString());
+
+        findViewById(R.id.btnSelectTickets).setOnClickListener(v -> {
+            Intent intent = new Intent(this, TicketSelectActivity.class);
+            intent.putExtra("event", i);
+            startActivity(intent);
+        });
     }
 }

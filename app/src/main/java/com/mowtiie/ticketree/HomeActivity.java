@@ -38,7 +38,8 @@ public class HomeActivity extends AppCompatActivity {
 
         View.OnClickListener soon = v ->
                 Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
-        findViewById(R.id.btnTickets).setOnClickListener(soon);
+        findViewById(R.id.btnTickets).setOnClickListener(v ->
+                startActivity(new Intent(this, TicketWalletActivity.class)));
         findViewById(R.id.btnHistory).setOnClickListener(soon);
         findViewById(R.id.btnNotifications).setOnClickListener(soon);
         findViewById(R.id.btnProfile).setOnClickListener(soon);
