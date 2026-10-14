@@ -23,8 +23,6 @@ public class LoginActivity extends AppCompatActivity {
         ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.tilEmail.setHelperText("Demo: customer@demo.com or organizer@demo.com");
-        binding.tilPassword.setHelperText("Demo password: demo1234");
         binding.tilPassword.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
 
         binding.btnLogin.setOnClickListener(v -> {

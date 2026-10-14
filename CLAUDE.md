@@ -96,7 +96,7 @@ Navigation is `startActivity(new Intent(...))` with `putExtra`. After payment, `
 **1. Account**
 - Sign up, login, logout, profile edit and password reset are fake but validated (see Form conventions). Accounts live in the SQLite `users` table; the logged-in user is copied into `Data.USER_*`.
 - Sign up picks the role with a Customer / Organizer `TabLayout` at the top of the screen. Login has no role switch: the stored account decides whether you land on Home (customer) or OrganizerHome (organizer).
-- Login accepts only stored accounts. Two demo accounts are created in the database automatically: `customer@demo.com` and `organizer@demo.com`, both with password `demo1234` (the Login helper text shows them; remove before the real event if wanted). Logging in as the demo customer loads a sample purchase once (`Data.seedDemoPurchase()`): one order, its receipt, two VIP tickets, and four notifications.
+- Login accepts only stored accounts. Two demo accounts are created in the database automatically: `customer@demo.com` and `organizer@demo.com`, both with password `demo1234`. Logging in as the demo customer loads a sample purchase once (`Data.seedDemoPurchase()`): one order, its receipt, two VIP tickets, and four notifications.
 - Password reset shows a Toast "Reset link sent". Nothing is sent.
 - Payment methods: `Data.PAYMENT_METHODS`, add and remove on the PaymentMethods screen. Checkout fills in GCash, Maya and Visa ****1234 if the list is empty.
 
