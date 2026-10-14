@@ -78,19 +78,6 @@ Logging in as the demo customer loads a sample purchase (one order, receipt, two
 - The QR code and the seat map are static images, not generated.
 - Events, tickets, orders and notifications are kept in memory and reset when the app restarts. Accounts are saved in SQLite.
 
-## Project structure
-
-```
-app/src/main/java/com/mowtiie/ticketree/
-├── activities/   one Activity per screen
-├── adapters/     GenericAdapter, the single shared RecyclerView adapter
-└── data/         Data (all app state and seed data) and DbHelper (SQLite)
-```
-
-## Screens
-
-Login, Sign up, Reset password, Home, Event list, Event detail, Ticket select, Seat select, Checkout, Confirmation, Ticket wallet, Ticket view, History, Notifications, Profile, Payment methods, Organizer home, Event form, Ticket pricing, Venue management, Organizer dashboard.
-
 ## Screenshots
 
 <div align="center">
