@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.progressindicator.LinearProgressIndicator;
@@ -18,6 +19,7 @@ public class OrganizerDashboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         ActivityOrganizerDashboardBinding binding = ActivityOrganizerDashboardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         binding.toolbar.setNavigationOnClickListener(v -> finish());

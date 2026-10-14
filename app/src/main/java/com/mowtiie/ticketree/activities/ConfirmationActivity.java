@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.animation.OvershootInterpolator;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.mowtiie.ticketree.databinding.ActivityConfirmationBinding;
@@ -14,6 +15,7 @@ public class ConfirmationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         ActivityConfirmationBinding binding = ActivityConfirmationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 

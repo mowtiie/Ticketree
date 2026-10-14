@@ -13,6 +13,7 @@ import android.widget.GridLayout;
 
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -31,6 +32,7 @@ public class SeatSelectActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
 
         binding = ActivitySeatSelectBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
