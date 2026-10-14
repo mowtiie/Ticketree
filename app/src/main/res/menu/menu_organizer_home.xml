@@ -6,6 +6,7 @@
         android:id="@+id/action_new_event"
         android:icon="@drawable/ic_add"
         android:title="New event"
+        app:contentDescription="Create a new event"
         app:showAsAction="always" />
 
     <item

@@ -46,6 +46,11 @@ public class VenueManagementActivity extends AppCompatActivity {
                 } else {
                     Data.VENUES.remove(position);
                     adapter.notifyDataSetChanged();
+                    Snackbar.make(binding.getRoot(), venue + " removed", Snackbar.LENGTH_LONG)
+                            .setAction("Undo", undo -> {
+                                Data.VENUES.add(position, venue);
+                                adapter.notifyDataSetChanged();
+                            }).show();
                 }
             });
         });

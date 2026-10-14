@@ -92,6 +92,7 @@ public class SeatSelectActivity extends AppCompatActivity {
             b.setText(String.valueOf(s + 1));
             b.setInsetTop(0);
             b.setInsetBottom(0);
+            b.setMinHeight((int) (48 * getResources().getDisplayMetrics().density));
             b.setPadding(0, 0, 0, 0);
             GridLayout.LayoutParams lp = new GridLayout.LayoutParams(
                     GridLayout.spec(GridLayout.UNDEFINED, 1f), GridLayout.spec(GridLayout.UNDEFINED, 1f));

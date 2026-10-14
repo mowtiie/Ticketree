@@ -41,11 +41,19 @@ public class PaymentMethodsActivity extends AppCompatActivity {
             row.btnAction.setVisibility(View.VISIBLE);
             row.btnAction.setText("Remove");
             row.btnAction.setOnClickListener(v -> {
+                final int oldDefault = Data.DEFAULT_PAYMENT;
                 Data.PAYMENT_METHODS.remove(position);
                 if (position == Data.DEFAULT_PAYMENT) Data.DEFAULT_PAYMENT = 0;
                 else if (position < Data.DEFAULT_PAYMENT) Data.DEFAULT_PAYMENT--;
                 adapter.notifyDataSetChanged();
                 refreshEmpty();
+                Snackbar.make(binding.getRoot(), method + " removed", Snackbar.LENGTH_LONG)
+                        .setAction("Undo", undo -> {
+                            Data.PAYMENT_METHODS.add(position, method);
+                            Data.DEFAULT_PAYMENT = oldDefault;
+                            adapter.notifyDataSetChanged();
+                            refreshEmpty();
+                        }).show();
             });
             row.getRoot().setOnClickListener(v -> {
                 Data.DEFAULT_PAYMENT = position;

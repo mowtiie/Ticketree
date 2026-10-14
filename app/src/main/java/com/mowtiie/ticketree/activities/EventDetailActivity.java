@@ -25,12 +25,18 @@ public class EventDetailActivity extends AppCompatActivity {
         binding.tvImage.setText(Data.EVENT_NAMES[i]);
         binding.tvFromPrice.setText(Data.money(Data.fromPrice()));
         binding.chipCategory.setText(Data.EVENT_CATEGORIES[i]);
-        binding.chipVenue.setText(Data.EVENT_VENUES[i]);
-        binding.chipAge.setText("Age " + Data.EVENT_AGE_RESTRICTIONS[i]);
+        binding.chipCategory.setContentDescription("Show more " + Data.EVENT_CATEGORIES[i] + " events");
+        binding.chipCategory.setOnClickListener(v -> {
+            Intent intent = new Intent(this, EventListActivity.class);
+            intent.putExtra("category", Data.EVENT_CATEGORIES[i]);
+            startActivity(intent);
+        });
 
         StringBuilder sb = new StringBuilder();
         sb.append("Date and time: ").append(Data.EVENT_DATES[i]).append("\n");
         sb.append("Location: ").append(Data.EVENT_LOCATIONS[i]).append("\n");
+        sb.append("Venue: ").append(Data.EVENT_VENUES[i]).append("\n");
+        sb.append("Age restriction: ").append(Data.EVENT_AGE_RESTRICTIONS[i]).append("\n");
         sb.append("Organizer: ").append(Data.EVENT_ORGANIZERS[i]).append("\n");
         sb.append("Contact: ").append(Data.EVENT_ORG_CONTACTS[i]).append("\n");
         sb.append("About the organizer: ").append(Data.EVENT_ORG_ABOUT[i]).append("\n");

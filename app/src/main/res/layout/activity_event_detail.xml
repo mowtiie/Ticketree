@@ -62,22 +62,7 @@
                     android:id="@+id/chipCategory"
                     style="@style/Widget.Material3.Chip.Assist"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="false" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipVenue"
-                    style="@style/Widget.Material3.Chip.Assist"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="false" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipAge"
-                    style="@style/Widget.Material3.Chip.Assist"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="false" />
+                    android:layout_height="wrap_content" />
             </com.google.android.material.chip.ChipGroup>
 
             <com.google.android.material.card.MaterialCardView

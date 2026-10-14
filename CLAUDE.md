@@ -201,3 +201,12 @@ The core flow must work end to end before anything else is polished. Remaining w
 - Scrolling lists use `clipToPadding="false"` with 8dp bottom padding so the last card is not flush with the screen edge.
 - Multi-line text blocks (event details, order summary, receipt) use `lineSpacingMultiplier="1.15"`.
 - Greetings use `Data.greeting()` ("Hello, <first name>!") on both the customer and organizer home screens.
+
+## Material 3 component rules (from the official component guidelines)
+
+- Buttons: one filled button per screen for the main action, tonal for secondary actions, outlined for medium emphasis, text for the lowest emphasis. Controls need a 48dp touch target (seat buttons use `minHeight` 48dp).
+- Chips are for interactive items (filters, suggestions, assist actions). The event category chip on the detail screen opens the filtered list. Do not use chips for static facts; put those in the detail text. The only non-interactive chips are small status labels inside list rows.
+- Modal bottom sheets show a `BottomSheetDragHandleView`. Dialogs are used sparingly and always use `MaterialAlertDialogBuilder`.
+- Snackbars give brief feedback, one at a time. Destructive actions (removing a payment method or venue) offer an Undo action. Toasts are only for the simulated notifications and for messages shown as a screen closes.
+- Text fields: outlined style, label on the `TextInputLayout`, helper text, inline errors, exposed dropdown menus for choices.
+- Toolbar action and navigation icons have content descriptions.
