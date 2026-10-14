@@ -8,11 +8,11 @@ An Android event ticketing app that takes a customer from discovering an event t
 
 | | |
 |---|---|
-| Event | Tagisan Ng Talino Local 2026 Code Fest |
-| Year | 2026 |
+| Event | Tagisan Ng Talino Local 2026 - 2027 Code Fest |
 | Level | Local |
-| Placement | _Add your placement here (for example: 1st Place, Champion, Finalist)_ |
-| Team | _Add team name and members_ |
+| Placement | _Champion_ |
+| Team Name | ERRAnds |
+| Team Members | Vrixzandro Eliponga, Michael Tagle, Christine Jane Lapuz |
 | Challenge | Develop an Event Ticketing Application with customer and organizer modules |
 
 ## Features
@@ -93,7 +93,16 @@ Login, Sign up, Reset password, Home, Event list, Event detail, Ticket select, S
 
 ## Screenshots
 
-_Add screenshots here, for example a `docs/screenshots` folder with Home, Event detail, Seat select, Ticket and Dashboard._
+<div align="center">
+	<div>
+         <img src="metadata/en-US/images/screenshots/screenshot1.jpg" width="30%" />
+         <img src="metadata/en-US/images/screenshots/screenshot2.jpg" width="30%" />
+         <img src="metadata/en-US/images/screenshots/screenshot3.jpg" width="30%" />
+         <img src="metadata/en-US/images/screenshots/screenshot4.jpg" width="30%" />
+         <img src="metadata/en-US/images/screenshots/screenshot5.jpg" width="30%" />
+         <img src="metadata/en-US/images/screenshots/screenshot6.jpg" width="30%" />
+	</div>
+</div>
 
 ## Verification
 
@@ -152,7 +161,7 @@ After importing, confirm the fingerprint printed by GPG matches the one listed a
 Each release includes a detached `.asc` signature alongside the APK. Verify a downloaded release with:
 
 ```
-gpg --verify ticketree-vX.X.apk.asc ticketree-vX.X.apk
+gpg --verify ticketree.apk.asc ticketree.apk
 ```
 
 A valid signature looks like:
