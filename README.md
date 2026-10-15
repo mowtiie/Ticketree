@@ -12,7 +12,7 @@ An Android event ticketing app that takes a customer from discovering an event t
 | Level | Local |
 | Placement | _Champion_ |
 | Team Name | ERRAnds |
-| Team Members | Vrixzandro Eliponga, Michael Tagle, Christine Jane Lapuz |
+| Team Members | [Vrixzandro Eliponga](https://github.com/mowtiie), [Michael Tagle](https://github.com/ImmunoCapacity), [Christine Jane Lapuz](https://github.com/chrstnjn) |
 | Challenge | Develop an Event Ticketing Application with customer and organizer modules |
 
 ## Features
