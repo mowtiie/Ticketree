@@ -77,8 +77,8 @@ public class HomeActivity extends AppCompatActivity {
             Data.bindEvent(row, event);
             ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) row.getRoot().getLayoutParams();
             lp.width = (int) (300 * density);
-            lp.height = (int) (200 * density);
-            row.tvTitle.setMaxLines(2);
+            lp.height = (int) (160 * density);
+            row.tvTitle.setMaxLines(1);
             row.tvTitle.setEllipsize(TextUtils.TruncateAt.END);
             row.tvSubtitle.setMaxLines(3);
             row.tvSubtitle.setEllipsize(TextUtils.TruncateAt.END);
