@@ -158,3 +158,7 @@ Good signature from "Mowtiie <mowtiie.dev@gmail.com>"
 ```
 
 **Note:** PGP signing is a supplementary trust measure, not a substitute for the `apksigner` check above — verify both if you want the highest confidence that a release is genuine and unmodified.
+
+## License
+
+Ticketree is released under the [MIT License](LICENSE).
