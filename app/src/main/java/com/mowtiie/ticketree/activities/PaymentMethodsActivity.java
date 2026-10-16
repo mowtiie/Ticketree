@@ -79,6 +79,7 @@ public class PaymentMethodsActivity extends AppCompatActivity {
         sb.tilMobile.setHelperText("11 digits, for example 09171234567");
         sb.tilCardNumber.setHelperText("16 digits. Only the last 4 are shown after saving");
         sb.tilExpiry.setHelperText("Month and year");
+        sb.tilCvv.setHelperText("3 digits on the back");
         sb.tilHolder.setHelperText("As printed on the card");
 
         sb.tabType.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -118,13 +119,19 @@ public class PaymentMethodsActivity extends AppCompatActivity {
                 String holder = sb.etHolder.getText().toString().trim();
                 sb.tilCardNumber.setError(null);
                 sb.tilExpiry.setError(null);
+                String cvv = sb.etCvv.getText().toString().trim();
                 sb.tilHolder.setError(null);
+                sb.tilCvv.setError(null);
                 if (!number.matches("^\\d{16}$")) {
                     sb.tilCardNumber.setError("Enter all 16 digits");
                     return;
                 }
                 if (!expiry.matches("^(0[1-9]|1[0-2])/\\d{2}$")) {
                     sb.tilExpiry.setError("Use MM/YY");
+                    return;
+                }
+                if (!cvv.matches("^\\d{3}$")) {
+                    sb.tilCvv.setError("Enter 3 digits");
                     return;
                 }
                 if (holder.length() < 3) {

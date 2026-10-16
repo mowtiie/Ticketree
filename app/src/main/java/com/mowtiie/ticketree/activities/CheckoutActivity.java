@@ -46,6 +46,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
         binding.etName.setText(Data.USER_NAME);
         binding.etEmail.setText(Data.USER_EMAIL);
+        binding.etAddress.setText(Data.USER_ADDRESS);
         binding.tilName.setHelperText("Name on the receipt");
         binding.tilEmail.setHelperText("Your tickets and receipt are sent here");
         binding.tilAddress.setHelperText("Street, city");

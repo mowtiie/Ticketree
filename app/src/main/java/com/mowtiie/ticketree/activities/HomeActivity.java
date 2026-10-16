@@ -2,6 +2,7 @@ package com.mowtiie.ticketree.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.ViewGroup;
 
 import androidx.activity.EdgeToEdge;
@@ -76,6 +77,11 @@ public class HomeActivity extends AppCompatActivity {
             Data.bindEvent(row, event);
             ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) row.getRoot().getLayoutParams();
             lp.width = (int) (300 * density);
+            lp.height = (int) (200 * density);
+            row.tvTitle.setMaxLines(2);
+            row.tvTitle.setEllipsize(TextUtils.TruncateAt.END);
+            row.tvSubtitle.setMaxLines(3);
+            row.tvSubtitle.setEllipsize(TextUtils.TruncateAt.END);
             lp.setMarginEnd((int) (8 * density));
             lp.bottomMargin = 0;
             row.getRoot().setOnClickListener(v -> {

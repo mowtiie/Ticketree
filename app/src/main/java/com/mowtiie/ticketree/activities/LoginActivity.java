@@ -45,13 +45,15 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             SQLiteDatabase db = new DbHelper(this).getWritableDatabase();
-            Cursor c = db.rawQuery("SELECT name, organizer, phone, about FROM users WHERE email=? AND password=?",
+            Cursor c = db.rawQuery("SELECT name, organizer, phone, about, birthdate, address FROM users WHERE email=? AND password=?",
                     new String[]{email, password});
             if (c.moveToFirst()) {
                 Data.USER_NAME = c.getString(0);
                 Data.USER_IS_ORGANIZER = c.getInt(1) == 1;
                 Data.USER_PHONE = c.getString(2);
                 Data.USER_ABOUT = c.getString(3);
+                Data.USER_BIRTHDATE = c.getString(4);
+                Data.USER_ADDRESS = c.getString(5);
             } else {
                 c.close();
                 binding.tilPassword.setError("Wrong email or password");

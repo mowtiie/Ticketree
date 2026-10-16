@@ -15,6 +15,15 @@ import com.mowtiie.ticketree.R;
 import com.mowtiie.ticketree.databinding.ItemRowBinding;
 
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.TimeZone;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.DateValidatorPointBackward;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.textfield.TextInputEditText;
 import java.util.Locale;
 
 public class Data {
@@ -144,6 +153,43 @@ public class Data {
     };
     public static String USER_PHONE = "";
     public static String USER_ABOUT = "";
+    public static String USER_BIRTHDATE = "";
+
+    public static int ageOf(String birthdate) {
+        try {
+            SimpleDateFormat f = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
+            f.setTimeZone(TimeZone.getTimeZone("UTC"));
+            Calendar born = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+            born.setTime(f.parse(birthdate));
+            Calendar now = Calendar.getInstance();
+            int age = now.get(Calendar.YEAR) - born.get(Calendar.YEAR);
+            if (now.get(Calendar.DAY_OF_YEAR) < born.get(Calendar.DAY_OF_YEAR)) age--;
+            return age;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    public static void pickBirthdate(AppCompatActivity activity, TextInputEditText field) {
+        CalendarConstraints constraints = new CalendarConstraints.Builder()
+                .setValidator(DateValidatorPointBackward.now()).build();
+        MaterialDatePicker<Long> picker = MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Birth date")
+                .setCalendarConstraints(constraints)
+                .build();
+        picker.addOnPositiveButtonClickListener(selection -> {
+            SimpleDateFormat f = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
+            f.setTimeZone(TimeZone.getTimeZone("UTC"));
+            field.setText(f.format(new Date(selection)));
+        });
+        picker.show(activity.getSupportFragmentManager(), "birthdate");
+    }
+    public static String USER_ADDRESS = "";
+
+    public static int minAge(int event) {
+        String digits = EVENT_AGE_RESTRICTIONS[event].replaceAll("\\D", "");
+        return digits.isEmpty() ? 0 : Integer.parseInt(digits);
+    }
 
     public static boolean[] EVENT_PUBLISHED = {true, true, true, true, true, true, true, true};
 

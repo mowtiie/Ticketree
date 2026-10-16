@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.mowtiie.ticketree.data.Data;
 import com.mowtiie.ticketree.databinding.ActivityEventDetailBinding;
 
@@ -51,6 +52,16 @@ public class EventDetailActivity extends AppCompatActivity {
         binding.tvDetails.setText(sb.toString());
 
         binding.btnSelectTickets.setOnClickListener(v -> {
+            int age = Data.ageOf(Data.USER_BIRTHDATE);
+            if (!Data.USER_IS_ORGANIZER && age < Data.minAge(i)) {
+                new MaterialAlertDialogBuilder(this)
+                        .setTitle("Age restriction")
+                        .setMessage("This event is " + Data.EVENT_AGE_RESTRICTIONS[i] + ". Your profile says you are "
+                                + age + ", so you cannot buy tickets for it.")
+                        .setPositiveButton("OK", null)
+                        .show();
+                return;
+            }
             Intent intent = new Intent(this, TicketSelectActivity.class);
             intent.putExtra("event", i);
             startActivity(intent);

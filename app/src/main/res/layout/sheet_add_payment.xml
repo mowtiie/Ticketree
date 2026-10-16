@@ -26,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:background="@android:color/transparent"
             app:tabGravity="fill"
             app:tabMode="fixed">
 
@@ -123,21 +124,37 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilHolder"
+                    android:id="@+id/tilCvv"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:hint="Name on card">
+                    android:hint="CVV">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etHolder"
+                        android:id="@+id/etCvv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPersonName" />
+                        android:inputType="numberPassword"
+                        android:maxLength="3" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilHolder"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Name on card">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etHolder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName" />
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
