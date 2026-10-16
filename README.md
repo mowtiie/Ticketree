@@ -148,7 +148,7 @@ After importing, confirm the fingerprint printed by GPG matches the one listed a
 Each release includes a detached `.asc` signature alongside the APK. Verify a downloaded release with:
 
 ```
-gpg --verify ticketree.apk.asc ticketree.apk
+gpg --verify ticketree-X.X.apk.asc ticketree-X.X.apk
 ```
 
 A valid signature looks like:
