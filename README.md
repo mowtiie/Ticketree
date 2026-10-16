@@ -34,28 +34,6 @@ An Android event ticketing app that takes a customer from discovering an event t
 - Venue management and ticket pricing and stock management
 - Dashboard with revenue, tickets sold, orders, sales by ticket type, sales by date and ticket inventory
 
-## What's new in v1.1
-
-**Registration and accounts**
-- Sign up now asks for a confirm password, mobile number, birth date and address.
-- Birth date uses a date picker that only allows past dates.
-- Profile lets users edit birth date, address and mobile number. Customers can now edit their mobile number too, which used to be organizer-only.
-- Mobile numbers must be 11 digits starting with 09.
-- The database moved to version 6. Existing installs get the new columns, and the demo accounts are filled in so they still work.
-
-**Age restrictions**
-- The app works out the user's age from their birth date.
-- Tapping "Select tickets" on an event the user is too young for shows a dialog and stops the booking. Organizers skip the check.
-
-**Checkout and payments**
-- The billing address is pre-filled from the profile.
-- The add-card form has a new CVV field (3 digits, masked). Expiry and CVV share a row, and the name on card sits below.
-
-**UI fixes**
-- The tab bars on the add-payment sheet, History and Sign up now blend with the page background.
-- Featured event cards are a fixed 160dp tall, with a 1-line title and up to 3 lines of details, so the price chip is no longer clipped.
-- The login screen shows "Version 1.1" at the bottom.
-
 ## Tech specs
 
 | | |
